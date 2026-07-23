@@ -1,21 +1,47 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
+import { useCollaborations } from "@/services/collaborations/queries";
+import { useSectionTitle } from "@/services/section-title/queries";
 import aboutTestimonialFeature from "../../../public/images/about-testimonial-feature.jpg";
 import aboutContactArt from "../../../public/images/about-contact-art.png";
 
+/** The API quote arrives already wrapped in quote marks — strip them, the card
+ *  renders its own. */
+const stripQuotes = (text: string) => text.replace(/^"+|"+$/g, "");
+
 export function TestimonialsSection() {
+  const { data: testimonials = [] } = useCollaborations();
+  const { data: sectionTitle } = useSectionTitle("Collaboration");
+  const [index, setIndex] = useState(0);
+
+  // Figma colours the last word teal; the API sends the title as plain text.
+  const titleWords = (
+    sectionTitle?.title ?? "Etibarla Qurulan Əməkdaşlıqlar!"
+  ).split(" ");
+  const titleStart = titleWords.slice(0, -1).join(" ");
+  const titleAccent = titleWords[titleWords.length - 1];
+
+  const count = testimonials.length;
+  const current = testimonials[Math.min(index, Math.max(count - 1, 0))];
+
+  const goPrev = () => setIndex((i) => (i - 1 + count) % count);
+  const goNext = () => setIndex((i) => (i + 1) % count);
+
   return (
     <div className="flex flex-col items-center w-full py-9 lg:pt-0 lg:pb-[90px]">
       <Container className="flex flex-col items-center gap-6 w-full lg:gap-11">
         <div className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10">
           <SplitLines>
             <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[424px] lg:shrink-0">
-              Etibarla Qurulan <span className="text-[#3abdaa]">Əməkdaşlıqlar!</span>
+              {titleStart} <span className="text-[#3abdaa]">{titleAccent}</span>
             </h2>
           </SplitLines>
           <Reveal
@@ -24,9 +50,8 @@ export function TestimonialsSection() {
             className="w-full lg:max-w-[656px] lg:flex-1 lg:min-w-0"
           >
             <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər
-              dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı
-              inkişafımızın ən dəyərli göstəricisidir.
+              {sectionTitle?.description ??
+                "Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı inkişafımızın ən dəyərli göstəricisidir."}
             </p>
           </Reveal>
         </div>
@@ -41,35 +66,41 @@ export function TestimonialsSection() {
           <div className="flex flex-col gap-4 lg:gap-5 items-start flex-[858] min-w-0 w-full">
             <div className="bg-[#0d153a] border border-[#8e929c] flex flex-col items-start justify-between gap-6 px-3.5 py-3.5 rounded-2xl w-full lg:gap-0 lg:h-[336px] lg:px-9 lg:py-8 lg:rounded-[20px]">
               <p className="font-semibold text-base leading-6 tracking-[0.16px] lg:text-[20px] lg:leading-7 lg:tracking-[0.2px]">
-                <span className="text-white">01</span>
-                <span className="text-[#b3b5bc]">/03</span>
+                <span className="text-white">
+                  {String(count ? index + 1 : 0).padStart(2, "0")}
+                </span>
+                <span className="text-[#b3b5bc]">
+                  /{String(count).padStart(2, "0")}
+                </span>
               </p>
               <p className="font-normal text-white text-base leading-6 tracking-[0.16px] lg:text-xl lg:leading-7 lg:tracking-[0.2px]">
-                &quot;İlk görüşdən layihənin təhvilinə qədər bütün proses şəffaf və
-                peşəkar şəkildə idarə olundu. Gözləntilərimizi qarşılayan, istifadəsi
-                rahat və keyfiyyətli bir məhsul əldə etdik.&quot;
+                {current ? `"${stripQuotes(current.description)}"` : ""}
               </p>
               <div className="flex items-end justify-between w-full">
                 <div className="flex flex-col gap-1 lg:gap-1.5 items-start">
                   <p className="font-medium text-[#3abdaa] text-base leading-6 tracking-[0.16px] lg:font-semibold lg:text-xl lg:leading-7 lg:tracking-[0.2px]">
-                    Ayaz Afandiyev
+                    {current?.name}
                   </p>
                   <p className="text-[#b3b5bc] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                    Co-Founder | Veysəloğlu
+                    {current ? `${current.profession} | ${current.company}` : ""}
                   </p>
                 </div>
                 <div className="flex gap-3 items-center">
                   <button
                     type="button"
                     aria-label="Əvvəlki rəy"
-                    className="bg-white/12 flex items-center justify-center p-2 rounded-full"
+                    onClick={goPrev}
+                    disabled={count < 2}
+                    className="bg-white/12 flex items-center justify-center p-2 rounded-full cursor-pointer transition-colors enabled:hover:bg-white/20 disabled:opacity-50"
                   >
                     <ChevronLeft className="h-6 w-6" strokeWidth={1.5} />
                   </button>
                   <button
                     type="button"
                     aria-label="Növbəti rəy"
-                    className="bg-white/12 flex items-center justify-center p-2 rounded-full"
+                    onClick={goNext}
+                    disabled={count < 2}
+                    className="bg-white/12 flex items-center justify-center p-2 rounded-full cursor-pointer transition-colors enabled:hover:bg-white/20 disabled:opacity-50"
                   >
                     <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
                   </button>
@@ -79,7 +110,7 @@ export function TestimonialsSection() {
             <ClipReveal className="border border-[#e7e7ea] relative rounded-2xl w-full h-[200px] overflow-hidden lg:rounded-[20px] lg:h-[336px]">
               <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
                 <Image
-                  src={aboutTestimonialFeature}
+                  src={sectionTitle?.image ?? aboutTestimonialFeature}
                   alt=""
                   fill
                   className="object-cover"

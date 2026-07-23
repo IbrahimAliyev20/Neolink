@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import { ClipReveal } from "@/components/animation/clip-reveal";
@@ -5,33 +7,14 @@ import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
+import { useHowWeWork } from "@/services/how-we-work/queries";
+import { useSectionTitle } from "@/services/section-title/queries";
 import aboutProcess from "../../../public/images/about-process.jpg";
 
-const processSteps = [
-  {
-    key: "discover",
-    icon: "/icons/process-discover.svg",
-    title: "Kəşf və Analiz",
-    description:
-      "Biznes ehtiyaclarınızı və layihə məqsədlərinizi analiz edərək doğru strategiyanı müəyyənləşdiririk.",
-  },
-  {
-    key: "design",
-    icon: "/icons/process-design.svg",
-    title: "Dizayn və İnkişaf",
-    description:
-      "Müasir texnologiyalar və istifadəçi yönümlü yanaşma ilə etibarlı rəqəmsal həllər hazırlayırıq.",
-  },
-  {
-    key: "launch",
-    icon: "/icons/process-launch.svg",
-    title: "Tətbiq və Davamlı Dəstək",
-    description:
-      "Layihəni uğurla istifadəyə təqdim edir, davamlı texniki dəstək və inkişaf təmin edirik.",
-  },
-] as const;
-
 export function HowWeWorkSection() {
+  const { data: processSteps = [] } = useHowWeWork();
+  const { data: sectionTitle } = useSectionTitle("How We Work");
+
   return (
     <div className="flex flex-col items-start w-full">
       <Container className="flex flex-col items-center w-full">
@@ -40,19 +23,22 @@ export function HowWeWorkSection() {
             <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
               <SplitLines>
                 <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:text-[56px] lg:leading-[72px] lg:tracking-normal lg:max-w-[566px]">
-                  Necə işləyirik?
+                  {sectionTitle?.title ?? "Necə işləyirik?"}
                 </h2>
               </SplitLines>
               <Reveal y={44} blur={8} className="w-full">
                 <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq.
-                  Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün
-                  prosesi peşəkar komandamızla birlikdə idarə edirik.
+                  {sectionTitle?.description ??
+                    "Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq. Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün prosesi peşəkar komandamızla birlikdə idarə edirik."}
                 </p>
               </Reveal>
             </div>
-            {/* Each step slides in from the left, well behind the one above it. */}
+            {/* Each step slides in from the left, well behind the one above it.
+                Keyed by item count: Reveal captures its children on mount, so
+                it must remount once the async steps arrive or they stay at the
+                CSS hidden starting state. */}
             <Reveal
+              key={processSteps.length}
               x={-72}
               y={0}
               stagger={0.3}
@@ -60,10 +46,10 @@ export function HowWeWorkSection() {
               className="flex flex-col gap-4 items-start w-full lg:gap-5"
             >
               {processSteps.map((step) => (
-                <div key={step.key} className="flex gap-3 items-start w-full lg:gap-5">
+                <div key={step.title} className="flex gap-3 items-start w-full lg:gap-5">
                   <div className="bg-[#0d153a] flex items-center justify-center p-2.5 rounded-lg shrink-0 size-10 lg:rounded-xl lg:size-14">
                     <Image
-                      src={step.icon}
+                      src={step.image}
                       alt=""
                       width={32}
                       height={32}
@@ -85,7 +71,7 @@ export function HowWeWorkSection() {
           <ClipReveal className="border border-[#e7e7ea] relative rounded-2xl w-full h-[247px] overflow-hidden lg:rounded-[20px] lg:h-[474px] lg:flex-1 lg:min-w-0">
             <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
               <Image
-                src={aboutProcess}
+                src={sectionTitle?.image ?? aboutProcess}
                 alt=""
                 fill
                 className="object-cover"

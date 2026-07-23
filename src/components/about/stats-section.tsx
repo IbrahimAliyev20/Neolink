@@ -1,6 +1,9 @@
+"use client";
+
 import { CountUp } from "@/components/animation/count-up";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
+import { useStatistics } from "@/services/statistics/queries";
 
 function StatisticsCard({
   value,
@@ -35,6 +38,11 @@ function StatisticsCard({
 }
 
 export function StatsSection() {
+  // Same `/statistics` endpoint as the home hero cards.
+  const { data: stats = [] } = useStatistics();
+
+  if (stats.length === 0) return null;
+
   return (
     <Container className="flex flex-col items-center w-full">
       {/* Cards launch up one after another, out of focus until they land. */}
@@ -45,21 +53,14 @@ export function StatsSection() {
         stagger={0.22}
         className="flex flex-col gap-3 items-start w-full lg:flex-row lg:gap-5"
       >
-        <StatisticsCard
-          value="15+"
-          title="Sahə üzrə Ekspert"
-          description="Fərqli sahələrdə təcrübəli komandamızla layihələrinizi peşəkar şəkildə idarə edirik."
-        />
-        <StatisticsCard
-          value="40+"
-          title="Uğurla Tamamlanmış Layihə"
-          description="Müxtəlif miqyaslı layihələri uğurla həyata keçirərək dəyər yaradırıq."
-        />
-        <StatisticsCard
-          value="98%"
-          title="Müştəri Məmnuniyyəti"
-          description="Müştərilərimizin məmnuniyyəti bizim üçün ən vacib göstəricidir."
-        />
+        {stats.map((stat) => (
+          <StatisticsCard
+            key={stat.title}
+            value={stat.number}
+            title={stat.title}
+            description={stat.description}
+          />
+        ))}
       </Reveal>
     </Container>
   );
