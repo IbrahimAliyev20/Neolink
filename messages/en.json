@@ -3,6 +3,26 @@
         "title": "HR-vacancies",
         "description": "HR-vacancies"
     },
+    "hero": {
+        "title": "We Empower Your Business with the <accent>Digital</accent> Solutions of the Future",
+        "description": "Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend ullamcorper.",
+        "primaryCta": "Contact us",
+        "secondaryCta": "Our services",
+        "stats": {
+            "experts": {
+                "value": "15+",
+                "label": "Experts in the field"
+            },
+            "projects": {
+                "value": "40+",
+                "label": "Successfully Completed Projects"
+            },
+            "satisfaction": {
+                "value": "98%",
+                "label": "Customer Satisfaction"
+            }
+        }
+    },
     "navigation": {
         "jobs": "Jobs",
         "companies": "Companies",

@@ -1,10 +1,9 @@
-import { useTranslations } from "next-intl";
+import { HeroSection } from "@/components/home/hero-section";
 
 export default function Home() {
-  const t = useTranslations("home");
   return (
-    <div className="flex justify-center items-center text-[120px] font-bold min-h-screen">
-     YENI LAYIHƏ 
-    </div>
+    <main>
+      <HeroSection />
+    </main>
   );
 }
