@@ -52,20 +52,20 @@ export function ServicesRail({ count }: { count: number }) {
   return (
     <div
       ref={rootRef}
-      className="flex w-9 shrink-0 flex-col items-center gap-4 lg:w-[72px]"
+      className="flex w-9 shrink-0 flex-col items-center gap-4 lg:w-14 2xl:w-[72px]"
     >
       {Array.from({ length: count }, (_, index) => (
         <div key={index} className="flex flex-col items-center gap-4">
           <span
             data-rail-circle
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neo-teal text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-teal lg:h-[72px] lg:w-[72px] lg:text-[32px] lg:leading-[40px]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neo-teal text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-teal lg:h-14 lg:w-14 lg:text-[24px] lg:leading-[32px] 2xl:h-[72px] 2xl:w-[72px] 2xl:text-[32px] 2xl:leading-[40px]"
           >
             {String(index + 1).padStart(2, "0")}
           </span>
           <span
             data-rail-line
             aria-hidden
-            className="h-[75px] w-px rounded-[20px] bg-[#7bd3c6] lg:h-[97.75px]"
+            className="h-[75px] w-px rounded-[20px] bg-[#7bd3c6] lg:h-[85px] 2xl:h-[97.75px]"
           />
         </div>
       ))}

@@ -69,7 +69,9 @@ export function ServicesSection() {
             stagger={0.12}
             className="flex min-w-0 flex-col gap-4 text-center lg:sticky lg:top-[95px] lg:w-[39.31%] lg:self-start lg:gap-6 lg:text-left"
           >
-            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
+            {/* Full 56/72 only from 2xl, where the column is the Figma 566 wide;
+                between lg and 2xl the column is ~440 and 56px wraps badly. */}
+            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[40px] lg:leading-[52px] lg:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]">
               Biznesiniz üçün Güclü{" "}
               <span className="text-neo-teal">İT Ekosistemi</span>
             </h2>
@@ -96,10 +98,10 @@ export function ServicesSection() {
                 >
                   {/* Figma: Frame 2147224617 — column; gap 11 mobile / 16 desktop */}
                   <div className="flex min-w-0 flex-1 flex-col gap-[11px] lg:gap-4">
-                    <h3 className="text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-ink lg:text-[24px] lg:leading-[32px]">
+                    <h3 className="text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px] 2xl:text-[24px] 2xl:leading-[32px]">
                       {service.title}
                     </h3>
-                    <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[16px] lg:leading-[24px]">
+                    <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[14px] lg:leading-[22px] 2xl:text-[16px] 2xl:leading-[24px]">
                       {description}
                     </p>
                   </div>

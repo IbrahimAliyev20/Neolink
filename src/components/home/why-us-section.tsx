@@ -108,15 +108,17 @@ export function WhyUsSection() {
                   Korporativ Təcrübə, Kompakt Yanaşma
                 </h3>
                 {/* Figma: Frame 2147225009 — row, gap 36, space-between; mobile
-                    shows only the first two logos (161x31 and 130x58) */}
-                <div className="flex flex-wrap items-start justify-between gap-9">
+                    shows only the first two logos (161x31 and 130x58). No
+                    wrapping: below 1920 the logos shrink inside their boxes
+                    (`object-contain`) rather than dropping to a second line. */}
+                <div className="flex items-start justify-between gap-4 xl:gap-9">
                   <Image
                     src="/images/logo-1.png"
                     alt=""
                     width={200}
                     height={38}
                     aria-hidden
-                    className="h-[31px] w-[161px] object-contain opacity-70 lg:h-[38px] lg:w-[200px]"
+                    className="h-[31px] w-[161px] min-w-0 object-contain opacity-70 lg:h-[38px] lg:w-[200px]"
                   />
                   <Image
                     src="/images/logo-2.png"
@@ -124,7 +126,7 @@ export function WhyUsSection() {
                     width={161}
                     height={72}
                     aria-hidden
-                    className="h-[58px] w-[130px] object-contain opacity-[0.72] lg:h-[72px] lg:w-[161px]"
+                    className="h-[58px] w-[130px] min-w-0 object-contain opacity-[0.72] lg:h-[72px] lg:w-[161px]"
                   />
                   <Image
                     src="/images/logo-3.png"
@@ -132,7 +134,7 @@ export function WhyUsSection() {
                     width={209}
                     height={45}
                     aria-hidden
-                    className="hidden h-[45px] w-[209px] object-contain opacity-[0.72] lg:block"
+                    className="hidden h-[45px] w-[209px] min-w-0 object-contain opacity-[0.72] lg:block"
                   />
                 </div>
               </div>
