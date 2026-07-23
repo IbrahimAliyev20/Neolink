@@ -1,8 +1,13 @@
+"use client";
+
 import { Copyright } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 import Container from "@/components/shared/container";
+import { toExternalUrl } from "@/lib/utils";
+import { useSetting } from "@/services/setting/queries";
+import { useSocialMedia } from "@/services/social-media/queries";
 
 /** Figma: `Header-menu` items — 14/20 Regular, #8E929C, px 8 / py 4. */
 const menu = [
@@ -13,13 +18,6 @@ const menu = [
   { label: "Əlaqə", href: "/contact" },
 ];
 
-/** Figma: `Social media icons` — 44px circles, white, 1px #E7E7EA, gap 8. */
-const socials = [
-  { label: "Instagram", icon: "/icons/instagram.svg", href: "#" },
-  { label: "Facebook", icon: "/icons/facebook.svg", href: "#" },
-  { label: "LinkedIn", icon: "/icons/linkedin.svg", href: "#" },
-  { label: "X", icon: "/icons/twitter-x.svg", href: "#" },
-];
 
 /**
  * Figma desktop: `Footer` (1920x229, white) — column, gap 28, pt 48, pb 32.
@@ -30,6 +28,9 @@ const socials = [
  * divider, then the social icons above the copyright line.
  */
 export function Footer() {
+  const { data: setting } = useSetting();
+  const { data: socials = [] } = useSocialMedia();
+
   return (
     <footer className="w-full bg-white pt-9 pb-6 lg:pt-12 lg:pb-8">
       <Container>
@@ -38,7 +39,7 @@ export function Footer() {
           <div className="flex w-full flex-col items-center gap-6 lg:h-12 lg:flex-row lg:justify-between lg:gap-10">
             <Link href="/" aria-label="Neoline" className="shrink-0">
               <Image
-                src="/images/logo.svg"
+                src={setting?.sitefooterlogo ?? "/images/logo.svg"}
                 alt="Neoline"
                 width={130}
                 height={48}
@@ -82,9 +83,11 @@ export function Footer() {
             <div className="flex items-center gap-2">
               {socials.map((social) => (
                 <Link
-                  key={social.label}
-                  href={social.href}
-                  aria-label={social.label}
+                  key={social.link}
+                  href={toExternalUrl(social.link)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.link}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e7e7ea] bg-white p-[10px] transition-colors hover:bg-[#f7f7f7]"
                 >
                   <Image

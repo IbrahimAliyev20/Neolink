@@ -1,32 +1,39 @@
+"use client";
+
 import Image from "next/image";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
+import { useLogos } from "@/services/logo/queries";
+import type { LogoItem as ApiLogo } from "@/services/logo/api";
 
 /** Figma: `Partner` — 160x82 mobile / 195x100 desktop, r12, border #E7E7EA. */
-function PartnerCard() {
+function PartnerCard({ logo }: { logo: ApiLogo }) {
   return (
     <div className="bg-white border border-[#e7e7ea] flex h-[82px] items-center justify-center px-[34px] py-7 rounded-xl w-[160px] lg:h-[100px] lg:w-[195px]">
-      <div className="flex gap-2.5 items-center">
-        <Image
-          src="/icons/partner-triangle.svg"
-          alt=""
-          width={32}
-          height={32}
-          className="h-6 w-6 lg:h-8 lg:w-8"
-        />
-        <p className="font-semibold leading-7 text-[20px] tracking-[0.01em] text-[#3b4153] whitespace-nowrap lg:leading-9 lg:text-[28px]">
-          Neolit
-        </p>
-      </div>
+      <Image
+        src={logo.logo}
+        alt=""
+        width={195}
+        height={100}
+        className="h-full w-full object-contain"
+      />
     </div>
   );
 }
 
-function createPartnerLogos(): LogoItem[] {
-  return Array.from({ length: 6 }, (_, index) => ({
-    node: <PartnerCard key={index} />,
-    ariaLabel: "Neolit",
+/** The API may return only a few logos — repeat them until the row has at
+ *  least `MIN_ROW_ITEMS` cards so the marquee never looks empty. */
+const MIN_ROW_ITEMS = 8;
+
+function createPartnerLogos(logos: ApiLogo[]): LogoItem[] {
+  const repeats = Math.ceil(MIN_ROW_ITEMS / logos.length);
+  const filled = Array.from({ length: repeats }, () => logos).flat();
+
+  return filled.map((logo, index) => ({
+    node: <PartnerCard key={index} logo={logo} />,
+    href: logo.link,
+    ariaLabel: "Partnyor",
   }));
 }
 
@@ -39,6 +46,12 @@ const loopGap = { "--logoloop-gap": "var(--partner-gap)" } as React.CSSPropertie
  * heading (gap 12) above two partner rows (gap 10) of 160x82 cards.
  */
 export function EcosystemSection() {
+  const { data: logos = [] } = useLogos();
+
+  if (logos.length === 0) return null;
+
+  const partnerLogos = createPartnerLogos(logos);
+
   return (
     <div className="flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-15 lg:pb-[90px]">
       <Reveal
@@ -56,7 +69,7 @@ export function EcosystemSection() {
       </Reveal>
       <Container className="flex flex-col gap-[10px] items-center w-full [--partner-gap:10px] lg:gap-4 lg:[--partner-gap:16px]">
         <LogoLoop
-          logos={createPartnerLogos()}
+          logos={partnerLogos}
           direction="right"
           speed={40}
           style={loopGap}
@@ -65,7 +78,7 @@ export function EcosystemSection() {
           ariaLabel="Partnyor loqoları"
         />
         <LogoLoop
-          logos={createPartnerLogos()}
+          logos={partnerLogos}
           direction="left"
           speed={40}
           style={loopGap}

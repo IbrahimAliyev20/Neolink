@@ -8,18 +8,7 @@ import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
-
-const answer =
-  "Neoline UX/UI dizayn, korporativ veb saytlar, e-commerce platformaları, landing page-lər, fərdi veb həllər, texniki dəstək və rəqəmsal məhsulların hazırlanması üzrə xidmətlər təqdim edir.";
-
-const faqs = [
-  { question: "Neoline hansı xidmətləri təqdim edir?", answer },
-  { question: "Layihənin hazırlanması nə qədər vaxt aparır?", answer },
-  { question: "Layihəyə başlamazdan əvvəl qiymət necə müəyyən edilir?", answer },
-  { question: "Layihə müddətində prosesi izləyə bilərəm?", answer },
-  { question: "Layihə neçə mərhələdən ibarətdir?", answer },
-  { question: "Hansı texnologiyalardan istifadə edirsiniz?", answer },
-];
+import { useFaqs } from "@/services/faq/queries";
 
 const supportAvatars = [
   "/images/support-1.png",
@@ -34,6 +23,7 @@ const supportAvatars = [
  * gap: intro (gap 28) above the accordion, 44px avatars and a full-width button.
  */
 export function FaqSection() {
+  const { data: faqs = [] } = useFaqs();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const iconRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -100,7 +90,7 @@ export function FaqSection() {
     });
 
     return () => ctx.kill();
-  }, [openIndex]);
+  }, [openIndex, faqs.length]);
 
   return (
     <section className="w-full overflow-hidden bg-white py-9 lg:py-[90px]">

@@ -6,6 +6,8 @@ import { MagneticLink } from "@/components/animation/magnetic-link";
 import { StatCard } from "@/components/home/stat-card";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
+import { useHero } from "@/services/hero/queries";
+import { useStatistics } from "@/services/statistics/queries";
 
 /**
  * Figma desktop: `Frame 1` (1920x997, padding-x 240 → 1440 content column);
@@ -17,6 +19,8 @@ import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
  */
 export function HeroSection() {
   const rootRef = useRef<HTMLElement | null>(null);
+  const { data: hero, isLoading: heroLoading } = useHero();
+  const { data: stats } = useStatistics();
 
   // Opening timeline: the background settles while the copy, the buttons and
   // then the stat cards arrive. Elements start hidden via `[data-hero-anim]`
@@ -24,6 +28,10 @@ export function HeroSection() {
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
+
+    // Wait for the hero content query to settle so SplitText splits the final
+    // title instead of the fallback. Elements stay hidden via CSS meanwhile.
+    if (heroLoading) return;
 
     if (prefersReducedMotion()) {
       gsap.set(root.querySelectorAll("[data-hero-anim], .js-hero-stat"), {
@@ -79,7 +87,7 @@ export function HeroSection() {
     }, root);
 
     return () => ctx.kill();
-  }, []);
+  }, [heroLoading]);
 
   return (
     <section
@@ -87,7 +95,8 @@ export function HeroSection() {
       className="hero-scale relative w-full overflow-hidden bg-white"
     >
       <video
-        src="/bg-video/260601_0002_image_to_video_1812.mp4"
+        key={hero?.video ?? "fallback"}
+        src={hero?.video ?? "/bg-video/260601_0002_image_to_video_1812.mp4"}
         poster="/images/hero-bg.jpg"
         autoPlay
         muted
@@ -110,15 +119,21 @@ export function HeroSection() {
           <div className="flex w-full min-w-0 flex-col gap-5 lg:w-[48.33%] lg:gap-[calc(var(--hero-u)*72)]">
             {/* Figma: Frame 2 — mobile gap 20, desktop gap 24 */}
             <div className="flex flex-col gap-5 lg:gap-[calc(var(--hero-u)*24)]">
-              <h1 data-hero-anim data-hero-title className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[calc(var(--hero-u)*64)] lg:leading-[calc(var(--hero-u)*80)] lg:tracking-[0]">
-                Biznesinizi Gələcəyin{" "}
-                <span className="text-neo-teal">Rəqəmsal</span> Həlləri ilə
-                Gücləndiririk
-              </h1>
+              {/* The API title arrives as HTML (empty Figma metadata spans +
+                  `<font color>` for the teal word), so it is injected as-is. */}
+              <h1
+                data-hero-anim
+                data-hero-title
+                className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[calc(var(--hero-u)*64)] lg:leading-[calc(var(--hero-u)*80)] lg:tracking-[0]"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    hero?.title ??
+                    'Biznesinizi Gələcəyin <span style="color:#009999">Rəqəmsal</span> Həlləri ilə Gücləndiririk',
+                }}
+              />
               <p data-hero-anim className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px] lg:text-[calc(var(--hero-u)*20)] lg:leading-[calc(var(--hero-u)*28)]">
-                Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in
-                mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend
-                ullamcorper.
+                {hero?.description ??
+                  "Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend ullamcorper."}
               </p>
             </div>
 
@@ -144,22 +159,22 @@ export function HeroSection() {
           <div className="flex w-full min-w-0 gap-[7px] lg:w-[36.39%] lg:flex-col lg:items-end lg:gap-[calc(var(--hero-u)*10)]">
             <StatCard
               className="js-hero-stat order-1 flex-1 lg:order-none lg:w-full lg:flex-none"
-              value="15+"
-              label="Sahə Üzrə Ekspert"
+              value={stats?.[0]?.number ?? "15+"}
+              label={stats?.[0]?.title ?? "Sahə Üzrə Ekspert"}
             />
             {/* `contents` lets both cards join the mobile row; at lg this
                 becomes Figma's `Frame 5` (row, gap 10). */}
             <div className="contents lg:flex lg:w-full lg:items-center lg:justify-end lg:gap-[calc(var(--hero-u)*10)]">
               <StatCard
                 className="js-hero-stat order-3 flex-1 lg:order-none"
-                value="40+"
-                label="Uğurla Tamamlanmış Layihə"
+                value={stats?.[1]?.number ?? "40+"}
+                label={stats?.[1]?.title ?? "Uğurla Tamamlanmış Layihə"}
               />
               <StatCard
                 accent
                 className="js-hero-stat order-2 flex-1 lg:order-none"
-                value="98%"
-                label="Müştəri Məmnuniyyəti"
+                value={stats?.[2]?.number ?? "98%"}
+                label={stats?.[2]?.title ?? "Müştəri Məmnuniyyəti"}
               />
             </div>
           </div>

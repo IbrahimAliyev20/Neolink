@@ -3,7 +3,12 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { Check, ChevronDown } from "lucide-react";
+import { toast } from "sonner";
 import Container from "@/components/shared/container";
+import { toExternalUrl } from "@/lib/utils";
+import { useContactForm } from "@/services/contact/mutations";
+import { useContact } from "@/services/contact/queries";
+import { useSocialMedia } from "@/services/social-media/queries";
 
 const messageSubjects = [
   "Əməkdaşlıq təklifi",
@@ -13,35 +18,68 @@ const messageSubjects = [
   "Digər",
 ];
 
-const contactInfo = [
-  {
-    icon: "/icons/phone.svg",
-    label: "Telefon nömrəsi",
-    lines: ["+994 70 777 77 77", "+994 50 555 55 55"],
-  },
-  {
-    icon: "/icons/mail.svg",
-    label: "E-poçt",
-    lines: ["office@neoline.az", "support@neoline.az"],
-  },
-  {
-    icon: "/icons/map-pin.svg",
-    label: "Ünvan",
-    lines: ["Bakı şəhəri, Nərimanov ray. Əhməd R. küç."],
-  },
-];
-
-const socialLinks = [
-  { icon: "/icons/contact-instagram.svg", label: "Instagram" },
-  { icon: "/icons/contact-facebook.svg", label: "Facebook" },
-  { icon: "/icons/brand-linkedin.svg", label: "LinkedIn" },
-  { icon: "/icons/contact-twitter-x.svg", label: "X (Twitter)" },
-];
 
 export function HeroSection() {
+  const { data: contact } = useContact();
+  const { data: socialLinks = [] } = useSocialMedia();
   const [subject, setSubject] = useState<string | null>(null);
+
+  // Each block only shows the lines the API actually returned (phone_2 can be
+  // null); empty blocks are dropped entirely.
+  const contactInfo = [
+    {
+      icon: "/icons/phone.svg",
+      label: "Telefon nömrəsi",
+      lines: [contact?.phone_1, contact?.phone_2].filter(Boolean) as string[],
+    },
+    {
+      icon: "/icons/mail.svg",
+      label: "E-poçt",
+      lines: [contact?.email_1, contact?.email_2].filter(Boolean) as string[],
+    },
+    {
+      icon: "/icons/map-pin.svg",
+      label: "Ünvan",
+      lines: [contact?.address].filter(Boolean) as string[],
+    },
+  ].filter((item) => item.lines.length > 0);
   const [subjectOpen, setSubjectOpen] = useState(false);
   const subjectRef = useRef<HTMLDivElement | null>(null);
+  const { mutate: sendForm, isPending } = useContactForm();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isPending) return;
+
+    sendForm(
+      {
+        name,
+        email,
+        phone: `+994${phone}`,
+        title: subject ?? "",
+        note: message,
+      },
+      {
+        onSuccess: () => {
+          toast.success(
+            "Mesajınız göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq."
+          );
+          setName("");
+          setEmail("");
+          setPhone("");
+          setSubject(null);
+          setMessage("");
+        },
+        onError: () => {
+          toast.error("Mesaj göndərilə bilmədi. Yenidən cəhd edin.");
+        },
+      }
+    );
+  };
 
   // Close the subject dropdown on outside click or Escape.
   useEffect(() => {
@@ -111,14 +149,16 @@ export function HeroSection() {
               </p>
               <div className="flex gap-3 items-start">
                 {socialLinks.map((social) => (
-                  <button
-                    key={social.label}
-                    type="button"
-                    aria-label={social.label}
+                  <a
+                    key={social.link}
+                    href={toExternalUrl(social.link)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.link}
                     className="bg-[rgba(235,248,247,0.04)] border border-[#3abdaa] flex items-center justify-center rounded-full size-11"
                   >
                     <Image src={social.icon} alt="" width={24} height={24} />
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
@@ -137,7 +177,7 @@ export function HeroSection() {
             </div>
 
             <form
-              onSubmit={(event) => event.preventDefault()}
+              onSubmit={handleSubmit}
               className="flex flex-col gap-4 items-start w-full lg:gap-6"
             >
               <div className="flex flex-col gap-2 items-start w-full">
@@ -147,6 +187,9 @@ export function HeroSection() {
                 <input
                   id="contact-name"
                   type="text"
+                  required
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
                   placeholder="Ad və soyadınızı daxil edin"
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
                 />
@@ -159,6 +202,9 @@ export function HeroSection() {
                 <input
                   id="contact-email"
                   type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder="E-poçtunuu daxil edin"
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
                 />
@@ -176,6 +222,9 @@ export function HeroSection() {
                   <input
                     id="contact-phone"
                     type="tel"
+                    required
+                    value={phone}
+                    onChange={(event) => setPhone(event.target.value)}
                     placeholder="Telefon nömrənizi daxi edin"
                     className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                   />
@@ -248,6 +297,9 @@ export function HeroSection() {
                 <textarea
                   id="contact-message"
                   placeholder="Mesajınız"
+                  required
+                  value={message}
+                  onChange={(event) => setMessage(event.target.value)}
                   rows={4}
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] resize-none focus:outline-none focus:border-[#3abdaa]"
                 />
@@ -255,10 +307,11 @@ export function HeroSection() {
 
               <button
                 type="submit"
-                className="bg-[#9093a4] flex h-10 items-center justify-center px-6 py-2.5 rounded-full w-full lg:h-12 lg:py-3"
+                disabled={isPending}
+                className="bg-[#9093a4] flex h-10 items-center justify-center px-6 py-2.5 rounded-full w-full transition-colors enabled:hover:bg-[#3abdaa] disabled:opacity-70 lg:h-12 lg:py-3"
               >
                 <span className="font-medium text-[#e7e8eb] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  Göndər
+                  {isPending ? "Göndərilir..." : "Göndər"}
                 </span>
               </button>
             </form>

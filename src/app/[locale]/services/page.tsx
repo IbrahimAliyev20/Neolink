@@ -1,5 +1,10 @@
+import { getPageMetadata } from "@/services/meta-tag/api";
 import { HeroSection } from "@/components/services/hero-section";
 import { GridSection } from "@/components/services/grid-section";
+
+export function generateMetadata() {
+  return getPageMetadata("Service");
+}
 
 export default function ServicePage() {
   return (

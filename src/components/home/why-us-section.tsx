@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 
 import { CountUp } from "@/components/animation/count-up";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
+import { useWhyNeoline } from "@/services/why-neoline/queries";
 
 /**
  * Figma desktop: `Frame 2147224640` (1920x1100) — "Niyə Məhz Neoline?".
@@ -14,6 +17,18 @@ import Container from "@/components/shared/container";
  * the dark card is 224).
  */
 export function WhyUsSection() {
+  // API order: [0] "20+ Əməkdaşlıq" (stat card), [1] "İcradan Əvvəl
+  // Strategiya", [2] "“Tək Tərəfdaş” Üstünlüyü".
+  const { data: items } = useWhyNeoline();
+  const statItem = items?.[0];
+  const strategyItem = items?.[1];
+  const partnerItem = items?.[2];
+  // "20+ Əməkdaşlıq" → CountUp value + label.
+  const [statNumber, ...statLabelParts] = (
+    statItem?.title ?? "20+ Əməkdaşlıq"
+  ).split(" ");
+  const statLabel = statLabelParts.join(" ");
+
   return (
     <section className="w-full py-9 lg:py-[90px]">
       <Container className="flex flex-col gap-6 lg:gap-12">
@@ -43,13 +58,11 @@ export function WhyUsSection() {
             <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:flex-[880] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between gap-9 lg:gap-0">
                 <h3 className="max-w-[247px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
-                  “Tək Tərəfdaş” Üstünlüyü
+                  {partnerItem?.title ?? "“Tək Tərəfdaş” Üstünlüyü"}
                 </h3>
                 <p className="max-w-[824px] text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-                  Avadanlıq, proqram təminatı, bulud həlləri və təhlükəsizlik
-                  hamısı bir dam altında. Neoline yarananda bir sürücü
-                  tərəfindən ayrı-ayrı idarə olunan sistemlərini yenidən
-                  birləşdirdi.
+                  {partnerItem?.description ??
+                    "Avadanlıq, proqram təminatı, bulud həlləri və təhlükəsizlik hamısı bir dam altında. Neoline yarananda bir sürücü tərəfindən ayrı-ayrı idarə olunan sistemlərini yenidən birləşdirdi."}
                 </p>
               </div>
 
@@ -91,12 +104,11 @@ export function WhyUsSection() {
             <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
                 <h3 className="text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
-                  İcradan Əvvəl Strategiya
+                  {strategyItem?.title ?? "İcradan Əvvəl Strategiya"}
                 </h3>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
-                  Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir,
-                  riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı
-                  hazırlayırıq.
+                  {strategyItem?.description ??
+                    "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."}
                 </p>
               </div>
             </div>
@@ -146,16 +158,15 @@ export function WhyUsSection() {
                 {/* Figma: Frame 2147224998 — column; gap 12 mobile / 16 desktop */}
                 <div className="flex flex-col gap-3 lg:gap-4">
                   <span className="text-[32px] leading-[40px] font-semibold tracking-[0] text-neo-ink lg:text-[48px] lg:leading-[64px]">
-                    <CountUp value="20+" />
+                    <CountUp value={statNumber} />
                   </span>
                   <span className="text-[16px] leading-[24px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px]">
-                    Əməkdaşlıq
+                    {statLabel}
                   </span>
                 </div>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
-                  Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir,
-                  riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı
-                  hazırlayırıq.
+                  {statItem?.description ??
+                    "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."}
                 </p>
               </div>
             </div>

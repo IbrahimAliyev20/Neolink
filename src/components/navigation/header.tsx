@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 
 import Container from "@/components/shared/container";
+import { useSetting } from "@/services/setting/queries";
 
 /** Figma: `Header-menu` — 14/20, #3B4153, 2px gradient hover line below. */
 const menu = [
@@ -15,7 +16,7 @@ const menu = [
   { label: "Haqqımızda", href: "/about" },
   { label: "Xidmətlər", href: "/services", hasMenu: true },
   { label: "Layihələr", href: "/projects" },
-  { label: "Bloqlar", href: "/blogs" },
+  { label: "Bloqlar", href: "/blog" },
 ];
 
 /**
@@ -85,6 +86,7 @@ const hoverLine =
  * Hovering "Xidmətlər" opens `Service-list-2`, the full-width services panel.
  */
 export function Header() {
+  const { data: setting } = useSetting();
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(false);
   // Kept mounted through the closing tween so the panel can animate out too.
@@ -241,7 +243,7 @@ export function Header() {
         <div className="flex h-[66px] w-full items-center justify-between gap-4 lg:h-24 lg:gap-[151px]">
           <Link href="/" aria-label="Neoline" className="shrink-0">
             <Image
-              src="/images/logo.svg"
+              src={setting?.sitelogo ?? "/images/logo.svg"}
               alt="Neoline"
               width={130}
               height={48}

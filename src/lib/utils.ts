@@ -5,6 +5,12 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+/** API links arrive without a protocol ("instagram.com") — make them absolute
+ *  so Next's Link doesn't treat them as relative paths. */
+export function toExternalUrl(link: string): string {
+  return link.startsWith('http') ? link : `https://${link}`
+}
+
 export function getCurrentLocale(): string {
   // Check if we're in browser environment
   if (typeof window !== 'undefined') {

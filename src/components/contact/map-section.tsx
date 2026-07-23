@@ -1,8 +1,14 @@
-import Container from "@/components/shared/container";
+"use client";
 
-const officeAddress = "Bakı şəhəri, Nərimanov rayonu, Əhməd Rəcəbli küçəsi";
+import Container from "@/components/shared/container";
+import { useContact } from "@/services/contact/queries";
+
+const fallbackAddress = "Bakı şəhəri, Nərimanov rayonu, Əhməd Rəcəbli küçəsi";
 
 export function MapSection() {
+  const { data: contact } = useContact();
+  const officeAddress = contact?.address ?? fallbackAddress;
+
   return (
     <div className="bg-[#f7f7f7] flex flex-col items-center w-full">
       <Container className="flex flex-col items-center w-full pt-8 pb-8 lg:pt-12 lg:pb-[90px]">

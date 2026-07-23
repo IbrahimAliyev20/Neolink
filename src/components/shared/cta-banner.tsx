@@ -1,9 +1,12 @@
+"use client";
+
 import Image from "next/image";
 
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
+import { useBanner } from "@/services/banner/queries";
 
 /**
  * Figma desktop: `Banner` (1920x490) — site-wide CTA strip rendered on every
@@ -13,6 +16,8 @@ import Container from "@/components/shared/container";
  * and two half-width 40px buttons in one row.
  */
 export function CtaBanner() {
+  const { data: banner } = useBanner();
+
   return (
     <section className="relative w-full overflow-hidden">
       <Parallax
@@ -37,13 +42,19 @@ export function CtaBanner() {
         >
           {/* Figma: Frame 16 — column; gap 20 mobile / 24 desktop */}
           <div className="flex flex-col gap-5 md:gap-4 2xl:gap-6">
-            <h2 className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]">
-              Gələcəyin Rəqəmsal Həllərini{" "}
-              <span className="text-neo-teal">Bu Gün</span> Qurun!
-            </h2>
+            {/* The API title arrives as HTML (with Figma metadata spans that
+                render nothing), so it is injected as-is. */}
+            <h2
+              className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]"
+              dangerouslySetInnerHTML={{
+                __html:
+                  banner?.title ??
+                  'Gələcəyin Rəqəmsal Həllərini <span style="color:#009999">Bu Gün</span> Qurun!',
+              }}
+            />
             <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-[#e7e7ea] md:text-[16px] md:leading-[24px] 2xl:w-[631px]">
-              Biznes məqsədlərinizə uyğun innovativ proqram təminatı və rəqəmsal
-              məhsullar hazırlamaq üçün ilk addımı birlikdə ataq.
+              {banner?.description ??
+                "Biznes məqsədlərinizə uyğun innovativ proqram təminatı və rəqəmsal məhsullar hazırlamaq üçün ilk addımı birlikdə ataq."}
             </p>
           </div>
 
