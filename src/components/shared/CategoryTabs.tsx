@@ -1,15 +1,15 @@
-import { blogCategories, type BlogCategory } from "@/lib/data/blogs";
-
-export function CategoryTabs({
+export function CategoryTabs<T extends string>({
+  categories,
   activeCategory,
   onChange,
 }: {
-  activeCategory: BlogCategory;
-  onChange: (category: BlogCategory) => void;
+  categories: readonly T[];
+  activeCategory: T;
+  onChange: (category: T) => void;
 }) {
   return (
     <div className="flex gap-3 items-start flex-wrap">
-      {blogCategories.map((category) => {
+      {categories.map((category) => {
         const isActive = category === activeCategory;
         return (
           <button

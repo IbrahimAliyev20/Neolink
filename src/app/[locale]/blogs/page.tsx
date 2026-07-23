@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Container from "@/components/shared/container";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
 import { BlogCard } from "@/components/blog/BlogCard";
-import { CategoryTabs } from "@/components/blog/CategoryTabs";
+import { CategoryTabs } from "@/components/shared/CategoryTabs";
 import { blogCategories, blogPosts, type BlogCategory } from "@/lib/data/blogs";
 
 function getFeaturedPost(category: BlogCategory) {
@@ -43,7 +43,11 @@ export default function BlogPage() {
       </Container>
 
       <Container className="flex flex-col gap-6 items-start w-full">
-        <CategoryTabs activeCategory={activeCategory} onChange={setActiveCategory} />
+        <CategoryTabs
+          categories={blogCategories}
+          activeCategory={activeCategory}
+          onChange={setActiveCategory}
+        />
 
         {gridPosts.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
