@@ -37,8 +37,12 @@ function StatisticsCard({
 export function StatsSection() {
   return (
     <Container className="flex flex-col items-center w-full">
+      {/* Cards launch up one after another, out of focus until they land. */}
       <Reveal
-        stagger={0.1}
+        y={72}
+        scale={0.88}
+        blur={10}
+        stagger={0.22}
         className="flex flex-col gap-3 items-start w-full lg:flex-row lg:gap-5"
       >
         <StatisticsCard

@@ -1,7 +1,9 @@
 import Image from "next/image";
 
+import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 import aboutProcess from "../../../public/images/about-process.jpg";
 
@@ -35,21 +37,26 @@ export function HowWeWorkSection() {
       <Container className="flex flex-col items-center w-full">
         <div className="flex flex-col gap-4 items-center py-8 w-full lg:flex-row lg:gap-[102px] lg:py-[90px]">
           <div className="flex flex-col gap-6 items-start w-full lg:gap-12 lg:flex-1 lg:min-w-0">
+            <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
+              <SplitLines>
+                <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:text-[56px] lg:leading-[72px] lg:tracking-normal lg:max-w-[566px]">
+                  Necə işləyirik?
+                </h2>
+              </SplitLines>
+              <Reveal y={44} blur={8} className="w-full">
+                <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
+                  Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq.
+                  Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün
+                  prosesi peşəkar komandamızla birlikdə idarə edirik.
+                </p>
+              </Reveal>
+            </div>
+            {/* Each step slides in from the left, well behind the one above it. */}
             <Reveal
-              stagger={0.12}
-              className="flex flex-col gap-4 items-start w-full lg:gap-6"
-            >
-              <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:text-[56px] lg:leading-[72px] lg:tracking-normal lg:max-w-[566px]">
-                Necə işləyirik?
-              </h2>
-              <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq.
-                Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün
-                prosesi peşəkar komandamızla birlikdə idarə edirik.
-              </p>
-            </Reveal>
-            <Reveal
-              stagger={0.12}
+              x={-72}
+              y={0}
+              stagger={0.3}
+              end="top 45%"
               className="flex flex-col gap-4 items-start w-full lg:gap-5"
             >
               {processSteps.map((step) => (
@@ -75,7 +82,7 @@ export function HowWeWorkSection() {
               ))}
             </Reveal>
           </div>
-          <div className="border border-[#e7e7ea] relative rounded-2xl w-full h-[247px] overflow-hidden lg:rounded-[20px] lg:h-[474px] lg:flex-1 lg:min-w-0">
+          <ClipReveal className="border border-[#e7e7ea] relative rounded-2xl w-full h-[247px] overflow-hidden lg:rounded-[20px] lg:h-[474px] lg:flex-1 lg:min-w-0">
             <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
               <Image
                 src={aboutProcess}
@@ -85,7 +92,7 @@ export function HowWeWorkSection() {
                 sizes="(min-width: 1024px) 50vw, 100vw"
               />
             </Parallax>
-          </div>
+          </ClipReveal>
         </div>
       </Container>
     </div>

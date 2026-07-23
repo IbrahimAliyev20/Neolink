@@ -8,8 +8,14 @@ type RevealProps = {
   children: ReactNode;
   /** Applied to the wrapper, so this can replace an existing layout div. */
   className?: string;
-  /** Distance in px the element travels into place. */
+  /** Distance in px the element travels vertically into place. */
   y?: number;
+  /** Distance in px it travels horizontally; negative comes from the left. */
+  x?: number;
+  /** Starting scale, eased back to 1. */
+  scale?: number;
+  /** Starting blur in px, eased back to 0. */
+  blur?: number;
   /** When set, the direct children animate one after another. */
   stagger?: number;
   /** Scroll position where the entrance begins. */
@@ -32,6 +38,9 @@ export function Reveal({
   children,
   className,
   y = 32,
+  x = 0,
+  scale = 1,
+  blur = 0,
   stagger,
   start = "top 88%",
   end = "top 62%",
@@ -48,17 +57,26 @@ export function Reveal({
     if (targets.length === 0) return;
 
     if (prefersReducedMotion()) {
-      gsap.set(targets, { opacity: 1, y: 0 });
+      gsap.set(targets, { opacity: 1, x: 0, y: 0, scale: 1, filter: "none" });
       return;
     }
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
         targets,
-        { opacity: 0, y },
+        {
+          opacity: 0,
+          y,
+          x,
+          scale,
+          ...(blur ? { filter: `blur(${blur}px)` } : {}),
+        },
         {
           opacity: 1,
           y: 0,
+          x: 0,
+          scale: 1,
+          ...(blur ? { filter: "blur(0px)" } : {}),
           ease: "none",
           stagger: stagger ?? 0,
           scrollTrigger: {
@@ -73,7 +91,7 @@ export function Reveal({
     }, el);
 
     return () => ctx.kill();
-  }, [y, stagger, start, end]);
+  }, [y, x, scale, blur, stagger, start, end]);
 
   return (
     <div ref={ref} data-reveal className={className}>

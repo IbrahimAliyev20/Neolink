@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 
 const openVacancies = [
@@ -94,7 +95,9 @@ export function JoinUsSection() {
     <div className="flex flex-col items-center justify-center pb-9 w-full lg:pb-[90px]">
       <Container className="flex flex-col lg:flex-row gap-5 lg:gap-16 items-start w-full">
         <Reveal
-          stagger={0.12}
+          y={56}
+          scale={0.92}
+          stagger={0.22}
           className="flex flex-col gap-3 items-start flex-[576] min-w-0 w-full"
         >
           <div className="-rotate-[6.89deg] bg-[#0d153a] flex gap-2 items-center justify-center px-3 py-2 rounded-full lg:gap-2.5 lg:px-4 lg:py-2.5">
@@ -105,9 +108,11 @@ export function JoinUsSection() {
           </div>
           <div className="flex flex-col gap-4 items-start w-full lg:gap-9">
             <div className="flex flex-col gap-3 items-start justify-center w-full lg:gap-6">
-              <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-                Neoline Ailəsinə Qoşulun
-              </h2>
+              <SplitLines>
+                <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
+                  Neoline Ailəsinə Qoşulun
+                </h2>
+              </SplitLines>
               <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                 Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud
                 sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın
@@ -128,8 +133,13 @@ export function JoinUsSection() {
           </div>
         </Reveal>
 
+        {/* Vacancies deal in from the right, one card at a time. */}
         <Reveal
-          stagger={0.12}
+          x={80}
+          y={0}
+          scale={0.96}
+          stagger={0.26}
+          end="top 45%"
           className="flex flex-col gap-3 lg:gap-3.5 items-start flex-[800] min-w-0 w-full"
         >
           {openVacancies.map((vacancy) => (

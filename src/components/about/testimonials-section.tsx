@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 import aboutTestimonialFeature from "../../../public/images/about-testimonial-feature.jpg";
 import aboutContactArt from "../../../public/images/about-contact-art.png";
@@ -10,22 +12,30 @@ export function TestimonialsSection() {
   return (
     <div className="flex flex-col items-center w-full py-9 lg:pt-0 lg:pb-[90px]">
       <Container className="flex flex-col items-center gap-6 w-full lg:gap-11">
-        <Reveal
-          stagger={0.12}
-          className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10"
-        >
-          <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[424px] lg:shrink-0">
-            Etibarla Qurulan <span className="text-[#3abdaa]">Əməkdaşlıqlar!</span>
-          </h2>
-          <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px] lg:max-w-[656px] lg:flex-1 lg:min-w-0">
-            Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər
-            dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı
-            inkişafımızın ən dəyərli göstəricisidir.
-          </p>
-        </Reveal>
+        <div className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+          <SplitLines>
+            <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[424px] lg:shrink-0">
+              Etibarla Qurulan <span className="text-[#3abdaa]">Əməkdaşlıqlar!</span>
+            </h2>
+          </SplitLines>
+          <Reveal
+            y={44}
+            blur={8}
+            className="w-full lg:max-w-[656px] lg:flex-1 lg:min-w-0"
+          >
+            <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
+              Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər
+              dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı
+              inkişafımızın ən dəyərli göstəricisidir.
+            </p>
+          </Reveal>
+        </div>
 
+        {/* Quote column rises, the contact card swings in from the right. */}
         <Reveal
-          stagger={0.12}
+          y={80}
+          scale={0.94}
+          stagger={0.28}
           className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start w-full"
         >
           <div className="flex flex-col gap-4 lg:gap-5 items-start flex-[858] min-w-0 w-full">
@@ -66,7 +76,7 @@ export function TestimonialsSection() {
                 </div>
               </div>
             </div>
-            <div className="border border-[#e7e7ea] relative rounded-2xl w-full h-[200px] overflow-hidden lg:rounded-[20px] lg:h-[336px]">
+            <ClipReveal className="border border-[#e7e7ea] relative rounded-2xl w-full h-[200px] overflow-hidden lg:rounded-[20px] lg:h-[336px]">
               <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
                 <Image
                   src={aboutTestimonialFeature}
@@ -76,7 +86,7 @@ export function TestimonialsSection() {
                   sizes="(min-width: 1024px) 60vw, 100vw"
                 />
               </Parallax>
-            </div>
+            </ClipReveal>
           </div>
 
           <div className="bg-white border border-[#e7e7ea] rounded-2xl flex-[558] min-w-0 w-full h-[425px] overflow-hidden flex flex-col lg:rounded-[20px] lg:h-[692px]">

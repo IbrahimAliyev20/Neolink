@@ -207,6 +207,7 @@
    timeline. GSAP takes over on mount; without this the content would paint in
    its final position first and then jump back. */
 [data-reveal] > *,
+[data-split-lines] > *,
 [data-hero-anim],
 .js-hero-stat {
   opacity: 0;
