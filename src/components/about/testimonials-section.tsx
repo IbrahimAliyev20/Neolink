@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import Container from "@/components/shared/container";
 import aboutTestimonialFeature from "../../../public/images/about-testimonial-feature.jpg";
 import aboutContactArt from "../../../public/images/about-contact-art.png";
@@ -45,14 +46,14 @@ export function TestimonialsSection() {
                     aria-label="Əvvəlki rəy"
                     className="bg-white/12 flex items-center justify-center p-2 rounded-full"
                   >
-                    <Image src="/icons/chevron-left.svg" alt="" width={24} height={24} />
+                    <ChevronLeft className="h-6 w-6" strokeWidth={1.5} />
                   </button>
                   <button
                     type="button"
                     aria-label="Növbəti rəy"
                     className="bg-white/12 flex items-center justify-center p-2 rounded-full"
                   >
-                    <Image src="/icons/chevron-right.svg" alt="" width={24} height={24} />
+                    <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
                   </button>
                 </div>
               </div>
@@ -94,7 +95,7 @@ export function TestimonialsSection() {
                 <span className="font-medium text-[#3abdaa] text-base leading-6 tracking-[0.16px]">
                   Gəlin başlayaq
                 </span>
-                <Image src="/icons/arrow-up-right.svg" alt="" width={24} height={24} />
+                <ArrowUpRight className="h-6 w-6" strokeWidth={1.5} />
               </button>
             </div>
           </div>

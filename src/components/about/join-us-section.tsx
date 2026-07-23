@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/shared/container";
 
 const openVacancies = [
@@ -80,7 +81,7 @@ function VacancyCard({
         <span className="font-medium text-white text-sm leading-5 tracking-[0.14px] whitespace-nowrap">
           Ətraflı bax
         </span>
-        <Image src="/icons/arrow-up-right-white.svg" alt="" width={20} height={20} />
+        <ArrowUpRight className="h-5 w-5 text-white" strokeWidth={1.5} />
       </button>
     </div>
   );

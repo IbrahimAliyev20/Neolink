@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import Container from "@/components/shared/container";
 import type { Project } from "@/lib/data/projects";
 
@@ -24,7 +25,7 @@ export function HeroDetailSection({ project }: { project: Project }) {
             <Link href="/projects" className="text-[#b3b5bc] text-xs">
               Layihələr
             </Link>
-            <Image src="/icons/breadcrumb-divider.svg" alt="" width={16} height={16} />
+            <ChevronRight className="h-4 w-4 text-[#b3b5bc]" strokeWidth={1.5} />
             <p className="font-medium text-white text-xs truncate max-w-[400px]">
               {project.title}
             </p>

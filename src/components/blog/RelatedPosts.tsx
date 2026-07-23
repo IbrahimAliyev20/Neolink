@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/shared/container";
 import { blogPosts } from "@/lib/data/blogs";
@@ -33,7 +33,7 @@ export function RelatedPosts({ currentSlug }: { currentSlug: string }) {
 
       <Link href="/blogs" className="flex gap-1.5 items-center">
         <span className="font-medium text-[#20201e] text-base leading-6">Hamısına bax</span>
-        <Image src="/icons/chevron-right-black.svg" alt="" width={24} height={24} />
+        <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
       </Link>
     </div>
   );

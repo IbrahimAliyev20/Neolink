@@ -1,8 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/shared/container";
+import { OfferModal } from "@/components/shared/OfferModal";
 import type { ServiceDetail } from "@/lib/data/service-details";
 
 export function HeroDetailSection({ service }: { service: ServiceDetail }) {
+  const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
+
   return (
     <Container className="flex flex-col items-start w-full">
       <div className="flex flex-col lg:flex-row gap-16 lg:gap-[132px] items-center w-full">
@@ -18,19 +25,13 @@ export function HeroDetailSection({ service }: { service: ServiceDetail }) {
           <div className="flex gap-5 items-start w-full">
             <button
               type="button"
-              className="bg-[#3abdaa] flex flex-1 gap-4 h-12 items-center justify-center px-6 py-3 rounded-full"
+              onClick={() => setIsOfferModalOpen(true)}
+              className="bg-[#3abdaa] flex gap-2 h-12 items-center justify-center px-16 py-3 rounded-full"
             >
               <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
                 Təklif al
               </span>
-            </button>
-            <button
-              type="button"
-              className="bg-white flex flex-1 gap-4 h-12 items-center justify-center px-6 py-3 rounded-full"
-            >
-              <span className="font-medium text-[#040711] text-base leading-6 tracking-[0.16px]">
-                Layihələrimiz
-              </span>
+              <ArrowUpRight className="h-5 w-5 text-white" strokeWidth={1.5} />
             </button>
           </div>
         </div>
@@ -45,6 +46,8 @@ export function HeroDetailSection({ service }: { service: ServiceDetail }) {
           />
         </div>
       </div>
+
+      <OfferModal open={isOfferModalOpen} onClose={() => setIsOfferModalOpen(false)} />
     </Container>
   );
 }

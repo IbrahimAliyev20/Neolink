@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ChevronDown } from "lucide-react";
 import Container from "@/components/shared/container";
 
 const contactInfo = [
@@ -32,8 +33,8 @@ export function HeroSection() {
   return (
     <div className="relative w-full bg-[#f7f7f7]">
       <div className="absolute inset-0 bg-[#0d153a] lg:bottom-20 lg:rounded-bl-[120px]" />
-      <Container className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start w-full py-16 lg:py-24">
-        <div className="flex flex-col gap-8 items-start flex-[574] min-w-0 w-full">
+      <Container className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start w-full  lg:pt-24">
+        <div className=" flex flex-col gap-8 items-start flex-[574] min-w-0 w-full">
           <div className="flex flex-col gap-6 items-start w-full">
             <h1 className="font-semibold text-white text-[48px] leading-[64px]">
               Bizimlə Əlaqə
@@ -105,74 +106,69 @@ export function HeroSection() {
               onSubmit={(event) => event.preventDefault()}
               className="flex flex-col gap-6 items-start w-full"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-                <div className="flex flex-col gap-2 items-start w-full">
-                  <label htmlFor="contact-name" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                    Ad, soyad
-                  </label>
+              <div className="flex flex-col gap-2 items-start w-full">
+                <label htmlFor="contact-name" className="text-[#040711] text-sm tracking-[0.14px] px-1">
+                  Ad, soyad
+                </label>
+                <input
+                  id="contact-name"
+                  type="text"
+                  placeholder="Ad və soyadınızı daxil edin"
+                  className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2 items-start w-full">
+                <label htmlFor="contact-email" className="text-[#040711] text-sm tracking-[0.14px] px-1">
+                  E-poçt
+                </label>
+                <input
+                  id="contact-email"
+                  type="email"
+                  placeholder="E-poçtunuu daxil edin"
+                  className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
+                />
+              </div>
+
+              <div className="flex flex-col gap-2 items-start w-full">
+                <label htmlFor="contact-phone" className="text-[#040711] text-sm tracking-[0.14px] px-1">
+                  Telefon nömrəsi
+                </label>
+                <div className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl flex items-center gap-2 px-4 py-3.5 w-full focus-within:border-[#3abdaa]">
+                  <span className="flex items-center gap-1 text-[#77777b] text-sm shrink-0">
+                    +994
+                    <ChevronDown className="h-4 w-4" strokeWidth={1.5} />
+                  </span>
                   <input
-                    id="contact-name"
-                    type="text"
-                    placeholder="Ad və soyadınızı daxil edin"
-                    className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f]"
-                  />
-                </div>
-                <div className="flex flex-col gap-2 items-start w-full">
-                  <label htmlFor="contact-email" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                    E-poçt
-                  </label>
-                  <input
-                    id="contact-email"
-                    type="email"
-                    placeholder="E-poçtunuu daxil edin"
-                    className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f]"
+                    id="contact-phone"
+                    type="tel"
+                    placeholder="Telefon nömrənizi daxi edin"
+                    className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
-                <div className="flex flex-col gap-2 items-start w-full">
-                  <label htmlFor="contact-phone" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                    Telefon nömrəsi
-                  </label>
-                  <div className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl flex items-center gap-2 px-4 py-3.5 w-full">
-                    <span className="flex items-center gap-1 text-[#77777b] text-sm shrink-0">
-                      +994
-                      <Image src="/icons/chevron-down-small.svg" alt="" width={16} height={16} />
-                    </span>
-                    <input
-                      id="contact-phone"
-                      type="tel"
-                      placeholder="Telefon nömrənizi daxi edin"
-                      className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
-                    />
-                  </div>
-                </div>
-                <div className="flex flex-col gap-2 items-start w-full">
-                  <label htmlFor="contact-subject" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                    Mesaj başlığı
-                  </label>
-                  <div className="relative w-full">
-                    <select
-                      id="contact-subject"
-                      defaultValue=""
-                      className="appearance-none bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#5b606f] focus:outline-none"
-                    >
-                      <option value="" disabled>
-                        Mesaj başlığı
-                      </option>
-                      <option value="teklif">Təklif almaq istəyirəm</option>
-                      <option value="emekdasliq">Əməkdaşlıq təklifi</option>
-                      <option value="diger">Digər</option>
-                    </select>
-                    <Image
-                      src="/icons/chevron-down.svg"
-                      alt=""
-                      width={20}
-                      height={20}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"
-                    />
-                  </div>
+              <div className="flex flex-col gap-2 items-start w-full">
+                <label htmlFor="contact-subject" className="text-[#040711] text-sm tracking-[0.14px] px-1">
+                  Mesaj başlığı
+                </label>
+                <div className="relative w-full">
+                  <select
+                    id="contact-subject"
+                    defaultValue=""
+                    className="appearance-none bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
+                  >
+                    <option value="" disabled>
+                      Mesaj başlığı
+                    </option>
+                    <option value="teklif">Təklif almaq istəyirəm</option>
+                    <option value="emekdasliq">Əməkdaşlıq təklifi</option>
+                    <option value="diger">Digər</option>
+                  </select>
+                  <ChevronDown
+                    className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none h-5 w-5 text-[#20201e]"
+                    strokeWidth={1.5}
+                  />
                 </div>
               </div>
 
@@ -184,7 +180,7 @@ export function HeroSection() {
                   id="contact-message"
                   placeholder="Mesajınız"
                   rows={4}
-                  className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] resize-none"
+                  className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] resize-none focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
 
