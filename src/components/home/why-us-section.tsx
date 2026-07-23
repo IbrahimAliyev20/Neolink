@@ -3,36 +3,39 @@ import Image from "next/image";
 import Container from "@/components/shared/container";
 
 /**
- * Figma: `Frame 2147224640` (1920x1100) — "Niyə Məhz Neoline?".
+ * Figma desktop: `Frame 2147224640` (1920x1100) — "Niyə Məhz Neoline?".
  * Column, py 90, gap 48: header `Frame 16` (788 wide) + `Home-statistics`
  * (1440 content column, two 360-tall rows with 24 gaps).
+ * Figma mobile: `Frame 17` (375x1320) — py 36 / px 16, column gap 24; centred
+ * header (gap 12) + five stacked 343-wide cards (gap 12, r16, p16, 216 tall;
+ * the dark card is 224).
  */
 export function WhyUsSection() {
   return (
-    <section className="w-full py-[60px] lg:py-[90px]">
-      <Container className="flex flex-col gap-10 lg:gap-12 2xl:px-0">
-        {/* Figma: Frame 16 — column, gap 24, width 788, centered */}
-        <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-4 lg:gap-6">
-          <h2 className="text-center text-[32px] leading-[44px] font-semibold tracking-[0.01em] text-[#1c1c1e] lg:text-[40px] lg:leading-[56px]">
+    <section className="w-full py-9 lg:py-[90px]">
+      <Container className="flex flex-col gap-6 lg:gap-12 2xl:px-0">
+        {/* Figma: Frame 16 — column; gap 12 mobile / 24 desktop, width 788, centered */}
+        <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-3 lg:gap-6">
+          <h2 className="text-center text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
             Niyə Məhz Neoline?
           </h2>
-          <p className="max-w-[756px] text-center text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
+          <p className="max-w-[756px] text-center text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
             2022-ci ildə qurulan Neoline Technology, çoxsaylı İT podratçıların
             xaosunu tək məsuliyyətli tərəfdaşla əvəz etmək üçün yaradıb.
           </p>
         </div>
 
-        {/* Figma: Frame 2147225006 — column, gap 24 */}
-        <div className="flex flex-col gap-6">
-          {/* Figma: Frame 2147225004 — row, gap 24, height 360 */}
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
-            {/* Figma: Statistics-card-1 — 880x360, r20, border #E7E7EA, p 32/28 */}
-            <div className="relative flex min-h-[360px] w-full min-w-0 flex-col overflow-hidden rounded-[20px] border border-[#e7e7ea] bg-white px-7 py-8 lg:w-[61.1%]">
-              <div className="flex h-full flex-col justify-between">
-                <h3 className="max-w-[465px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[40px] lg:leading-[56px]">
+        {/* Figma: Frame 2147225006 — column; gap 12 mobile / 24 desktop */}
+        <div className="flex flex-col gap-3 lg:gap-6">
+          {/* Figma: Frame 2147225004 — column gap 12 mobile; row gap 24, height 360 desktop */}
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6">
+            {/* Figma: Statistics-card-1 — 343x216 r16 p16 mobile / 880x360 r20 p 32/28 desktop */}
+            <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:w-[61.1%] lg:rounded-[20px] lg:px-7 lg:py-8">
+              <div className="flex h-full flex-col justify-between gap-9 lg:gap-0">
+                <h3 className="max-w-[247px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   “Tək Tərəfdaş” Üstünlüyü
                 </h3>
-                <p className="max-w-[824px] text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
+                <p className="max-w-[824px] text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
                   Avadanlıq, proqram təminatı, bulud həlləri və təhlükəsizlik
                   hamısı bir dam altında. Neoline yarananda bir sürücü
                   tərəfindən ayrı-ayrı idarə olunan sistemlərini yenidən
@@ -40,19 +43,21 @@ export function WhyUsSection() {
                 </p>
               </div>
 
-              {/* Figma: rotated 46.3° decorative render, 395.29x263.53 at (502, 167.78) */}
+              {/* Figma: rotated decorative render — desktop 395.29x263.53 at
+                  (502, 167.78); mobile 208x138.68 at (172, 110) inside the
+                  343x216 card, so it is placed proportionally below lg. */}
               <Image
                 src="/images/why-partner-visual.png"
                 alt=""
                 width={396}
                 height={264}
                 aria-hidden
-                className="pointer-events-none absolute -top-[100.78px] left-[532px] hidden  max-w-none  select-none 2xl:block"
+                className="pointer-events-none absolute -top-[20%] left-[50%] h-auto w-[60.6%] max-w-none select-none lg:hidden 2xl:-top-[100.78px] 2xl:left-[532px] 2xl:block 2xl:w-[396px]"
               />
             </div>
 
-            {/* Figma: Frame 2147225004 — 537x360 image card, r20 */}
-            <div className="relative h-[240px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:w-[37.24%]">
+            {/* Figma: Frame 2147225004 — 343x216 mobile / 537x360 desktop image card, r20 */}
+            <div className="relative h-[216px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:w-[37.24%]">
               <Image
                 src="/images/why-photo-card.png"
                 alt=""
@@ -63,12 +68,12 @@ export function WhyUsSection() {
             </div>
           </div>
 
-          {/* Figma: Frame 2147225005 — row, gap 24, height 360 */}
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
-            {/* Figma: Statistics-card-2 — 340x360, r20, p 24 */}
-            <div className="flex min-h-[360px] w-full min-w-0 flex-col rounded-[20px] bg-white p-6 lg:w-[23.61%]">
+          {/* Figma: Frame 2147225005 — column gap 12 mobile; row gap 24, height 360 desktop */}
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6">
+            {/* Figma: Statistics-card-2 — 343x216 r16 p16 mobile / 340x360 r20 p24 desktop */}
+            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:w-[23.61%] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
-                <h3 className="text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[40px] lg:leading-[56px]">
+                <h3 className="text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   İcradan Əvvəl Strategiya
                 </h3>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -79,13 +84,14 @@ export function WhyUsSection() {
               </div>
             </div>
 
-            {/* Figma: Statistics-card-3 — 712x360, #0D153A, r20, p 32/28 */}
-            <div className="flex min-h-[360px] w-full min-w-0 flex-col overflow-hidden rounded-[20px] bg-[#0d153a] px-7 py-8 lg:w-[49.44%]">
+            {/* Figma: Statistics-card-3 — 343x224 r16 p16 mobile / 712x360 r20 p 32/28 desktop */}
+            <div className="flex min-h-[224px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:w-[49.44%] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between">
-                <h3 className="max-w-[553px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-white lg:text-[40px] lg:leading-[56px]">
+                <h3 className="max-w-[553px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-white md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   Korporativ Təcrübə, Kompakt Yanaşma
                 </h3>
-                {/* Figma: Frame 2147225009 — row, gap 36, space-between */}
+                {/* Figma: Frame 2147225009 — row, gap 36, space-between; mobile
+                    shows only the first two logos (161x31 and 130x58) */}
                 <div className="flex flex-wrap items-start justify-between gap-9">
                   <Image
                     src="/images/logo-1.png"
@@ -93,7 +99,7 @@ export function WhyUsSection() {
                     width={200}
                     height={38}
                     aria-hidden
-                    className="h-[38px] w-[200px] object-contain"
+                    className="h-[31px] w-[161px] object-contain lg:h-[38px] lg:w-[200px]"
                   />
                   <Image
                     src="/images/logo-2.png"
@@ -101,7 +107,7 @@ export function WhyUsSection() {
                     width={161}
                     height={72}
                     aria-hidden
-                    className="h-[72px] w-[161px] object-contain"
+                    className="h-[58px] w-[130px] object-contain lg:h-[72px] lg:w-[161px]"
                   />
                   <Image
                     src="/images/logo-3.png"
@@ -109,21 +115,21 @@ export function WhyUsSection() {
                     width={209}
                     height={45}
                     aria-hidden
-                    className="h-[45px] w-[209px] object-contain"
+                    className="hidden h-[45px] w-[209px] object-contain lg:block"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Figma: Statistics-card-4 — 340x360, r20, p 24 */}
-            <div className="flex min-h-[360px] w-full min-w-0 flex-col rounded-[20px] bg-white p-6 lg:w-[23.61%]">
+            {/* Figma: Statistics-card-4 — 343x216 r16 p16 mobile / 340x360 r20 p24 desktop */}
+            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:w-[23.61%] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
-                {/* Figma: Frame 2147224998 — column, gap 16 */}
-                <div className="flex flex-col gap-4">
-                  <span className="text-[48px] leading-[64px] font-semibold tracking-[0] text-neo-ink">
+                {/* Figma: Frame 2147224998 — column; gap 12 mobile / 16 desktop */}
+                <div className="flex flex-col gap-3 lg:gap-4">
+                  <span className="text-[32px] leading-[40px] font-semibold tracking-[0] text-neo-ink lg:text-[48px] lg:leading-[64px]">
                     20+
                   </span>
-                  <span className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink">
+                  <span className="text-[16px] leading-[24px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px]">
                     Əməkdaşlıq
                   </span>
                 </div>

@@ -233,12 +233,12 @@ export function Header() {
 
   return (
     <header
-      className="relative w-full border-b border-[#e7e7ea] bg-white"
+      className="relative w-full border-b border-[#f3f2f8] bg-white lg:border-[#e7e7ea]"
       onMouseLeave={() => setServicesOpen(false)}
     >
-      <Container className="2xl:px-0">
+      <Container >
         {/* Figma: Frame 4 — row, space-between, align center, height 48 */}
-        <div className="flex w-full items-center justify-between gap-6 py-6 lg:h-24 lg:gap-[151px]">
+        <div className="flex h-[66px] w-full items-center justify-between gap-4 lg:h-24 lg:gap-[151px]">
           <Link href="/" aria-label="Neoline" className="shrink-0">
             <Image
               src="/images/logo.svg"
@@ -246,7 +246,7 @@ export function Header() {
               width={130}
               height={48}
               priority
-              className="h-12 w-[130px] object-contain"
+              className="h-[34px] w-[90px] object-contain lg:h-12 lg:w-[130px]"
             />
           </Link>
 
@@ -311,7 +311,7 @@ export function Header() {
             onClick={() => setMobileOpen((open) => !open)}
             aria-label={mobileOpen ? "Menyunu bağla" : "Menyunu aç"}
             aria-expanded={mobileOpen}
-            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#e7e7ea] text-[#1c1c1e] transition-colors hover:bg-[#f7f7f7] lg:hidden"
+            className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center text-black lg:hidden"
           >
             {mobileOpen ? (
               <X className="h-6 w-6" strokeWidth={1.5} />
@@ -322,74 +322,90 @@ export function Header() {
         </div>
       </Container>
 
-      {/* Mobile / tablet drawer */}
+      {/* Figma: `Menu-opened` (375x700) — fills the viewport under the 66px
+          header, pt 12 / px 16 / pb 44, list on top and the CTA pinned bottom. */}
       {mobileMounted && (
         <div
           ref={drawerRef}
-          className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-96px)] overflow-y-auto border-b border-[#e7e7ea] bg-white opacity-0 shadow-[0_16px_40px_rgba(4,7,17,0.08)] will-change-[transform,opacity] lg:hidden"
+          className="absolute inset-x-0 top-full z-50 flex h-[calc(100vh-66px)] flex-col justify-between gap-4 overflow-y-auto bg-white px-4 pt-3 pb-11 opacity-0 will-change-[transform,opacity] lg:hidden"
         >
-          <Container className="flex flex-col gap-2 py-6">
-            {menu.map((item) =>
-              item.hasMenu ? (
-                <div key={item.href} className="flex flex-col">
-                  <button
-                    type="button"
-                    onClick={() => setMobileServicesOpen((open) => !open)}
-                    aria-expanded={mobileServicesOpen}
-                    className="flex cursor-pointer items-center justify-between py-3 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#1c1c1e]"
+          {/* Figma: Frame 2147225056 — rows, 1px #F7F7F7 separators */}
+          <div className="flex flex-col">
+            {menu.map((item, index) => {
+              const isLast = index === menu.length - 1;
+
+              if (item.hasMenu) {
+                return (
+                  <div
+                    key={item.href}
+                    className={`flex flex-col ${
+                      mobileServicesOpen ? "pt-4" : "border-b border-[#f7f7f7]"
+                    }`}
                   >
-                    {item.label}
-                    <ChevronDown
-                      className={`h-5 w-5 transition-transform ${
-                        mobileServicesOpen ? "rotate-180" : ""
+                    {/* Figma: Responsive-menu — 56 tall, py 16, 16/24 Medium */}
+                    <button
+                      type="button"
+                      onClick={() => setMobileServicesOpen((open) => !open)}
+                      aria-expanded={mobileServicesOpen}
+                      className={`flex cursor-pointer items-center justify-between gap-4 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#3b4153] ${
+                        mobileServicesOpen ? "pb-6" : "py-4"
                       }`}
-                      strokeWidth={1.5}
-                    />
-                  </button>
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-6 w-6 shrink-0 text-[#8e929c] transition-transform ${
+                          mobileServicesOpen ? "rotate-180" : ""
+                        }`}
+                        strokeWidth={1.5}
+                      />
+                    </button>
 
-                  {mobileServicesOpen && (
-                    <div className="flex flex-col gap-1 pb-2 pl-3">
-                      {serviceColumns.flat().map((service) => (
-                        <Link
-                          key={service.href}
-                          href={service.href}
-                          onClick={() => setMobileOpen(false)}
-                          className="flex items-center justify-between gap-4 py-2 text-[16px] leading-[24px] font-normal tracking-[0.01em] text-[#3b4153]"
-                        >
-                          {service.label}
-                          <ArrowUpRight
-                            className="h-5 w-5 shrink-0"
-                            strokeWidth={2}
-                          />
-                        </Link>
-                      ))}
-                    </div>
-                  )}
+                    {/* Figma: Frame 2147225057 — service rows, gap 12 */}
+                    {mobileServicesOpen && (
+                      <div className="flex flex-col gap-3">
+                        {serviceColumns.flat().map((service) => (
+                          <Link
+                            key={service.href}
+                            href={service.href}
+                            onClick={() => setMobileOpen(false)}
+                            className="flex items-center justify-between gap-4 border-b border-[#f7f7f7] px-4 pb-4 text-[14px] leading-[20px] font-normal tracking-[0.01em] text-neo-ink"
+                          >
+                            {service.label}
+                            <ArrowUpRight
+                              className="h-6 w-6 shrink-0"
+                              strokeWidth={1.5}
+                            />
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
 
-                  <div className="h-px w-full bg-[#e7e7ea]" />
-                </div>
-              ) : (
-                <div key={item.href} className="flex flex-col">
-                  <Link
-                    href={item.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="py-3 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#1c1c1e]"
-                  >
-                    {item.label}
-                  </Link>
-                  <div className="h-px w-full bg-[#e7e7ea]" />
-                </div>
-              )
-            )}
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`py-4 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#3b4153] ${
+                    isLast ? "" : "border-b border-[#f7f7f7]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
 
-            <Link
-              href="/contact"
-              onClick={() => setMobileOpen(false)}
-              className="mt-4 flex h-12 w-full items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
-            >
-              Bizimlə əlaqə
-            </Link>
-          </Container>
+          {/* Figma: Common buttons — 343x40, #0D153A, r100, 14/20 Medium */}
+          <Link
+            href="/contact"
+            onClick={() => setMobileOpen(false)}
+            className="flex h-10 w-full shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
+          >
+            Bizimlə əlaqə
+          </Link>
         </div>
       )}
 

@@ -4,9 +4,11 @@ import Link from "next/link";
 import Container from "@/components/shared/container";
 
 /**
- * Figma: `Banner` (1920x490) — site-wide CTA strip rendered on every page,
- * just above the footer. Cropped photo background, py 81, px 240, content 706
- * wide with a 64 gap between the copy block and the button row.
+ * Figma desktop: `Banner` (1920x490) — site-wide CTA strip rendered on every
+ * page, just above the footer. Cropped photo background, py 81, px 240, content
+ * 706 wide with a 64 gap between the copy block and the button row.
+ * Figma mobile: `Banner` (375x252) — py 24 / px 16, content 343 with a 32 gap
+ * and two half-width 40px buttons in one row.
  */
 export function CtaBanner() {
   return (
@@ -20,32 +22,32 @@ export function CtaBanner() {
         className="pointer-events-none object-cover object-center select-none"
       />
 
-      <Container className="relative flex flex-col py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:px-0 2xl:py-[81px]">
-        {/* Figma: Frame 2147224633 — column, gap 64, width 706 */}
-        <div className="flex flex-col gap-10 2xl:w-[706px] 2xl:gap-16">
-          {/* Figma: Frame 16 — column, gap 24 */}
-          <div className="flex flex-col gap-4 2xl:gap-6">
-            <h2 className="text-[36px] leading-[46px] font-semibold tracking-[0] text-white 2xl:text-[56px] 2xl:leading-[72px]">
+      <Container className="relative flex flex-col py-6 md:py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:px-0 2xl:py-[81px]">
+        {/* Figma: Frame 2147224633 — column; gap 32 mobile / 64 desktop, width 706 */}
+        <div className="flex flex-col gap-8 md:gap-10 2xl:w-[706px] 2xl:gap-16">
+          {/* Figma: Frame 16 — column; gap 20 mobile / 24 desktop */}
+          <div className="flex flex-col gap-5 md:gap-4 2xl:gap-6">
+            <h2 className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]">
               Gələcəyin Rəqəmsal Həllərini{" "}
               <span className="text-neo-teal">Bu Gün</span> Qurun!
             </h2>
-            <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-[#e7e7ea] 2xl:w-[631px]">
+            <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-[#e7e7ea] md:text-[16px] md:leading-[24px] 2xl:w-[631px]">
               Biznes məqsədlərinizə uyğun innovativ proqram təminatı və rəqəmsal
               məhsullar hazırlamaq üçün ilk addımı birlikdə ataq.
             </p>
           </div>
 
-          {/* Figma: Frame 7 — row, gap 20, buttons 265.585x48, r100 */}
-          <div className="flex flex-col gap-4 sm:flex-row 2xl:gap-5">
+          {/* Figma: Frame 7 — row, gap 16; buttons 163.5x40 mobile, 265.585x48 desktop */}
+          <div className="flex gap-4 2xl:gap-5">
             <Link
               href="/contact"
-              className="flex h-12 w-full items-center justify-center rounded-full bg-neo-teal px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:w-[265.59px]"
+              className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
             >
               Bizimlə əlaqə
             </Link>
             <Link
               href="/services"
-              className="flex h-12 w-full items-center justify-center rounded-full border border-neo-teal px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:w-[265.59px]"
+              className="flex h-10 flex-1 items-center justify-center rounded-full border border-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
             >
               Xidmətlərimiz
             </Link>

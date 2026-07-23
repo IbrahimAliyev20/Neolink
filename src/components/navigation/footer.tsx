@@ -22,16 +22,19 @@ const socials = [
 ];
 
 /**
- * Figma: `Footer` (1920x229, white) — column, gap 28, pt 48, pb 32.
+ * Figma desktop: `Footer` (1920x229, white) — column, gap 28, pt 48, pb 32.
  * Row 1: 130x48 logo + menu (gap 16). 1px #E7E7EA divider across the 1440
  * column. Row 2: copyright line + social icons, space-between.
+ * Figma mobile: `Footer` (375x339) — column gap 20, pt 36 / pb 24, px 16.
+ * Stacked 112x42 logo above a two-line centred menu (row gap 8), a full-bleed
+ * divider, then the social icons above the copyright line.
  */
 export function Footer() {
   return (
-    <footer className="w-full bg-white pt-12 pb-8">
+    <footer className="w-full bg-white pt-9 pb-6 lg:pt-12 lg:pb-8">
       <Container className="2xl:px-0">
-        <div className="flex w-full flex-col gap-7">
-          {/* Figma: Logo-Menus — row, space-between, align center, height 48 */}
+        <div className="flex w-full flex-col gap-5 lg:gap-7">
+          {/* Figma: Logo-Menus — mobile centred column gap 24; desktop row, space-between */}
           <div className="flex w-full flex-col items-center gap-6 lg:h-12 lg:flex-row lg:justify-between lg:gap-10">
             <Link href="/" aria-label="Neoline" className="shrink-0">
               <Image
@@ -40,12 +43,12 @@ export function Footer() {
                 width={130}
                 height={48}
                 priority
-                className="h-12 w-[130px] object-contain"
+                className="h-[42px] w-[112px] object-contain lg:h-12 lg:w-[130px]"
               />
             </Link>
 
-            {/* Figma: Frame 2147224961 — row, gap 16 */}
-            <nav className="flex flex-wrap items-center justify-center gap-4">
+            {/* Figma: Frame 2147224961 — wrapped rows; column gap 16, row gap 8 */}
+            <nav className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 lg:gap-4">
               {menu.map((item) => (
                 <Link
                   key={item.href}
@@ -58,14 +61,18 @@ export function Footer() {
             </nav>
           </div>
 
-          {/* Figma: Frame 2147224962 — 1440x1 divider, #E7E7EA */}
-          <div className="h-px w-full bg-[#e7e7ea]" />
+          {/* Figma: Frame 2147224962 — 1px #E7E7EA divider; full-bleed on mobile */}
+          <div className="-mx-4 h-px bg-[#e7e7ea] md:mx-0 md:w-full" />
 
-          {/* Figma: Logo-Menus — row, space-between, align center, height 44 */}
-          <div className="flex w-full flex-col items-center gap-6 lg:h-11 lg:flex-row lg:justify-between lg:gap-10">
-            {/* Figma: Copyrights — row, gap 8 */}
-            <div className="flex items-center gap-2 text-[#3b4153]">
-              <Copyright className="h-6 w-6 shrink-0" strokeWidth={1.5} />
+          {/* Figma: Logo-Menus — mobile centred column gap 24 with the socials on
+              top; desktop row, space-between, height 44 */}
+          <div className="flex w-full flex-col-reverse items-center gap-6 lg:h-11 lg:flex-row lg:justify-between lg:gap-10">
+            {/* Figma: Copyrights — row; gap 0 mobile / 8 desktop */}
+            <div className="flex items-center text-[#3b4153] lg:gap-2">
+              <Copyright
+                className="h-[21px] w-[21px] shrink-0 lg:h-6 lg:w-6"
+                strokeWidth={1.5}
+              />
               <span className="font-poppins text-[14px] leading-[20px] font-normal tracking-[0]">
                 Neoline Technology MMC | Bütün hüquqlar qorunur.
               </span>
