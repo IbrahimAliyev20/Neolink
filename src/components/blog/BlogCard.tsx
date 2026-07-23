@@ -4,13 +4,16 @@ import type { BlogPost } from "@/lib/data/blogs";
 
 export function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <Link href={`/blogs/${post.slug}`} className="flex flex-col gap-3 items-start w-full lg:gap-4">
+    <Link
+      href={`/blogs/${post.slug}`}
+      className="group/card flex flex-col gap-3 items-start w-full lg:gap-4"
+    >
       <div className="border border-[#f2f4f8] h-[128px] relative rounded-[14px] w-full overflow-hidden lg:h-[264px] lg:rounded-2xl">
         <Image
           src={post.image}
           alt=""
           fill
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover/card:scale-[1.05]"
           sizes="(min-width: 1024px) 25vw, 50vw"
         />
       </div>

@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { CategoryTabs } from "@/components/shared/CategoryTabs";
@@ -17,11 +18,20 @@ export function GridSection({
       <CategoryTabs categories={blogCategories} activeCategory={activeCategory} onChange={onChange} />
 
       {posts.length > 0 && (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-4 lg:gap-5 w-full">
+        /* Keyed on the category so switching tabs remounts the reveal and the
+           new cards animate in instead of staying at their hidden start. */
+        <Reveal
+          key={activeCategory}
+          y={64}
+          scale={0.94}
+          blur={8}
+          stagger={0.14}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-4 lg:gap-5 w-full"
+        >
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
-        </div>
+        </Reveal>
       )}
     </Container>
   );

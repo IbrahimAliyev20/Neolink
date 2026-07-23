@@ -61,13 +61,13 @@ export function Reveal({
       return;
     }
 
-    const ctx = gsap.context(() => {
+    const build = (travelX: number, travelY: number) =>
       gsap.fromTo(
         targets,
         {
           opacity: 0,
-          y,
-          x,
+          y: travelY,
+          x: travelX,
           scale,
           ...(blur ? { filter: `blur(${blur}px)` } : {}),
         },
@@ -88,9 +88,19 @@ export function Reveal({
           },
         }
       );
-    }, el);
 
-    return () => ctx.kill();
+    // Sideways travel only on desktop: on a phone the offset sticks out past
+    // the viewport and adds a horizontal scrollbar. Those reveals fall back to
+    // a vertical one so they still animate.
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 1024px)", () => {
+      build(x, y);
+    });
+    mm.add("(max-width: 1023.98px)", () => {
+      build(0, x !== 0 && y === 0 ? 32 : y);
+    });
+
+    return () => mm.revert();
   }, [y, x, scale, blur, stagger, start, end]);
 
   return (

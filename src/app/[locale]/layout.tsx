@@ -69,7 +69,11 @@ export default async function RootLayout({
       >
         <QueryProvider>
           <NextIntlClientProvider messages={messages}>
-            <div className="min-h-screen">
+            {/* `overflow-x-clip` catches any animation that travels sideways
+                before it can add a horizontal scrollbar. `clip` rather than
+                `hidden`, so it does not create a scroll container and break the
+                sticky header. */}
+            <div className="min-h-screen overflow-x-clip">
               <Header />
               {children}
               <CtaBanner />

@@ -209,6 +209,7 @@
 [data-reveal] > *,
 [data-split-lines] > *,
 [data-hero-anim],
+[data-page-transition],
 .js-hero-stat {
   opacity: 0;
 }
@@ -229,7 +230,9 @@
 /* No JS (or reduced motion) means no tween ever runs, so never hide anything. */
 @media (scripting: none), (prefers-reduced-motion: reduce) {
   [data-reveal] > *,
+  [data-split-lines] > *,
   [data-hero-anim],
+  [data-page-transition],
   .js-hero-stat {
     opacity: 1;
   }
