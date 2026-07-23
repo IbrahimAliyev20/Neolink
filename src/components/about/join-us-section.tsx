@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
+
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 
 const openVacancies = [
@@ -91,7 +93,10 @@ export function JoinUsSection() {
   return (
     <div className="flex flex-col items-center justify-center pb-9 w-full lg:pb-[90px]">
       <Container className="flex flex-col lg:flex-row gap-5 lg:gap-16 items-start w-full">
-        <div className="flex flex-col gap-3 items-start flex-[576] min-w-0 w-full">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col gap-3 items-start flex-[576] min-w-0 w-full"
+        >
           <div className="-rotate-[6.89deg] bg-[#0d153a] flex gap-2 items-center justify-center px-3 py-2 rounded-full lg:gap-2.5 lg:px-4 lg:py-2.5">
             <Image src="/icons/briefcase.svg" alt="" width={21} height={21} className="size-4 lg:size-[21px]" />
             <p className="font-medium text-[#3abdaa] text-xs leading-4 tracking-[0.12px] whitespace-nowrap lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
@@ -121,9 +126,12 @@ export function JoinUsSection() {
               </a>
             </div>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="flex flex-col gap-3 lg:gap-3.5 items-start flex-[800] min-w-0 w-full">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col gap-3 lg:gap-3.5 items-start flex-[800] min-w-0 w-full"
+        >
           {openVacancies.map((vacancy) => (
             <VacancyCard
               key={vacancy.key}
@@ -133,7 +141,7 @@ export function JoinUsSection() {
               type={vacancy.type}
             />
           ))}
-        </div>
+        </Reveal>
       </Container>
     </div>
   );

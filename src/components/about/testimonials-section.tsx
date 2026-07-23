@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Parallax } from "@/components/animation/parallax";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import aboutTestimonialFeature from "../../../public/images/about-testimonial-feature.jpg";
 import aboutContactArt from "../../../public/images/about-contact-art.png";
@@ -8,7 +10,10 @@ export function TestimonialsSection() {
   return (
     <div className="flex flex-col items-center w-full py-9 lg:pt-0 lg:pb-[90px]">
       <Container className="flex flex-col items-center gap-6 w-full lg:gap-11">
-        <div className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10"
+        >
           <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[424px] lg:shrink-0">
             Etibarla Qurulan <span className="text-[#3abdaa]">Əməkdaşlıqlar!</span>
           </h2>
@@ -17,9 +22,12 @@ export function TestimonialsSection() {
             dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı
             inkişafımızın ən dəyərli göstəricisidir.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start w-full">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-start w-full"
+        >
           <div className="flex flex-col gap-4 lg:gap-5 items-start flex-[858] min-w-0 w-full">
             <div className="bg-[#0d153a] border border-[#8e929c] flex flex-col items-start justify-between gap-6 px-3.5 py-3.5 rounded-2xl w-full lg:gap-0 lg:h-[336px] lg:px-9 lg:py-8 lg:rounded-[20px]">
               <p className="font-semibold text-base leading-6 tracking-[0.16px] lg:text-[20px] lg:leading-7 lg:tracking-[0.2px]">
@@ -59,13 +67,15 @@ export function TestimonialsSection() {
               </div>
             </div>
             <div className="border border-[#e7e7ea] relative rounded-2xl w-full h-[200px] overflow-hidden lg:rounded-[20px] lg:h-[336px]">
-              <Image
-                src={aboutTestimonialFeature}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 60vw, 100vw"
-              />
+              <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
+                <Image
+                  src={aboutTestimonialFeature}
+                  alt=""
+                  fill
+                  className="object-cover"
+                  sizes="(min-width: 1024px) 60vw, 100vw"
+                />
+              </Parallax>
             </div>
           </div>
 
@@ -99,7 +109,7 @@ export function TestimonialsSection() {
               </button>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </div>
   );

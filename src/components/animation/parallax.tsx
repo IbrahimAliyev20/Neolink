@@ -6,14 +6,15 @@ import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
 /**
  * Scrub-linked vertical drift for decorative imagery. Wrap the image and give
- * the wrapper a little vertical bleed (`-inset-y-[6%]`) so the travel never
- * exposes an edge inside a clipped card.
+ * the wrapper vertical bleed so the travel never exposes an edge inside a
+ * clipped card: the bleed on each side has to be at least half of `amount`
+ * (e.g. `-inset-y-[18%]` covers `amount={26}`).
  */
 export function Parallax({
   children,
   className,
   /** Total travel as a percentage of the wrapper height. */
-  amount = 12,
+  amount = 26,
   /** Optional starting scale, eased back to 1 across the same scroll range. */
   from,
 }: {

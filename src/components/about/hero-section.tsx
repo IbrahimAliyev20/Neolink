@@ -1,9 +1,13 @@
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 
 export function HeroSection() {
   return (
     <Container className="flex flex-col items-center w-full">
-      <div className="flex flex-col gap-3 items-start w-full lg:flex-row lg:justify-between lg:gap-10">
+      <Reveal
+        stagger={0.12}
+        className="flex flex-col gap-3 items-start w-full lg:flex-row lg:justify-between lg:gap-10"
+      >
         <h1 className="font-semibold text-[#1c1c1e] text-[20px] leading-7 tracking-[0.2px] w-full lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[424px] lg:shrink-0">
           Bizi Yaxından Tanıyın
         </h1>
@@ -14,7 +18,7 @@ export function HeroSection() {
           Məqsədimiz texnologiyanı sadəcə alət kimi deyil, bizneslərin inkişafına töhfə
           verən strateji dəyər kimi təqdim etməkdir.
         </p>
-      </div>
+      </Reveal>
     </Container>
   );
 }

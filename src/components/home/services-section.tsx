@@ -46,7 +46,7 @@ export function ServicesSection() {
       <Container className="relative">
         {/* Figma: `Burdaqal.az 1` — 800x534 at (-132, 396), opacity 72% */}
         <Parallax
-          amount={16}
+          amount={30}
           className="pointer-events-none absolute top-[396px] -left-[132px] hidden h-[534px] w-[800px] max-w-none opacity-[0.72] select-none 2xl:block"
         >
           <Image

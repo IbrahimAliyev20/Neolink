@@ -1,3 +1,5 @@
+import { CountUp } from "@/components/animation/count-up";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 
 function StatisticsCard({
@@ -19,7 +21,7 @@ function StatisticsCard({
     >
       <div className="flex flex-col gap-1.5 items-start font-semibold whitespace-nowrap lg:gap-2">
         <p className="text-2xl leading-8 tracking-[0.24px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-          {value}
+          <CountUp value={value} />
         </p>
         <p className="text-base leading-6 tracking-[0.16px] lg:text-xl lg:leading-[28px] lg:tracking-[0.2px]">
           {title}
@@ -35,7 +37,10 @@ function StatisticsCard({
 export function StatsSection() {
   return (
     <Container className="flex flex-col items-center w-full">
-      <div className="flex flex-col gap-3 items-start w-full lg:flex-row lg:gap-5">
+      <Reveal
+        stagger={0.1}
+        className="flex flex-col gap-3 items-start w-full lg:flex-row lg:gap-5"
+      >
         <StatisticsCard
           value="15+"
           title="Sahə üzrə Ekspert"
@@ -51,7 +56,7 @@ export function StatsSection() {
           title="Müştəri Məmnuniyyəti"
           description="Müştərilərimizin məmnuniyyəti bizim üçün ən vacib göstəricidir."
         />
-      </div>
+      </Reveal>
     </Container>
   );
 }

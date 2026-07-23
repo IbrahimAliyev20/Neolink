@@ -1,4 +1,7 @@
 import Image from "next/image";
+
+import { Parallax } from "@/components/animation/parallax";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import aboutProcess from "../../../public/images/about-process.jpg";
 
@@ -32,7 +35,10 @@ export function HowWeWorkSection() {
       <Container className="flex flex-col items-center w-full">
         <div className="flex flex-col gap-4 items-center py-8 w-full lg:flex-row lg:gap-[102px] lg:py-[90px]">
           <div className="flex flex-col gap-6 items-start w-full lg:gap-12 lg:flex-1 lg:min-w-0">
-            <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
+            <Reveal
+              stagger={0.12}
+              className="flex flex-col gap-4 items-start w-full lg:gap-6"
+            >
               <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:text-[56px] lg:leading-[72px] lg:tracking-normal lg:max-w-[566px]">
                 Necə işləyirik?
               </h2>
@@ -41,8 +47,11 @@ export function HowWeWorkSection() {
                 Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün
                 prosesi peşəkar komandamızla birlikdə idarə edirik.
               </p>
-            </div>
-            <div className="flex flex-col gap-4 items-start w-full lg:gap-5">
+            </Reveal>
+            <Reveal
+              stagger={0.12}
+              className="flex flex-col gap-4 items-start w-full lg:gap-5"
+            >
               {processSteps.map((step) => (
                 <div key={step.key} className="flex gap-3 items-start w-full lg:gap-5">
                   <div className="bg-[#0d153a] flex items-center justify-center p-2.5 rounded-lg shrink-0 size-10 lg:rounded-xl lg:size-14">
@@ -64,16 +73,18 @@ export function HowWeWorkSection() {
                   </div>
                 </div>
               ))}
-            </div>
+            </Reveal>
           </div>
           <div className="border border-[#e7e7ea] relative rounded-2xl w-full h-[247px] overflow-hidden lg:rounded-[20px] lg:h-[474px] lg:flex-1 lg:min-w-0">
-            <Image
-              src={aboutProcess}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 50vw, 100vw"
-            />
+            <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
+              <Image
+                src={aboutProcess}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(min-width: 1024px) 50vw, 100vw"
+              />
+            </Parallax>
           </div>
         </div>
       </Container>

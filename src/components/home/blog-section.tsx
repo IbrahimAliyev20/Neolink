@@ -73,7 +73,7 @@ export function BlogSection() {
             href="/blog"
             className="group/wide relative block aspect-[710/440] h-auto max-h-[440px] w-full min-w-0 overflow-hidden rounded-[14px] border border-[#f2f4f8] lg:w-[49.31%] lg:rounded-[16px]"
           >
-            <Parallax amount={12} className="absolute inset-x-0 -inset-y-[7%]">
+            <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
               <Image
                 src="/images/blog-wide.png"
                 alt=""

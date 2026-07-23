@@ -16,8 +16,8 @@ export function CtaBanner() {
   return (
     <section className="relative w-full overflow-hidden">
       <Parallax
-        amount={14}
-        className="pointer-events-none absolute inset-x-0 -inset-y-[8%] select-none"
+        amount={26}
+        className="pointer-events-none absolute inset-x-0 -inset-y-[18%] select-none"
       >
         <Image
           src="/images/cta-banner-bg.png"

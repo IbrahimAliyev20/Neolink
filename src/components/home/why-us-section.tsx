@@ -69,7 +69,7 @@ export function WhyUsSection() {
 
             {/* Figma: Frame 2147225004 — 343x216 mobile / 537x360 desktop image card, r20 */}
             <div className="relative h-[216px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:flex-[537]">
-              <Parallax amount={14} className="absolute inset-x-0 -inset-y-[8%]">
+              <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
                 <Image
                   src="/images/why-photo-card.png"
                   alt=""
