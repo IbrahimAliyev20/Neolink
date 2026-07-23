@@ -1,107 +1,99 @@
-import Link from "next/link"
-import { Instagram, Linkedin, Twitter } from "lucide-react"
-import Container from "../shared/container"
+import { Copyright } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
+import Container from "@/components/shared/container";
+
+/** Figma: `Header-menu` items — 14/20 Regular, #8E929C, px 8 / py 4. */
+const menu = [
+  { label: "Haqqımızda", href: "/about" },
+  { label: "Xidmətlər", href: "/services" },
+  { label: "Layihələr", href: "/projects" },
+  { label: "Bloqlar", href: "/blog" },
+  { label: "Əlaqə", href: "/contact" },
+];
+
+/** Figma: `Social media icons` — 44px circles, white, 1px #E7E7EA, gap 8. */
+const socials = [
+  { label: "Instagram", icon: "/icons/instagram.svg", href: "#" },
+  { label: "Facebook", icon: "/icons/facebook.svg", href: "#" },
+  { label: "LinkedIn", icon: "/icons/linkedin.svg", href: "#" },
+  { label: "X", icon: "/icons/twitter-x.svg", href: "#" },
+];
+
+/**
+ * Figma: `Footer` (1920x229, white) — column, gap 28, pt 48, pb 32.
+ * Row 1: 130x48 logo + menu (gap 16). 1px #E7E7EA divider across the 1440
+ * column. Row 2: copyright line + social icons, space-between.
+ */
 export function Footer() {
   return (
-    <footer className="bg-[#FAFDFF] border-t border-[#ECEEF6]">
-      <Container>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pt-14 pb-10">
-          <div className="md:col-span-1">
-            <Link href="/" className="text-2xl font-bold text-blue-600 mb-4 block">
-              Karyera.az
+    <footer className="w-full bg-white pt-12 pb-8">
+      <Container className="2xl:px-0">
+        <div className="flex w-full flex-col gap-7">
+          {/* Figma: Logo-Menus — row, space-between, align center, height 48 */}
+          <div className="flex w-full flex-col items-center gap-6 lg:h-12 lg:flex-row lg:justify-between lg:gap-10">
+            <Link href="/" aria-label="Neoline" className="shrink-0">
+              <Image
+                src="/images/logo.svg"
+                alt="Neoline"
+                width={130}
+                height={48}
+                priority
+                className="h-12 w-[130px] object-contain"
+              />
             </Link>
-            <p className="text-muted-foreground mb-4">Bizi izləyin</p>
-            <div className="flex space-x-4">
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </Link>
+
+            {/* Figma: Frame 2147224961 — row, gap 16 */}
+            <nav className="flex flex-wrap items-center justify-center gap-4">
+              {menu.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="px-2 py-1 text-[14px] leading-[20px] font-normal tracking-[0.01em] text-[#8e929c] transition-colors hover:text-neo-ink"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Figma: Frame 2147224962 — 1440x1 divider, #E7E7EA */}
+          <div className="h-px w-full bg-[#e7e7ea]" />
+
+          {/* Figma: Logo-Menus — row, space-between, align center, height 44 */}
+          <div className="flex w-full flex-col items-center gap-6 lg:h-11 lg:flex-row lg:justify-between lg:gap-10">
+            {/* Figma: Copyrights — row, gap 8 */}
+            <div className="flex items-center gap-2 text-[#3b4153]">
+              <Copyright className="h-6 w-6 shrink-0" strokeWidth={1.5} />
+              <span className="font-poppins text-[14px] leading-[20px] font-normal tracking-[0]">
+                Neoline Technology MMC | Bütün hüquqlar qorunur.
+              </span>
+            </div>
+
+            {/* Figma: Social media icons — row, gap 8 */}
+            <div className="flex items-center gap-2">
+              {socials.map((social) => (
+                <Link
+                  key={social.label}
+                  href={social.href}
+                  aria-label={social.label}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e7e7ea] bg-white p-[10px] transition-colors hover:bg-[#f7f7f7]"
+                >
+                  <Image
+                    src={social.icon}
+                    alt=""
+                    width={24}
+                    height={24}
+                    aria-hidden
+                    className="h-6 w-6"
+                  />
+                </Link>
+              ))}
             </div>
           </div>
-
-          <div className="hidden md:block"></div>
-
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Keçidlər</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Vakansiyalar
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Şirkətlər
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Kateqoriyalar
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Cv-lar
-                </Link>
-              </li>
-              <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Haqqımızda
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="font-semibold text-foreground mb-4">Contact</h3>
-            <div className="space-y-3 text-muted-foreground">
-              <p>Broadway Ave 79, New York, USA</p>
-              <p>
-                <Link href="mailto:info@designsystem.com" className="hover:text-foreground transition-colors">
-                  info@designsystem.com
-                </Link>
-              </p>
-              <p>
-                <Link href="tel:+12345678" className="hover:text-foreground transition-colors">
-                  +1 234 56 789
-                </Link>
-              </p>
-              <p>
-                <Link href="tel:+19876543" className="hover:text-foreground transition-colors">
-                  +1 987 65 432
-                </Link>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 py-4 text-center">
-          <p className="text-muted-foreground flex items-center justify-center gap-2">
-            <span className="w-4 h-4 rounded-full border border-muted-foreground text-xs flex items-center justify-center">
-              ©
-            </span>
-            Copyright | All Rights Reserved
-          </p>
         </div>
       </Container>
     </footer>
-  )
+  );
 }

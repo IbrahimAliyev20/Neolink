@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, K2D, Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
@@ -9,6 +9,7 @@ import { QueryProvider } from "@/providers/QueryProvider";
 import { Toaster } from "sonner";
 import { Header } from "@/components/navigation/header";
 import { Footer } from "@/components/navigation/footer";
+import { CtaBanner } from "@/components/shared/cta-banner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,6 +24,20 @@ const geistMono = Geist_Mono({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
+});
+
+/** Figma: partner logo wordmark ("Neolit") uses K2D SemiBold. */
+const k2d = K2D({
+  variable: "--font-k2d",
+  subsets: ["latin"],
+  weight: ["600"],
+});
+
+/** Figma: footer copyright line uses Poppins Regular. */
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -45,13 +60,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} font-inter antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${k2d.variable} ${poppins.variable} font-inter antialiased`}
       >
         <QueryProvider>
           <NextIntlClientProvider messages={messages}>
             <div className="min-h-screen">
               <Header />
               {children}
+              <CtaBanner />
               <Footer />
             </div>
             <Toaster position="top-center" richColors />
