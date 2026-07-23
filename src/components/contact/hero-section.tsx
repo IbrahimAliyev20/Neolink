@@ -1,8 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Check, ChevronDown } from "lucide-react";
 import Container from "@/components/shared/container";
+
+const messageSubjects = [
+  "Əməkdaşlıq təklifi",
+  "Qiymət təklifi",
+  "İT Konsultasiyası",
+  "Texniki problem",
+  "Digər",
+];
 
 const contactInfo = [
   {
@@ -30,6 +39,31 @@ const socialLinks = [
 ];
 
 export function HeroSection() {
+  const [subject, setSubject] = useState<string | null>(null);
+  const [subjectOpen, setSubjectOpen] = useState(false);
+  const subjectRef = useRef<HTMLDivElement | null>(null);
+
+  // Close the subject dropdown on outside click or Escape.
+  useEffect(() => {
+    if (!subjectOpen) return;
+
+    const handlePointerDown = (event: MouseEvent) => {
+      if (subjectRef.current && !subjectRef.current.contains(event.target as Node)) {
+        setSubjectOpen(false);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setSubjectOpen(false);
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [subjectOpen]);
+
   return (
     <div className="relative w-full bg-[#f7f7f7]">
       <div className="absolute inset-0 bg-[#0d153a] lg:bottom-20 lg:rounded-bl-[120px]" />
@@ -152,23 +186,58 @@ export function HeroSection() {
                 <label htmlFor="contact-subject" className="text-[#040711] text-sm tracking-[0.14px] px-1">
                   Mesaj başlığı
                 </label>
-                <div className="relative w-full">
-                  <select
+                <div ref={subjectRef} className="relative w-full">
+                  <button
+                    type="button"
                     id="contact-subject"
-                    defaultValue=""
-                    className="appearance-none bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
+                    aria-haspopup="listbox"
+                    aria-expanded={subjectOpen}
+                    onClick={() => setSubjectOpen((open) => !open)}
+                    className={`flex items-center justify-between gap-2 rounded-xl px-4 py-3.5 w-full text-left text-sm cursor-pointer transition-colors focus:outline-none ${
+                      subjectOpen
+                        ? "bg-white border border-[#3abdaa]"
+                        : "bg-[#f7f7f7] border border-[#e7e7ea]"
+                    } ${subject ? "text-[#040711]" : "text-[#5b606f]"}`}
                   >
-                    <option value="" disabled>
-                      Mesaj başlığı
-                    </option>
-                    <option value="teklif">Təklif almaq istəyirəm</option>
-                    <option value="emekdasliq">Əməkdaşlıq təklifi</option>
-                    <option value="diger">Digər</option>
-                  </select>
-                  <ChevronDown
-                    className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none h-5 w-5 text-[#20201e]"
-                    strokeWidth={1.5}
-                  />
+                    {subject ?? "Mesaj başlığı"}
+                    <ChevronDown
+                      className={`h-5 w-5 text-[#20201e] shrink-0 transition-transform ${
+                        subjectOpen ? "rotate-180" : ""
+                      }`}
+                      strokeWidth={1.5}
+                    />
+                  </button>
+
+                  {subjectOpen && (
+                    <ul
+                      role="listbox"
+                      aria-labelledby="contact-subject"
+                      className="absolute left-0 right-0 top-full mt-2 z-20 bg-white rounded-2xl shadow-[0px_16px_40px_0px_rgba(0,0,0,0.14)] py-1.5 overflow-hidden"
+                    >
+                      {messageSubjects.map((option) => {
+                        const isSelected = option === subject;
+                        return (
+                          <li key={option} role="option" aria-selected={isSelected}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setSubject(option);
+                                setSubjectOpen(false);
+                              }}
+                              className={`flex items-center justify-between gap-2 w-full px-5 py-3.5 text-left text-sm cursor-pointer transition-colors hover:bg-[#f7f7f7] ${
+                                isSelected ? "bg-[#f7f7f7] text-[#040711]" : "text-[#20201e]"
+                              }`}
+                            >
+                              {option}
+                              {isSelected && (
+                                <Check className="h-5 w-5 text-[#3abdaa] shrink-0" strokeWidth={2} />
+                              )}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </div>
               </div>
 
