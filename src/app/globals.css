@@ -209,9 +209,32 @@
 [data-reveal] > *,
 [data-split-lines] > *,
 [data-hero-anim],
-[data-page-transition],
 .js-hero-stat {
   opacity: 0;
+}
+
+/* Page transitions: the browser cross-fades a snapshot of the old page with
+   the new one. Both halves animate, so they overlap instead of blinking. */
+@keyframes page-transition-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes page-transition-out {
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: page-transition-out 220ms cubic-bezier(0.4, 0, 1, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: page-transition-in 340ms cubic-bezier(0, 0, 0.2, 1) both;
 }
 
 [data-clip-reveal] {
@@ -232,12 +255,16 @@
   [data-reveal] > *,
   [data-split-lines] > *,
   [data-hero-anim],
-  [data-page-transition],
   .js-hero-stat {
     opacity: 1;
   }
 
   [data-clip-reveal] {
     clip-path: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
   }
 }

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { CountUp } from "@/components/animation/count-up";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 import { useWhyNeoline } from "@/services/why-neoline/queries";
 
@@ -33,24 +34,28 @@ export function WhyUsSection() {
     <section className="w-full py-9 lg:py-[90px]">
       <Container className="flex flex-col gap-6 lg:gap-12">
         {/* Figma: Frame 16 — column; gap 12 mobile / 24 desktop, width 788, centered */}
-        <Reveal
-          stagger={0.12}
-          className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-3 lg:gap-6"
-        >
-          <h2 className="text-center text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
-            Niyə Məhz Neoline?
-          </h2>
-          <p className="max-w-[756px] text-center text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-            2022-ci ildə qurulan Neoline Technology, çoxsaylı İT podratçıların
-            xaosunu tək məsuliyyətli tərəfdaşla əvəz etmək üçün yaradıb.
-          </p>
-        </Reveal>
+        <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-3 lg:gap-6">
+          <SplitLines>
+            <h2 className="text-center text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
+              Niyə Məhz Neoline?
+            </h2>
+          </SplitLines>
+          <Reveal y={44} blur={8} className="w-full max-w-[756px]">
+            <p className="text-center text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
+              2022-ci ildə qurulan Neoline Technology, çoxsaylı İT podratçıların
+              xaosunu tək məsuliyyətli tərəfdaşla əvəz etmək üçün yaradıb.
+            </p>
+          </Reveal>
+        </div>
 
         {/* Figma: Frame 2147225006 — column; gap 12 mobile / 24 desktop */}
         <div className="flex flex-col gap-3 lg:gap-6">
           {/* Figma: Frame 2147225004 — column gap 12 mobile; row gap 24, height 360 desktop */}
           <Reveal
-            stagger={0.1}
+            y={80}
+            scale={0.92}
+            blur={8}
+            stagger={0.22}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
             {/* Figma: Statistics-card-1 — 343x216 r16 p16 mobile / 880x360 r20 p 32/28
@@ -96,7 +101,10 @@ export function WhyUsSection() {
 
           {/* Figma: Frame 2147225005 — column gap 12 mobile; row gap 24, height 360 desktop */}
           <Reveal
-            stagger={0.1}
+            y={80}
+            scale={0.92}
+            blur={8}
+            stagger={0.22}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
             {/* Figma: Statistics-card-2 — 343x216 r16 p16 mobile / 340x360 r20 p24

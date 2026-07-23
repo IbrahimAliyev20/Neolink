@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { Children, useEffect, useRef, type ReactNode } from "react";
 
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
@@ -46,6 +46,10 @@ export function Reveal({
   end = "top 62%",
 }: RevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
+  // Lists that arrive from an API start empty, so the tween has to be built
+  // again once the children show up — otherwise they keep the hidden state
+  // that `globals.css` gives them.
+  const childCount = Children.count(children);
 
   useEffect(() => {
     const el = ref.current;
@@ -101,7 +105,7 @@ export function Reveal({
     });
 
     return () => mm.revert();
-  }, [y, x, scale, blur, stagger, start, end]);
+  }, [y, x, scale, blur, stagger, start, end, childCount]);
 
   return (
     <div ref={ref} data-reveal className={className}>

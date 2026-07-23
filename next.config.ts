@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
+  // Lets the router run navigations through the browser's View Transitions API
+  // and enables React's <ViewTransition>. See components/animation/view-transition.
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     remotePatterns: [
       {

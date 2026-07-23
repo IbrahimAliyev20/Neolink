@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 import { useFaqs } from "@/services/faq/queries";
@@ -98,15 +99,19 @@ export function FaqSection() {
         {/* Figma: Frame 2147225017 — column; mobile gap 28, desktop gap 102 / width 566 */}
         <div className="flex min-w-0 flex-col gap-7 lg:w-[39.31%] lg:gap-[102px]">
           {/* Figma: Frame 16 — column, gap 16 mobile / 24 desktop */}
-          <Reveal stagger={0.12} className="flex flex-col gap-4 lg:gap-6">
-            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
-              Ən Çox Verilən <span className="text-neo-teal">Suallar</span>
-            </h2>
-            <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-              Komandamız sizə uyğun həlli müəyyənləşdirmək və bütün suallarınızı
-              cavablandırmaq üçün hər zaman hazırdır.
-            </p>
-          </Reveal>
+          <div className="flex flex-col gap-4 lg:gap-6">
+            <SplitLines>
+              <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
+                Ən Çox Verilən <span className="text-neo-teal">Suallar</span>
+              </h2>
+            </SplitLines>
+            <Reveal y={44} blur={8} className="w-full">
+              <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
+                Komandamız sizə uyğun həlli müəyyənləşdirmək və bütün suallarınızı
+                cavablandırmaq üçün hər zaman hazırdır.
+              </p>
+            </Reveal>
+          </div>
 
           {/* Figma: Frame 2147225018 — column; gap 24 mobile / 32 desktop, width 417 */}
           <div className="flex flex-col gap-6 lg:w-full lg:max-w-[417px] lg:gap-8">
@@ -157,7 +162,15 @@ export function FaqSection() {
         </div>
 
         {/* Figma: FAQ — column, gap 10, width 740 */}
-        <div className="flex min-w-0 flex-col gap-[10px] lg:w-[51.39%]">
+        {/* Questions deal in from the right, one after another. */}
+        <Reveal
+          x={64}
+          y={0}
+          blur={6}
+          stagger={0.16}
+          end="top 45%"
+          className="flex min-w-0 flex-col gap-[10px] lg:w-[51.39%]"
+        >
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 
@@ -210,7 +223,7 @@ export function FaqSection() {
               </div>
             );
           })}
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

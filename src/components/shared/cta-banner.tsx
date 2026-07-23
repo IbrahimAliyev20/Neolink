@@ -37,7 +37,10 @@ export function CtaBanner() {
       <Container className="relative flex flex-col py-6 md:py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:py-[81px]">
         {/* Figma: Frame 2147224633 — column; gap 32 mobile / 64 desktop, width 706 */}
         <Reveal
-          stagger={0.14}
+          y={64}
+          scale={0.95}
+          blur={8}
+          stagger={0.24}
           className="flex flex-col gap-8 md:gap-10 2xl:w-[706px] 2xl:gap-16"
         >
           {/* Figma: Frame 16 — column; gap 20 mobile / 24 desktop */}

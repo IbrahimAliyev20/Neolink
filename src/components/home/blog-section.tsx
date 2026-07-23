@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 
 const posts = [
@@ -50,22 +51,26 @@ export function BlogSection() {
       <Container className="flex flex-col gap-6 lg:gap-12 ">
         {/* Figma: Frame 16 / Frame 2147224638 — mobile centred column gap 12;
             desktop row, space-between, align center, gap 24 */}
-        <Reveal
-          stagger={0.12}
-          className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left"
-        >
-          <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[34.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
-            Rəqəmsal Dünyadan Yeniliklər
-          </h2>
-          <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px] lg:w-[51.32%]">
-            Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual
-            məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın.
-          </p>
-        </Reveal>
+        <div className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left">
+          <SplitLines>
+            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[34.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
+              Rəqəmsal Dünyadan Yeniliklər
+            </h2>
+          </SplitLines>
+          <Reveal y={44} blur={8} className="w-full lg:w-[51.32%]">
+            <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
+              Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual
+              məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın.
+            </p>
+          </Reveal>
+        </div>
 
         {/* Figma: Frame 2147224631 — mobile column gap 12; desktop row, gap 20 */}
         <Reveal
-          stagger={0.12}
+          y={80}
+          scale={0.94}
+          blur={8}
+          stagger={0.26}
           className="flex flex-col gap-3 lg:flex-row lg:gap-5"
         >
           {/* Figma: Blog-wide — 710x440, r16, border #F2F4F8, gradient scrim */}

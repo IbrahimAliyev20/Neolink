@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { useLogos } from "@/services/logo/queries";
@@ -54,19 +55,20 @@ export function EcosystemSection() {
 
   return (
     <div className="flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-15 lg:pb-[90px]">
-      <Reveal
-        stagger={0.12}
-        className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6"
-      >
-        <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-7 tracking-[0.01em] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
-          Bütün İT Ekosisteminiz
-        </h2>
-        <p className="text-[#5b606f] text-[12px] leading-4 tracking-[0.01em] max-w-[756px] md:text-base md:leading-6">
-          Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud
-          sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət
-          planı təqdim edəcəyik.
-        </p>
-      </Reveal>
+      <div className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6">
+        <SplitLines>
+          <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-7 tracking-[0.01em] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
+            Bütün İT Ekosisteminiz
+          </h2>
+        </SplitLines>
+        <Reveal y={44} blur={8} className="w-full max-w-[756px]">
+          <p className="text-[#5b606f] text-[12px] leading-4 tracking-[0.01em] md:text-base md:leading-6">
+            Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud
+            sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət
+            planı təqdim edəcəyik.
+          </p>
+        </Reveal>
+      </div>
       <Container className="flex flex-col gap-[10px] items-center w-full [--partner-gap:10px] lg:gap-4 lg:[--partner-gap:16px]">
         <LogoLoop
           logos={partnerLogos}
