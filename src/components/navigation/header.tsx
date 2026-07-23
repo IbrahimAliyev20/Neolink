@@ -5,11 +5,9 @@ import Link from "next/link";
 import LanguageSelector from "../shared/language-selector";
 import { navigationItems } from "@/utils/static";
 import Container from "../shared/container";
-import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 
 export function Header() {
-  const t = useTranslations("navigation");
   const pathname = usePathname();
 
   return (
@@ -30,7 +28,7 @@ export function Header() {
                     pathname === item.href ? "text-[#14171A]" : ""
                   }`}
                 >
-                  {t(item.label)}
+                  {item.label}
                 </Link>
               ))}
             </nav>

@@ -1,7 +1,7 @@
 export const navigationItems = [
-    { label: "jobs", href: "/jobs" },
-    { label: "companies", href: "/companies" },
-    { label: "categories", href: "/categories" },
-    { label: "cvs", href: "/cvs" },
-    { label: "about", href: "/about" },
+    { label: "Vakansiyalar", href: "/jobs" },
+    { label: "Şirkətlər", href: "/companies" },
+    { label: "Kateqoriyalar", href: "/categories" },
+    { label: "CVlər", href: "/cvs" },
+    { label: "Haqqımızda", href: "/about" },
   ]

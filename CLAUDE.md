@@ -4,7 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Next.js 16 (App Router, Turbopack) HR vacancy site (`hr-vacancy`), internationalized with `next-intl` (locales: `az` default, `en`; prefix mode `as-needed`, no auto locale detection).
+Next.js 16 (App Router, Turbopack) HR vacancy site (`hr-vacancy`). The `next-intl` wiring exists in the repo but is **not used** — see the hard rules below.
+
+## Hard rules (do not violate)
+
+- **No i18n. Ever.** This project has no language system and will not get one. Write all user-facing text as plain literals directly in the components (Azerbaijani). Never use `useTranslations` / `getTranslations` / `t(...)`, never add keys to `messages/az.json` or `messages/en.json` (both are intentionally `{}` and must stay empty), and never introduce new translation files. Do not delete the existing `next-intl` setup (`src/i18n/*`, `src/proxy.ts`, `NextIntlClientProvider`, the `[locale]` segment) — leave it untouched and ignore it.
+- **No auth.** Authentication is out of scope. Do not build, wire up, or modify auth screens, auth flows, or token handling. Leave the existing `src/app/[locale]/(auth)/...` routes, `src/components/auth/`, and the `access_token` logic in `src/lib/api/client.ts` exactly as they are.
 
 ## Commands
 
@@ -18,7 +23,7 @@ No test suite is configured in this repo.
 ## Architecture
 
 - **Routing**: all pages live under `src/app/[locale]/...`. Locale handling is driven by `src/i18n/routing.ts` (locales, default locale, prefix strategy) and enforced by the middleware in `src/proxy.ts` (note: this is the next-intl middleware, exported from a nonstandard filename `proxy.ts` rather than `middleware.ts`).
-- **i18n messages**: JSON dictionaries in `messages/az.json` and `messages/en.json`, loaded server-side via `next-intl/server` in `src/app/[locale]/layout.tsx` and exposed to client components through `NextIntlClientProvider`.
+- **i18n messages (dormant)**: `messages/az.json` and `messages/en.json` are empty (`{}`) on purpose. They are still loaded via `next-intl/server` in `src/app/[locale]/layout.tsx` and passed to `NextIntlClientProvider`, but no component reads them. Do not populate them.
 - **API layer**: `src/lib/api/client.ts` wraps a single axios instance (`NEXT_PUBLIC_API_BASE_URL`). It auto-attaches the `access_token` cookie (via `js-cookie`) as a Bearer token, derives `Accept-Language` from the current URL locale segment, and clears the auth cookie on 401. Typed `get/post/put/patch/del` helpers are re-exported from `src/lib/api/index.ts` — import from `@/lib/api`, not directly from `client.ts`.
 - **Data fetching**: feature areas under `src/services/<feature>/` follow a 3-file convention: `api.ts` (raw calls using the `@/lib/api` helpers), `queries.ts` (React Query `useQuery` hooks), `mutations.ts` (React Query `useMutation` hooks). Follow this split when adding a new feature's data layer.
 - **React Query setup**: `src/providers/QueryProvider.tsx` creates a browser-singleton `QueryClient` (new client per request on the server, cached singleton in the browser) with app-wide defaults (60s staleTime, 2 retries, no refetch-on-focus). `src/providers/HydrationBoundary.tsx` / `server.ts` support SSR prefetch + hydration patterns.
