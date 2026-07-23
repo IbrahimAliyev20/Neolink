@@ -18,7 +18,7 @@ export default async function ServiceDetailPage({
 
   return (
     <>
-      <div className="bg-[#f7f7f7] flex flex-col gap-16 items-center pb-[90px] w-full">
+      <div className="bg-[#f7f7f7] flex flex-col gap-9 items-center pb-9 w-full lg:gap-16 lg:pb-[90px]">
         <HeroDetailSection service={service} />
         <WhatIncludedSection service={service} />
       </div>

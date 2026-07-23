@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, K2D, Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { notFound } from "next/navigation";
@@ -43,6 +43,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "HR-vakansiyaları",
   description: "HR-vakansiyaları",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default async function RootLayout({

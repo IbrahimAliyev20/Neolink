@@ -25,7 +25,7 @@ export default function BlogPage() {
   );
 
   return (
-    <div className="bg-[#f7f7f7] flex flex-col gap-9 items-center pt-16 pb-[90px] w-full">
+    <div className="flex flex-col gap-8 items-center pt-8 pb-12 w-full lg:gap-9 lg:pt-16 lg:pb-[90px]">
       <HeroSection featuredPost={featuredPost} />
       <GridSection activeCategory={activeCategory} onChange={setActiveCategory} posts={gridPosts} />
     </div>

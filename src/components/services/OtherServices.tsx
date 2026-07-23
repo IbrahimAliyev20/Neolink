@@ -13,19 +13,19 @@ export function OtherServices({ currentSlug }: { currentSlug: ServiceSlug }) {
   }
 
   return (
-    <div className="bg-[#f7f7f7] flex flex-col gap-12 items-center py-[90px] w-full">
-      <div className="flex flex-col gap-5 items-center text-center max-w-[646px] px-4">
-        <h2 className="font-semibold text-[#1c1c1e] text-[40px] leading-[56px] tracking-[0.4px]">
+    <div className="bg-[#f7f7f7] flex flex-col gap-5 items-center py-9 w-full lg:gap-12 lg:py-[90px]">
+      <div className="flex flex-col gap-3 items-center text-center max-w-[343px] px-4 lg:gap-5 lg:max-w-[646px]">
+        <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
           Digər Xidmətlərimiz
         </h2>
-        <p className="text-[#5b606f] text-base leading-6 tracking-[0.16px]">
+        <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
           Biznesinizin müxtəlif ehtiyaclarını qarşılamaq üçün təqdim etdiyimiz əlavə
           xidmətlərlə tanış olun.
         </p>
       </div>
 
       <Container className="flex flex-col items-start w-full">
-        <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
+        <div className="flex flex-col gap-3 lg:flex-row lg:gap-6 items-start w-full">
           {otherServices.map((service) => (
             <Link key={service.slug} href={`/services/${service.slug}`} className="contents">
               <ServiceCard {...service} />

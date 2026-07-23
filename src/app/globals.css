@@ -197,6 +197,15 @@
   clip-path: inset(0% 100% 0% 0%);
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* No JS (or reduced motion) means no tween ever runs, so never hide anything. */
 @media (scripting: none), (prefers-reduced-motion: reduce) {
   [data-reveal] > *,

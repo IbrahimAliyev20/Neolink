@@ -11,17 +11,23 @@ function StatisticsCard({
 }) {
   return (
     <div
-      className="backdrop-blur-lg flex flex-col items-start p-5 rounded-xl w-full flex-1 min-w-0 text-white"
+      className="backdrop-blur-lg flex flex-col items-start p-3.5 rounded-[10px] w-full flex-1 min-w-0 text-white lg:p-5 lg:rounded-xl"
       style={{
         backgroundImage:
           "linear-gradient(106.14deg, rgb(33, 203, 178) 17.782%, rgb(38, 189, 184) 63.245%)",
       }}
     >
-      <div className="flex flex-col gap-2 items-start font-semibold whitespace-nowrap">
-        <p className="text-[40px] leading-[56px] tracking-[0.4px]">{value}</p>
-        <p className="text-xl leading-[28px] tracking-[0.2px]">{title}</p>
+      <div className="flex flex-col gap-1.5 items-start font-semibold whitespace-nowrap lg:gap-2">
+        <p className="text-2xl leading-8 tracking-[0.24px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
+          {value}
+        </p>
+        <p className="text-base leading-6 tracking-[0.16px] lg:text-xl lg:leading-[28px] lg:tracking-[0.2px]">
+          {title}
+        </p>
       </div>
-      <p className="text-base leading-6 tracking-[0.16px] mt-2.5">{description}</p>
+      <p className="text-sm leading-5 tracking-[0.14px] mt-2.5 lg:text-base lg:leading-6 lg:tracking-[0.16px]">
+        {description}
+      </p>
     </div>
   );
 }
@@ -29,7 +35,7 @@ function StatisticsCard({
 export function StatsSection() {
   return (
     <Container className="flex flex-col items-center w-full">
-      <div className="flex gap-5 items-start w-full">
+      <div className="flex flex-col gap-3 items-start w-full lg:flex-row lg:gap-5">
         <StatisticsCard
           value="15+"
           title="Sahə üzrə Ekspert"

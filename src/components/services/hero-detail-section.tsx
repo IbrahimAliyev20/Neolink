@@ -12,13 +12,13 @@ export function HeroDetailSection({ service }: { service: ServiceDetail }) {
 
   return (
     <Container className="flex flex-col items-start w-full">
-      <div className="flex flex-col lg:flex-row gap-16 lg:gap-[132px] items-center w-full">
-        <div className="flex flex-col gap-12 items-start flex-1 min-w-0 w-full">
-          <div className="flex flex-col gap-6 items-start w-full">
-            <h1 className="font-semibold text-[#1c1c1e] text-[40px] leading-[56px] tracking-[0.4px]">
+      <div className="flex flex-col gap-5 lg:flex-row lg:gap-16 xl:gap-[132px] items-center w-full">
+        <div className="flex flex-col gap-5 items-start w-full lg:gap-12 lg:flex-1 lg:min-w-0">
+          <div className="flex flex-col gap-3 items-start w-full lg:gap-6">
+            <h1 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
               {service.title}
             </h1>
-            <p className="text-[#5b606f] text-base leading-6 tracking-[0.16px]">
+            <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
               {service.description}
             </p>
           </div>
@@ -26,16 +26,16 @@ export function HeroDetailSection({ service }: { service: ServiceDetail }) {
             <button
               type="button"
               onClick={() => setIsOfferModalOpen(true)}
-              className="bg-[#3abdaa] flex gap-2 h-12 items-center justify-center px-16 py-3 rounded-full"
+              className="bg-[#3abdaa] flex gap-4 h-10 items-center justify-center px-6 py-2.5 rounded-full w-full lg:gap-2 lg:h-12 lg:px-16 lg:py-3 lg:w-auto"
             >
-              <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
+              <span className="font-medium text-white text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                 Təklif al
               </span>
               <ArrowUpRight className="h-5 w-5 text-white" strokeWidth={1.5} />
             </button>
           </div>
         </div>
-        <div className="border border-[#e7e7ea] h-[474px] relative rounded-[20px] flex-1 min-w-0 w-full overflow-hidden">
+        <div className="border border-[#e7e7ea] h-[247px] relative rounded-2xl w-full overflow-hidden lg:h-[474px] lg:rounded-[20px] lg:flex-1 lg:min-w-0">
           <Image
             src={service.heroImage}
             alt=""

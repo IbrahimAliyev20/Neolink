@@ -17,7 +17,7 @@ export function GridSection({
       <CategoryTabs categories={blogCategories} activeCategory={activeCategory} onChange={onChange} />
 
       {posts.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-4 lg:gap-5 w-full">
           {posts.map((post) => (
             <BlogCard key={post.slug} post={post} />
           ))}
