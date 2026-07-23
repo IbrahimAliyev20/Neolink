@@ -33,13 +33,13 @@ export function HeroSection() {
   return (
     <div className="relative w-full bg-[#f7f7f7]">
       <div className="absolute inset-0 bg-[#0d153a] lg:bottom-20 lg:rounded-bl-[120px]" />
-      <Container className="relative z-10 flex flex-col lg:flex-row gap-12 lg:gap-16 items-start w-full  lg:pt-24">
-        <div className=" flex flex-col gap-8 items-start flex-[574] min-w-0 w-full">
-          <div className="flex flex-col gap-6 items-start w-full">
-            <h1 className="font-semibold text-white text-[48px] leading-[64px]">
+      <Container className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-16 items-start w-full pt-14 pb-8 lg:pt-24 lg:pb-0">
+        <div className="flex flex-col gap-5 lg:gap-8 items-start w-full lg:flex-[574] lg:min-w-0">
+          <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
+            <h1 className="font-semibold text-white text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal">
               Bizimlə Əlaqə
             </h1>
-            <p className="text-[#b3b5bc] text-base leading-6 tracking-[0.16px]">
+            <p className="text-[#b3b5bc] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
               Biznesiniz üçün düzgün texnoloji həlli birlikdə müəyyənləşdirək. Layihənizi
               bizimlə paylaşın, sizə uyğun həll yollarını birlikdə planlaşdıraq.
             </p>
@@ -47,19 +47,19 @@ export function HeroSection() {
 
           <div className="bg-[#3d4461] h-px w-full" />
 
-          <div className="flex flex-col gap-6 items-start w-full">
-            <div className="flex flex-col gap-5 items-start w-full">
+          <div className="flex flex-col gap-5 items-start w-full lg:gap-6">
+            <div className="flex flex-col gap-4 items-start w-full lg:gap-5">
               {contactInfo.map((item) => (
-                <div key={item.label} className="flex gap-4 items-start">
+                <div key={item.label} className="flex gap-3 items-start lg:gap-4">
                   <div className="pt-0.5 shrink-0">
-                    <Image src={item.icon} alt="" width={32} height={32} />
+                    <Image src={item.icon} alt="" width={32} height={32} className="size-6 lg:size-8" />
                   </div>
                   <div className="flex flex-col gap-1 items-start">
-                    <p className="text-[#b3b5bc] text-sm leading-5">{item.label}</p>
+                    <p className="text-[#b3b5bc] text-xs leading-4 tracking-[0.12px] lg:text-sm lg:leading-5 lg:tracking-normal">{item.label}</p>
                     {item.lines.map((line) => (
                       <p
                         key={line}
-                        className="font-medium text-white text-base leading-6 whitespace-nowrap"
+                        className="font-medium text-white text-sm leading-5 tracking-[0.14px] whitespace-nowrap lg:text-base lg:leading-6 lg:tracking-normal"
                       >
                         {line}
                       </p>
@@ -72,7 +72,7 @@ export function HeroSection() {
             <div className="bg-[#3d4461] h-px w-full" />
 
             <div className="flex flex-col gap-4 items-start w-full">
-              <p className="text-[#b3b5bc] text-base leading-6 tracking-[0.16px]">
+              <p className="text-[#b3b5bc] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                 Bizimlə sosial media vasitələri ilə əlaqə saxlayın
               </p>
               <div className="flex gap-3 items-start">
@@ -91,20 +91,20 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="bg-white shadow-2xl flex flex-col gap-10 items-start px-7 py-8 rounded-[20px] flex-[658] min-w-0 w-full">
+        <div className="bg-white shadow-2xl flex flex-col gap-10 items-start p-3.5 rounded-2xl w-full lg:px-7 lg:py-8 lg:rounded-[20px] lg:flex-[658] lg:min-w-0">
           <div className="flex flex-col gap-6 items-start w-full">
-            <div className="flex flex-col gap-2 items-start w-full">
-              <p className="font-medium text-[#040711] text-[32px] leading-10 tracking-[0.32px]">
+            <div className="flex flex-col gap-3 items-start w-full lg:gap-2">
+              <p className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:font-medium lg:text-[32px] lg:leading-10 lg:tracking-[0.32px]">
                 Sualınız var ? Bizə yazın
               </p>
-              <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px]">
+              <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
                 Məlumatlarınızı doldurun, komandamız ən qısa zamanda sizinlə əlaqə saxlayacaq.
               </p>
             </div>
 
             <form
               onSubmit={(event) => event.preventDefault()}
-              className="flex flex-col gap-6 items-start w-full"
+              className="flex flex-col gap-4 items-start w-full lg:gap-6"
             >
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-name" className="text-[#040711] text-sm tracking-[0.14px] px-1">
@@ -186,9 +186,9 @@ export function HeroSection() {
 
               <button
                 type="submit"
-                className="bg-[#9093a4] flex h-12 items-center justify-center px-6 py-3 rounded-full w-full"
+                className="bg-[#9093a4] flex h-10 items-center justify-center px-6 py-2.5 rounded-full w-full lg:h-12 lg:py-3"
               >
-                <span className="font-medium text-[#e7e8eb] text-base leading-6 tracking-[0.16px]">
+                <span className="font-medium text-[#e7e8eb] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                   Göndər
                 </span>
               </button>

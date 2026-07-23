@@ -1,13 +1,13 @@
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import Container from "@/components/shared/container";
 
 /**
- * Figma desktop (node 3263:87776, 1920 canvas): four rotated project-card
+ * Figma desktop (node 3263:87776, 1920x521 canvas): four rotated project-card
  * thumbnails flank a centered title/description/CTA, with a hand-drawn arrow
- * pointing from the copy up to the button. Uses the same `.hero-scale` /
- * `--hero-u` unit as the home hero so the whole composition scales together
- * instead of reflowing. Below `lg` the cards are dropped and the copy stacks.
+ * pointing from the copy up to the button. The canvas renders at fixed 1:1
+ * scale and is centered; narrower windows crop the side cards symmetrically,
+ * so the hero looks identical at every desktop size. Below `lg` the Figma
+ * mobile layout (node 3268:81608) takes over with literal mobile pixels.
  */
 function RotatedCard({
   className,
@@ -39,80 +39,125 @@ function RotatedCard({
 
 export function HeroSection() {
   return (
-    <section className="hero-scale relative w-full overflow-hidden bg-[#f7f7f7]">
-      {/* Mobile / tablet: no decorative cards, simple centered copy */}
-      <Container className="flex flex-col items-center gap-5 py-12 text-center lg:hidden">
-        <h1 className="text-xl leading-7 font-semibold tracking-[0.2px] text-[#1c1c1e]">
-          <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
-        </h1>
-        <p className="text-sm leading-5 tracking-[0.14px] text-[#5b606f]">
-          Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
-          fikirləri ilə gündəmdən geri qalmayın.
-        </p>
-        <button
-          type="button"
-          className="flex h-10 items-center justify-center gap-2 rounded-full bg-[#0d153a] px-6 text-sm font-medium tracking-[0.14px] text-white"
-        >
-          Təklif al
-          <ArrowUpRight className="size-5" strokeWidth={1.5} />
-        </button>
-      </Container>
+    <section className="relative w-full overflow-hidden bg-[#f7f7f7]">
+      {/* Mobile / tablet (Figma node 3268:81608, 375 canvas): the desktop
+          composition at literal mobile pixel sizes — small rotated corner
+          cards peeking in from the edges, centered copy, arrow to the CTA. */}
+      <div className="relative mx-auto h-[359px] w-full max-w-[375px] lg:hidden">
+        <div className="absolute top-[5px] -left-[54px] flex h-[111.37px] w-[133px] items-center justify-center">
+          <div className="relative h-[89.98px] w-[117.59px] shrink-0 -rotate-[11.36deg] overflow-hidden rounded-[10px] border border-[#f2f4f8]">
+            <Image src="/images/projects/hero/card-2.jpg" alt="" fill className="object-cover" sizes="118px" />
+          </div>
+        </div>
+        <div className="absolute top-[81px] -left-[10px] flex h-[54.02px] w-[65.73px] items-center justify-center">
+          <div className="relative h-[45.55px] w-[59.53px] shrink-0 -rotate-[8.69deg] overflow-hidden rounded-lg border border-[#f2f4f8] opacity-12">
+            <Image src="/images/projects/hero/card-1.jpg" alt="" fill className="object-cover" sizes="60px" />
+          </div>
+        </div>
+        <div className="absolute top-[233px] left-[279.91px] flex h-[61.2px] w-[70.65px] items-center justify-center">
+          <div className="relative h-[45.91px] w-[59.99px] shrink-0 rotate-[16.69deg] overflow-hidden rounded-lg border border-[#f2f4f8] opacity-12">
+            <Image src="/images/projects/hero/card-3.jpg" alt="" fill className="object-cover" sizes="60px" />
+          </div>
+        </div>
+        <div className="absolute top-[255px] left-[284px] flex h-[94.41px] w-[113.87px] items-center justify-center">
+          <div className="relative h-[78.03px] w-[101.97px] shrink-0 rotate-[9.91deg] overflow-hidden rounded-[10px] border border-[#f2f4f8]">
+            <Image src="/images/projects/hero/card-4.jpg" alt="" fill className="object-cover" sizes="102px" />
+          </div>
+        </div>
 
-      {/* Desktop: pixel-accurate Figma composition, scaled via --hero-u */}
-      <div className="relative mx-auto hidden w-full max-w-[1920px] lg:block lg:h-[calc(var(--hero-u)*520)]">
-        <RotatedCard
-          className="left-[calc(var(--hero-u)*333.33)] top-[calc(var(--hero-u)*317.9)] h-[calc(var(--hero-u)*160.153)] w-[calc(var(--hero-u)*194.848)]"
-          boxClassName="h-[calc(var(--hero-u)*135.035)] w-[calc(var(--hero-u)*176.467)]"
-          rotate="-rotate-[8.69deg]"
-          src="/images/projects/hero/card-1.jpg"
-          faded
-        />
-        <RotatedCard
-          className="left-[calc(var(--hero-u)*200)] top-[calc(var(--hero-u)*73)] h-[calc(var(--hero-u)*330.16)] w-[calc(var(--hero-u)*394.285)]"
-          boxClassName="h-[calc(var(--hero-u)*266.744)] w-[calc(var(--hero-u)*348.585)]"
-          rotate="-rotate-[11.36deg]"
-          src="/images/projects/hero/card-2.jpg"
-        />
-        <RotatedCard
-          className="left-[calc(var(--hero-u)*1307)] top-[calc(var(--hero-u)*57)] h-[calc(var(--hero-u)*223.75)] w-[calc(var(--hero-u)*258.283)]"
-          boxClassName="h-[calc(var(--hero-u)*167.828)] w-[calc(var(--hero-u)*219.321)]"
-          rotate="rotate-[16.69deg]"
-          src="/images/projects/hero/card-3.jpg"
-          faded
-        />
-        <RotatedCard
-          className="left-[calc(var(--hero-u)*1300)] top-[calc(var(--hero-u)*162)] h-[calc(var(--hero-u)*345.128)] w-[calc(var(--hero-u)*416.283)]"
-          boxClassName="h-[calc(var(--hero-u)*285.245)] w-[calc(var(--hero-u)*372.763)]"
-          rotate="rotate-[9.91deg]"
-          src="/images/projects/hero/card-4.jpg"
-        />
-
-        <div className="absolute left-[calc(var(--hero-u)*650)] top-[calc(var(--hero-u)*145)] flex w-[calc(var(--hero-u)*620)] flex-col items-center gap-[calc(var(--hero-u)*36)]">
-          <div className="relative flex w-full flex-col items-center gap-[calc(var(--hero-u)*20)] text-center">
-            <h1 className="w-[calc(var(--hero-u)*592)] text-[calc(var(--hero-u)*48)] leading-[calc(var(--hero-u)*64)] font-semibold text-[#1c1c1e]">
+        <div className="absolute top-[93px] left-4 flex w-[343px] flex-col items-center gap-6">
+          <div className="flex w-full flex-col items-center gap-3 text-center">
+            <h1 className="w-[294px] text-xl leading-7 font-semibold tracking-[0.2px] text-[#1c1c1e]">
               <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
             </h1>
-            <p className="w-full text-[calc(var(--hero-u)*16)] leading-[calc(var(--hero-u)*24)] tracking-[0.16px] text-[#5b606f]">
+            <p className="w-full text-xs leading-4 tracking-[0.12px] text-[#5b606f]">
               Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
               fikirləri ilə gündəmdən geri qalmayın.
             </p>
-
-            <Image
-              src="/images/projects/hero/arrow.svg"
-              alt=""
-              width={79}
-              height={31}
-              className="absolute left-[calc(var(--hero-u)*92)] top-[calc(var(--hero-u)*196)] w-[calc(var(--hero-u)*79)] rotate-[37.55deg]"
-            />
           </div>
 
           <button
             type="button"
-            className="flex h-[calc(var(--hero-u)*48)] items-center justify-center gap-[calc(var(--hero-u)*16)] rounded-full bg-[#0d153a] px-[calc(var(--hero-u)*24)] text-[calc(var(--hero-u)*16)] leading-[calc(var(--hero-u)*24)] font-medium tracking-[0.16px] text-white"
+            className="flex h-10 w-[166px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 py-2.5 text-sm leading-5 font-medium tracking-[0.14px] text-white"
           >
             Təklif al
-            <ArrowUpRight className="size-[calc(var(--hero-u)*24)]" strokeWidth={1.5} />
+            <ArrowUpRight className="size-5" strokeWidth={1.5} />
           </button>
+        </div>
+
+        <div className="absolute top-[195.78px] left-[82.53px] flex h-[29.25px] w-[27.61px] items-center justify-center">
+          <Image
+            src="/images/projects/hero/arrow.svg"
+            alt=""
+            width={29}
+            height={12}
+            className="w-[28.95px] shrink-0 rotate-[48.77deg]"
+          />
+        </div>
+      </div>
+
+      {/* Desktop: the Figma 1920x521 canvas at fixed 1:1 scale, centered.
+          Narrower windows crop the side cards symmetrically (section is
+          overflow-hidden) instead of shrinking anything, so the hero looks
+          identical at every window size. */}
+      <div className="relative hidden h-[521px] w-full lg:block">
+        <div className="absolute left-1/2 top-0 h-[521px] w-[1920px] -translate-x-1/2">
+          <RotatedCard
+            className="left-[393.33px] top-[344.57px] h-[160.15px] w-[194.85px]"
+            boxClassName="h-[135.04px] w-[176.47px]"
+            rotate="-rotate-[8.69deg]"
+            src="/images/projects/hero/card-1.jpg"
+            faded
+          />
+          <RotatedCard
+            className="left-[260px] top-[141.64px] h-[330.16px] w-[394.28px]"
+            boxClassName="h-[266.74px] w-[348.59px]"
+            rotate="-rotate-[11.36deg]"
+            src="/images/projects/hero/card-2.jpg"
+          />
+          <RotatedCard
+            className="left-[1295.2px] top-[57px] h-[223.75px] w-[258.28px]"
+            boxClassName="h-[167.83px] w-[219.32px]"
+            rotate="rotate-[16.69deg]"
+            src="/images/projects/hero/card-3.jpg"
+            faded
+          />
+          <RotatedCard
+            className="left-[1289.08px] top-[162px] h-[345.13px] w-[416.28px]"
+            boxClassName="h-[285.25px] w-[372.76px]"
+            rotate="rotate-[9.91deg]"
+            src="/images/projects/hero/card-4.jpg"
+          />
+
+          <div className="absolute left-[650px] top-[145px] flex w-[620px] flex-col items-center gap-9">
+            <div className="relative flex w-full flex-col items-center gap-5 text-center">
+              <h1 className="w-[592px] text-[48px] leading-[64px] font-semibold text-[#1c1c1e]">
+                <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
+              </h1>
+              <p className="w-full text-base leading-6 tracking-[0.16px] text-[#5b606f]">
+                Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
+                fikirləri ilə gündəmdən geri qalmayın.
+              </p>
+
+              <div className="absolute left-[110.81px] top-[196px] flex h-[72.5px] w-[81.29px] items-center justify-center">
+                <Image
+                  src="/images/projects/hero/arrow.svg"
+                  alt=""
+                  width={79}
+                  height={31}
+                  className="w-[78.81px] shrink-0 rotate-[37.55deg]"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="flex h-12 w-[248px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-base leading-6 font-medium tracking-[0.16px] text-white"
+            >
+              Təklif al
+              <ArrowUpRight className="size-6" strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       </div>
     </section>

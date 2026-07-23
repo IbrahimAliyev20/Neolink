@@ -48,6 +48,41 @@ const title = "Korporativ İT İdarəetmə Platforması";
 const description =
   "Şirkətlərin İT infrastrukturu, texniki dəstək, avadanlıqlar və təhlükəsizlik proseslərini vahid platforma üzərindən idarə etməsinə imkan verən kompleks həll.";
 
+/** Placeholder detail-page content shared by every project until real data lands. */
+const sharedDetail = {
+  client: "Nexend Group",
+  duration: "3 ay",
+  field: "Bulud Texnologiyaları",
+  heroImage: detailHeroBg,
+  detailSections: [
+    {
+      number: "01",
+      title: "Layihə Haqqında",
+      paragraphs: [
+        "Korporativ İT İdarəetmə Platforması, müəssisələrin İT əməliyyatlarını vahid ekosistem üzərindən idarə etməsi üçün hazırlanmış müasir və kompleks proqram təminatıdır. Platforma İT infrastrukturunun monitorinqi, texniki dəstək prosesləri, aktivlərin idarə olunması, DevOps əməliyyatları, bulud xidmətləri və kibertəhlükəsizlik funksiyalarını bir sistemdə birləşdirərək əməliyyatların daha səmərəli həyata keçirilməsini təmin edir.",
+        "Layihənin əsas məqsədi fərqli platformalarda idarə olunan prosesləri mərkəzləşdirmək, məlumat axınını optimallaşdırmaq və qərarvermə prosesini sürətləndirmək idi. İstifadəçi yönümlü interfeys və çevik modul strukturu sayəsində sistem müxtəlif ölçülü müəssisələrin ehtiyaclarına uyğunlaşdırıla bilir. Bu yanaşma şirkətlərə vaxt itkisinin qarşısını almağa, resurslardan daha səmərəli istifadə etməyə və İT proseslərini daha effektiv idarə etməyə imkan yaradır.",
+      ],
+    },
+    {
+      number: "02",
+      title: "Qarşıya Qoyulan Məqsəd",
+      paragraphs: [
+        "Müəssisələrdə İT proseslərinin müxtəlif proqramlar və əl ilə idarə olunması əməliyyatların mürəkkəbləşməsinə, məlumatların parçalanmasına və vaxt itkisinə səbəb olur. Texniki dəstək müraciətlərinin izlənilməsi, avadanlıqların idarə olunması, təhlükəsizlik nəzarəti və bulud resurslarının monitorinqi kimi vacib proseslərin vahid platformada olmaması idarəetmədə çətinliklər yaradır.",
+        "Bu layihənin əsas məqsədi bütün bu prosesləri bir platformada birləşdirərək daha şəffaf, çevik və avtomatlaşdırılmış idarəetmə sistemi yaratmaq idi. Eyni zamanda rəhbərlərin real vaxt rejimində analitik məlumatlara çıxış əldə etməsi, texniki komandaların gündəlik iş yükünün azaldılması və təhlükəsizlik risklərinin minimuma endirilməsi layihənin prioritet hədəflərindən biri olmuşdur.",
+      ],
+    },
+    {
+      number: "03",
+      title: "Təqdim Etdiyimiz Həll",
+      paragraphs: [
+        "Hazırlanan platforma modul əsaslı arxitektura üzərində qurularaq müəssisələrin bütün İT əməliyyatlarını vahid dashboard vasitəsilə idarə etməsinə imkan yaradır. Sistem Help Desk modulu ilə texniki dəstək müraciətlərinin idarə olunmasını, Asset Management bölməsi ilə avadanlıqların izlənilməsini, Cloud Management modulu ilə bulud resurslarının monitorinqini və DevOps inteqrasiyaları vasitəsilə proqram təminatının inkişaf proseslərini avtomatlaşdırır.",
+        "Bundan əlavə, platformaya kibertəhlükəsizlik monitorinqi, istifadəçi səlahiyyətlərinin idarə olunması, audit qeydləri, analitik hesabatlar və bildiriş sistemi inteqrasiya edilmişdir. Müasir UX/UI prinsipləri əsasında hazırlanmış interfeys istifadəçilərə mürəkkəb prosesləri daha rahat idarə etməyə imkan verir. Nəticədə təşkilatlar daha sürətli qərarlar qəbul edir, əməliyyat xərclərini azaldır, məlumat təhlükəsizliyini gücləndirir və ümumi iş məhsuldarlığını əhəmiyyətli dərəcədə artırırlar.",
+      ],
+    },
+  ],
+  gallery: [detailGallery1, detailGallery2],
+} satisfies Partial<Project>;
+
 export const projects: Project[] = [
   {
     slug: "bulud-infrastrukturunun-idareetme-sistemi",
@@ -58,6 +93,7 @@ export const projects: Project[] = [
     description:
       "Bulud resurslarının monitorinqi, idarə olunması və optimallaşdırılması üçün hazırlanmış korporativ platforma.",
     image: projectMain,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-1",
@@ -67,6 +103,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project1,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-2",
@@ -76,6 +113,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project2,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-3",
@@ -85,6 +123,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project3,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-4",
@@ -94,6 +133,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project4,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-5",
@@ -103,6 +143,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project5,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-6",
@@ -112,6 +153,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project6,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-7",
@@ -121,6 +163,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project7,
+    ...sharedDetail,
   },
   {
     slug: "korporativ-it-idareetme-platformasi-8",
@@ -130,6 +173,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project8,
+    ...sharedDetail,
   },
   {
     slug: "bulud-texnologiyalari-layihe-1",
@@ -139,37 +183,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project2,
-    client: "Nexend Group",
-    duration: "3 ay",
-    field: "Bulud Texnologiyaları",
-    heroImage: detailHeroBg,
-    detailSections: [
-      {
-        number: "01",
-        title: "Layihə Haqqında",
-        paragraphs: [
-          "Korporativ İT İdarəetmə Platforması, müəssisələrin İT əməliyyatlarını vahid ekosistem üzərindən idarə etməsi üçün hazırlanmış müasir və kompleks proqram təminatıdır. Platforma İT infrastrukturunun monitorinqi, texniki dəstək prosesləri, aktivlərin idarə olunması, DevOps əməliyyatları, bulud xidmətləri və kibertəhlükəsizlik funksiyalarını bir sistemdə birləşdirərək əməliyyatların daha səmərəli həyata keçirilməsini təmin edir.",
-          "Layihənin əsas məqsədi fərqli platformalarda idarə olunan prosesləri mərkəzləşdirmək, məlumat axınını optimallaşdırmaq və qərarvermə prosesini sürətləndirmək idi. İstifadəçi yönümlü interfeys və çevik modul strukturu sayəsində sistem müxtəlif ölçülü müəssisələrin ehtiyaclarına uyğunlaşdırıla bilir. Bu yanaşma şirkətlərə vaxt itkisinin qarşısını almağa, resurslardan daha səmərəli istifadə etməyə və İT proseslərini daha effektiv idarə etməyə imkan yaradır.",
-        ],
-      },
-      {
-        number: "02",
-        title: "Qarşıya Qoyulan Məqsəd",
-        paragraphs: [
-          "Müəssisələrdə İT proseslərinin müxtəlif proqramlar və əl ilə idarə olunması əməliyyatların mürəkkəbləşməsinə, məlumatların parçalanmasına və vaxt itkisinə səbəb olur. Texniki dəstək müraciətlərinin izlənilməsi, avadanlıqların idarə olunması, təhlükəsizlik nəzarəti və bulud resurslarının monitorinqi kimi vacib proseslərin vahid platformada olmaması idarəetmədə çətinliklər yaradır.",
-          "Bu layihənin əsas məqsədi bütün bu prosesləri bir platformada birləşdirərək daha şəffaf, çevik və avtomatlaşdırılmış idarəetmə sistemi yaratmaq idi. Eyni zamanda rəhbərlərin real vaxt rejimində analitik məlumatlara çıxış əldə etməsi, texniki komandaların gündəlik iş yükünün azaldılması və təhlükəsizlik risklərinin minimuma endirilməsi layihənin prioritet hədəflərindən biri olmuşdur.",
-        ],
-      },
-      {
-        number: "03",
-        title: "Təqdim Etdiyimiz Həll",
-        paragraphs: [
-          "Hazırlanan platforma modul əsaslı arxitektura üzərində qurularaq müəssisələrin bütün İT əməliyyatlarını vahid dashboard vasitəsilə idarə etməsinə imkan yaradır. Sistem Help Desk modulu ilə texniki dəstək müraciətlərinin idarə olunmasını, Asset Management bölməsi ilə avadanlıqların izlənilməsini, Cloud Management modulu ilə bulud resurslarının monitorinqini və DevOps inteqrasiyaları vasitəsilə proqram təminatının inkişaf proseslərini avtomatlaşdırır.",
-          "Bundan əlavə, platformaya kibertəhlükəsizlik monitorinqi, istifadəçi səlahiyyətlərinin idarə olunması, audit qeydləri, analitik hesabatlar və bildiriş sistemi inteqrasiya edilmişdir. Müasir UX/UI prinsipləri əsasında hazırlanmış interfeys istifadəçilərə mürəkkəb prosesləri daha rahat idarə etməyə imkan verir. Nəticədə təşkilatlar daha sürətli qərarlar qəbul edir, əməliyyat xərclərini azaldır, məlumat təhlükəsizliyini gücləndirir və ümumi iş məhsuldarlığını əhəmiyyətli dərəcədə artırırlar.",
-        ],
-      },
-    ],
-    gallery: [detailGallery1, detailGallery2],
+    ...sharedDetail,
   },
   {
     slug: "texnologiya-layihe-1",
@@ -179,6 +193,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project3,
+    ...sharedDetail,
   },
   {
     slug: "biznes-helleri-layihe-1",
@@ -188,6 +203,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project5,
+    ...sharedDetail,
   },
   {
     slug: "yenilikler-layihe-1",
@@ -197,6 +213,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project6,
+    ...sharedDetail,
   },
   {
     slug: "suni-intellekt-layihe-1",
@@ -206,6 +223,7 @@ export const projects: Project[] = [
     title,
     description,
     image: project7,
+    ...sharedDetail,
   },
 ];
 

@@ -6,7 +6,7 @@ import type { Project } from "@/lib/data/projects";
 
 export function HeroDetailSection({ project }: { project: Project }) {
   return (
-    <div className="relative w-full h-[500px] md:h-[704px]">
+    <div className="relative w-full h-[336px] lg:h-[704px]">
       {project.heroImage && (
         <Image
           src={project.heroImage}
@@ -20,7 +20,7 @@ export function HeroDetailSection({ project }: { project: Project }) {
       <div className="absolute inset-0 bg-black/20" />
 
       <div className="relative flex flex-col h-full">
-        <Container className="pt-6 w-full">
+        <Container className="py-4 w-full lg:pt-6 lg:pb-0">
           <div className="flex gap-1 items-center">
             <Link href="/projects" className="text-[#b3b5bc] text-xs">
               Layihələr
@@ -32,22 +32,22 @@ export function HeroDetailSection({ project }: { project: Project }) {
           </div>
         </Container>
 
-        <Container className="flex flex-col gap-6 items-start w-full mt-auto pb-10">
-          <h1 className="font-semibold text-white text-[48px] leading-[64px] max-w-[566px]">
+        <Container className="flex flex-col flex-1 justify-between items-start w-full pb-5 lg:justify-end lg:gap-6 lg:pb-10">
+          <h1 className="font-semibold text-white text-xl leading-7 tracking-[0.2px] w-full lg:text-[48px] lg:leading-[64px] lg:tracking-normal lg:max-w-[566px]">
             {project.title}
           </h1>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 w-full">
-            <div className="flex flex-wrap gap-6 sm:gap-9 items-center text-lg tracking-[0.18px] text-white">
+          <div className="flex flex-col gap-6 items-start w-full lg:flex-row lg:items-center lg:justify-between">
+            <div className="flex flex-col gap-1 items-start text-sm leading-5 tracking-[0.14px] text-white lg:flex-row lg:flex-wrap lg:items-center lg:gap-9 lg:text-lg lg:leading-normal lg:tracking-[0.18px]">
               <div className="flex gap-2 items-center">
-                <p className="font-semibold">Şirkət:</p>
+                <p className="font-medium lg:font-semibold">Şirkət:</p>
                 <p className="font-medium">{project.client}</p>
               </div>
               <div className="flex gap-2 items-center">
-                <p className="font-semibold">Müddət:</p>
+                <p className="font-medium lg:font-semibold">Müddət:</p>
                 <p className="font-medium">{project.duration}</p>
               </div>
               <div className="flex gap-2 items-center">
-                <p className="font-semibold">Sahə:</p>
+                <p className="font-medium lg:font-semibold">Sahə:</p>
                 <p className="font-medium">{project.field}</p>
               </div>
             </div>
@@ -55,9 +55,9 @@ export function HeroDetailSection({ project }: { project: Project }) {
               {project.tags.map((tag) => (
                 <div
                   key={tag}
-                  className="bg-black/32 flex items-center justify-center px-4 py-1.5 rounded-full"
+                  className="bg-black/32 flex items-center justify-center px-3.5 py-[5px] rounded-full lg:px-4 lg:py-1.5"
                 >
-                  <p className="font-medium text-white text-sm tracking-[0.14px] whitespace-nowrap">
+                  <p className="font-semibold text-white text-xs tracking-[0.12px] whitespace-nowrap lg:font-medium lg:text-sm lg:tracking-[0.14px]">
                     {tag}
                   </p>
                 </div>

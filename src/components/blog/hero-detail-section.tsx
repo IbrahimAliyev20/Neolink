@@ -22,7 +22,7 @@ function ShareButtons({ variant }: { variant: "mobile" | "desktop" }) {
       className={
         variant === "mobile"
           ? "flex lg:hidden gap-1 items-center"
-          : "hidden lg:flex flex-col gap-3 items-start pt-[86px] shrink-0"
+          : "hidden lg:flex flex-col gap-3 items-start  shrink-0"
       }
     >
       {(variant === "mobile" ? shareLinksMobile : shareLinks).map((share) => (

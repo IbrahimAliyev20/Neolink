@@ -12,19 +12,19 @@ export function RelatedProjects({ currentSlug }: { currentSlug: string }) {
   }
 
   return (
-    <div className="bg-white flex flex-col gap-12 items-center py-[90px] w-full">
-      <div className="flex flex-col gap-5 items-center text-center max-w-[566px] px-4">
-        <h2 className="font-semibold text-[#1c1c1e] text-[40px] leading-[56px] tracking-[0.4px]">
+    <div className="bg-white flex flex-col gap-6 items-center py-9 w-full lg:gap-12 lg:py-[90px]">
+      <div className="flex flex-col gap-3 items-center text-center max-w-[343px] px-4 lg:gap-5 lg:max-w-[566px]">
+        <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
           Digər Layihələrimizlə Tanış olum
         </h2>
-        <p className="text-[#5b606f] text-base leading-6 tracking-[0.16px]">
+        <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
           Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
           fikirləri ilə gündəmdən geri qalmayın.
         </p>
       </div>
 
       <Container className="flex flex-col items-center w-full">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-3 lg:gap-6 w-full">
           {relatedProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
