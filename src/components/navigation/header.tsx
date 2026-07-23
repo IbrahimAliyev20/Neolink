@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -96,9 +96,61 @@ export function Header() {
   const panelRef = useRef<HTMLDivElement | null>(null);
   const panelInnerRef = useRef<HTMLDivElement | null>(null);
 
+  // Tablet / mobile drawer, same mount-through-the-close-tween pattern.
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileMounted, setMobileMounted] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     if (servicesOpen) setPanelMounted(true);
   }, [servicesOpen]);
+
+  useEffect(() => {
+    if (mobileOpen) setMobileMounted(true);
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    const drawer = drawerRef.current;
+    if (!mobileMounted || !drawer) return;
+
+    const ctx = gsap.context(() => {
+      if (mobileOpen) {
+        gsap.fromTo(
+          drawer,
+          { opacity: 0, y: -12 },
+          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
+        );
+      } else {
+        gsap.to(drawer, {
+          opacity: 0,
+          y: -10,
+          duration: 0.28,
+          ease: "power2.inOut",
+          onComplete: () => {
+            setMobileMounted(false);
+            setMobileServicesOpen(false);
+          },
+        });
+      }
+    });
+
+    return () => ctx.kill();
+  }, [mobileMounted, mobileOpen]);
+
+  // Close the drawer on navigation and keep the page from scrolling behind it.
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [mobileOpen]);
 
   // Open: unroll from the header edge and lift the content in.
   // Close: reverse it, then unmount once the tween finishes.
@@ -248,12 +300,98 @@ export function Header() {
           {/* Figma: Common buttons — 151x48, #0D153A, r100 */}
           <Link
             href="/contact"
-            className="flex h-12 shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] whitespace-nowrap text-white transition-colors hover:bg-[#0d153a]/90"
+            className="hidden h-12 shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] whitespace-nowrap text-white transition-colors hover:bg-[#0d153a]/90 lg:flex"
           >
             Bizimlə əlaqə
           </Link>
+
+          {/* Tablet / mobile trigger — the desktop nav collapses below lg. */}
+          <button
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-label={mobileOpen ? "Menyunu bağla" : "Menyunu aç"}
+            aria-expanded={mobileOpen}
+            className="flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#e7e7ea] text-[#1c1c1e] transition-colors hover:bg-[#f7f7f7] lg:hidden"
+          >
+            {mobileOpen ? (
+              <X className="h-6 w-6" strokeWidth={1.5} />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={1.5} />
+            )}
+          </button>
         </div>
       </Container>
+
+      {/* Mobile / tablet drawer */}
+      {mobileMounted && (
+        <div
+          ref={drawerRef}
+          className="absolute inset-x-0 top-full z-50 max-h-[calc(100vh-96px)] overflow-y-auto border-b border-[#e7e7ea] bg-white opacity-0 shadow-[0_16px_40px_rgba(4,7,17,0.08)] will-change-[transform,opacity] lg:hidden"
+        >
+          <Container className="flex flex-col gap-2 py-6">
+            {menu.map((item) =>
+              item.hasMenu ? (
+                <div key={item.href} className="flex flex-col">
+                  <button
+                    type="button"
+                    onClick={() => setMobileServicesOpen((open) => !open)}
+                    aria-expanded={mobileServicesOpen}
+                    className="flex cursor-pointer items-center justify-between py-3 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#1c1c1e]"
+                  >
+                    {item.label}
+                    <ChevronDown
+                      className={`h-5 w-5 transition-transform ${
+                        mobileServicesOpen ? "rotate-180" : ""
+                      }`}
+                      strokeWidth={1.5}
+                    />
+                  </button>
+
+                  {mobileServicesOpen && (
+                    <div className="flex flex-col gap-1 pb-2 pl-3">
+                      {serviceColumns.flat().map((service) => (
+                        <Link
+                          key={service.href}
+                          href={service.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center justify-between gap-4 py-2 text-[16px] leading-[24px] font-normal tracking-[0.01em] text-[#3b4153]"
+                        >
+                          {service.label}
+                          <ArrowUpRight
+                            className="h-5 w-5 shrink-0"
+                            strokeWidth={2}
+                          />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="h-px w-full bg-[#e7e7ea]" />
+                </div>
+              ) : (
+                <div key={item.href} className="flex flex-col">
+                  <Link
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="py-3 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-[#1c1c1e]"
+                  >
+                    {item.label}
+                  </Link>
+                  <div className="h-px w-full bg-[#e7e7ea]" />
+                </div>
+              )
+            )}
+
+            <Link
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="mt-4 flex h-12 w-full items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
+            >
+              Bizimlə əlaqə
+            </Link>
+          </Container>
+        </div>
+      )}
 
       {/* Figma: Service-list-2 — 1920x360, white, pt 36 / pb 40, px 240 */}
       {panelMounted && (
