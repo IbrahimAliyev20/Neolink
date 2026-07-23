@@ -16,7 +16,7 @@ const menu = [
   { label: "Haqqımızda", href: "/about" },
   { label: "Xidmətlər", href: "/services", hasMenu: true },
   { label: "Layihələr", href: "/projects" },
-  { label: "Bloqlar", href: "/blog" },
+  { label: "Bloqlar", href: "/blogs" },
 ];
 
 /**
