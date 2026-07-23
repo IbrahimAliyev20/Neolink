@@ -104,7 +104,7 @@ export function FaqSection() {
 
   return (
     <section className="w-full overflow-hidden bg-white py-9 lg:py-[90px]">
-      <Container className="flex flex-col gap-8 lg:flex-row lg:gap-[7.08%] 2xl:px-0">
+      <Container className="flex flex-col gap-8 lg:flex-row lg:gap-[7.08%]">
         {/* Figma: Frame 2147225017 — column; mobile gap 28, desktop gap 102 / width 566 */}
         <div className="flex min-w-0 flex-col gap-7 lg:w-[39.31%] lg:gap-[102px]">
           {/* Figma: Frame 16 — column, gap 16 mobile / 24 desktop */}

@@ -32,7 +32,7 @@ const socials = [
 export function Footer() {
   return (
     <footer className="w-full bg-white pt-9 pb-6 lg:pt-12 lg:pb-8">
-      <Container className="2xl:px-0">
+      <Container>
         <div className="flex w-full flex-col gap-5 lg:gap-7">
           {/* Figma: Logo-Menus — mobile centred column gap 24; desktop row, space-between */}
           <div className="flex w-full flex-col items-center gap-6 lg:h-12 lg:flex-row lg:justify-between lg:gap-10">

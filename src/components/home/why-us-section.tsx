@@ -16,7 +16,7 @@ import Container from "@/components/shared/container";
 export function WhyUsSection() {
   return (
     <section className="w-full py-9 lg:py-[90px]">
-      <Container className="flex flex-col gap-6 lg:gap-12 2xl:px-0">
+      <Container className="flex flex-col gap-6 lg:gap-12">
         {/* Figma: Frame 16 — column; gap 12 mobile / 24 desktop, width 788, centered */}
         <Reveal
           stagger={0.12}
@@ -38,8 +38,9 @@ export function WhyUsSection() {
             stagger={0.1}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
-            {/* Figma: Statistics-card-1 — 343x216 r16 p16 mobile / 880x360 r20 p 32/28 desktop */}
-            <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:w-[61.1%] lg:rounded-[20px] lg:px-7 lg:py-8">
+            {/* Figma: Statistics-card-1 — 343x216 r16 p16 mobile / 880x360 r20 p 32/28
+                desktop. Widths are flex ratios, matching Figma’s 880 : 537 split. */}
+            <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:flex-[880] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between gap-9 lg:gap-0">
                 <h3 className="max-w-[247px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   “Tək Tərəfdaş” Üstünlüyü
@@ -52,21 +53,22 @@ export function WhyUsSection() {
                 </p>
               </div>
 
-              {/* Figma: rotated decorative render — desktop 395.29x263.53 at
-                  (502, 167.78); mobile 208x138.68 at (172, 110) inside the
-                  343x216 card, so it is placed proportionally below lg. */}
+              {/* Figma: rotated decorative render — 395.29x263.53 at (502, 167.78)
+                  inside the 880x360 card, i.e. 44.92% wide at 60.45% / -28%.
+                  Percentages rather than pixels, so it holds its place now that
+                  the card width follows the container. */}
               <Image
                 src="/images/why-partner-visual.png"
                 alt=""
                 width={396}
                 height={264}
                 aria-hidden
-                className="pointer-events-none absolute -top-[20%] left-[50%] h-auto w-[60.6%] max-w-none select-none lg:hidden 2xl:-top-[100.78px] 2xl:left-[532px] 2xl:block 2xl:w-[396px]"
+                className="pointer-events-none absolute -top-[20%] left-[50%] h-auto w-[60.6%] max-w-none select-none lg:-top-[28%] lg:left-[60.45%] lg:w-[44.92%]"
               />
             </div>
 
             {/* Figma: Frame 2147225004 — 343x216 mobile / 537x360 desktop image card, r20 */}
-            <div className="relative h-[216px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:w-[37.24%]">
+            <div className="relative h-[216px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:flex-[537]">
               <Parallax amount={14} className="absolute inset-x-0 -inset-y-[8%]">
                 <Image
                   src="/images/why-photo-card.png"
@@ -84,8 +86,9 @@ export function WhyUsSection() {
             stagger={0.1}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
-            {/* Figma: Statistics-card-2 — 343x216 r16 p16 mobile / 340x360 r20 p24 desktop */}
-            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:w-[23.61%] lg:rounded-[20px] lg:p-6">
+            {/* Figma: Statistics-card-2 — 343x216 r16 p16 mobile / 340x360 r20 p24
+                desktop. Flex ratios matching Figma’s 340 : 712 : 340 split. */}
+            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
                 <h3 className="text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   İcradan Əvvəl Strategiya
@@ -99,7 +102,7 @@ export function WhyUsSection() {
             </div>
 
             {/* Figma: Statistics-card-3 — 343x224 r16 p16 mobile / 712x360 r20 p 32/28 desktop */}
-            <div className="flex min-h-[224px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:w-[49.44%] lg:rounded-[20px] lg:px-7 lg:py-8">
+            <div className="flex min-h-[224px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:flex-[712] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between">
                 <h3 className="max-w-[553px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-white md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   Korporativ Təcrübə, Kompakt Yanaşma
@@ -113,7 +116,7 @@ export function WhyUsSection() {
                     width={200}
                     height={38}
                     aria-hidden
-                    className="h-[31px] w-[161px] object-contain lg:h-[38px] lg:w-[200px]"
+                    className="h-[31px] w-[161px] object-contain opacity-70 lg:h-[38px] lg:w-[200px]"
                   />
                   <Image
                     src="/images/logo-2.png"
@@ -121,7 +124,7 @@ export function WhyUsSection() {
                     width={161}
                     height={72}
                     aria-hidden
-                    className="h-[58px] w-[130px] object-contain lg:h-[72px] lg:w-[161px]"
+                    className="h-[58px] w-[130px] object-contain opacity-[0.72] lg:h-[72px] lg:w-[161px]"
                   />
                   <Image
                     src="/images/logo-3.png"
@@ -129,14 +132,14 @@ export function WhyUsSection() {
                     width={209}
                     height={45}
                     aria-hidden
-                    className="hidden h-[45px] w-[209px] object-contain lg:block"
+                    className="hidden h-[45px] w-[209px] object-contain opacity-[0.72] lg:block"
                   />
                 </div>
               </div>
             </div>
 
             {/* Figma: Statistics-card-4 — 343x216 r16 p16 mobile / 340x360 r20 p24 desktop */}
-            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:w-[23.61%] lg:rounded-[20px] lg:p-6">
+            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
                 {/* Figma: Frame 2147224998 — column; gap 12 mobile / 16 desktop */}
                 <div className="flex flex-col gap-3 lg:gap-4">

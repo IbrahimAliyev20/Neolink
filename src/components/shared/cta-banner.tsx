@@ -29,7 +29,7 @@ export function CtaBanner() {
         />
       </Parallax>
 
-      <Container className="relative flex flex-col py-6 md:py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:px-0 2xl:py-[81px]">
+      <Container className="relative flex flex-col py-6 md:py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:py-[81px]">
         {/* Figma: Frame 2147224633 — column; gap 32 mobile / 64 desktop, width 706 */}
         <Reveal
           stagger={0.14}

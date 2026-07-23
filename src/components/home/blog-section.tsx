@@ -47,7 +47,7 @@ function PostMeta({ className }: { className?: string }) {
 export function BlogSection() {
   return (
     <section className="w-full py-9 lg:py-[90px]">
-      <Container className="flex flex-col gap-6 lg:gap-12 2xl:px-0">
+      <Container className="flex flex-col gap-6 lg:gap-12 ">
         {/* Figma: Frame 16 / Frame 2147224638 — mobile centred column gap 12;
             desktop row, space-between, align center, gap 24 */}
         <Reveal

@@ -43,7 +43,7 @@ export function ServicesSection() {
     // same way but does not create a scroll container, which would stop the
     // heading below from sticking.
     <section className="relative w-full overflow-clip bg-white pt-9 pb-3 lg:py-[90px]">
-      <Container className="relative 2xl:px-0">
+      <Container className="relative">
         {/* Figma: `Burdaqal.az 1` — 800x534 at (-132, 396), opacity 72% */}
         <Parallax
           amount={16}

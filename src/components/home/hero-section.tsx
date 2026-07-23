@@ -103,7 +103,7 @@ export function HeroSection() {
           bottom-aligned and the video is `object-bottom`, so a shorter screen
           simply crops more off the top of the frame instead of squashing it.
           `min-h` rather than `h`, so unusually tall content can still grow. */}
-      <Container className="relative flex flex-col justify-end py-6 lg:min-h-[calc(100dvh-97px)] lg:pt-[calc(var(--hero-u)*96)] lg:pb-[calc(var(--hero-u)*90)] 2xl:px-0">
+      <Container className="relative flex flex-col justify-end py-6 lg:min-h-[calc(100dvh-97px)] lg:pt-[calc(var(--hero-u)*96)] lg:pb-[calc(var(--hero-u)*90)]">
         {/* Figma: Frame 8 — mobile column gap 32; desktop row, gap 220, bottom aligned */}
         <div className="flex w-full flex-col items-start gap-8 lg:flex-row lg:items-end lg:gap-[15.28%]">
           {/* Figma: Frame 3 — mobile gap 20, desktop gap 72 / width 696 */}

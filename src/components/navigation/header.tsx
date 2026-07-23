@@ -236,7 +236,7 @@ export function Header() {
       className="sticky top-0 z-50 w-full border-b border-[#f3f2f8] bg-white lg:border-[#e7e7ea]"
       onMouseLeave={() => setServicesOpen(false)}
     >
-      <Container >
+      <Container>
         {/* Figma: Frame 4 — row, space-between, align center, height 48 */}
         <div className="flex h-[66px] w-full items-center justify-between gap-4 lg:h-24 lg:gap-[151px]">
           <Link href="/" aria-label="Neoline" className="shrink-0">
@@ -417,7 +417,7 @@ export function Header() {
           // the panel at full opacity before the tween starts.
           className="absolute inset-x-0 top-full z-50 hidden border-b border-[#e7e7ea] bg-white pt-9 pb-10 opacity-0 will-change-[transform,opacity] lg:block"
         >
-          <Container className="2xl:px-0">
+          <Container>
             {/* Figma: Frame 2147224671 — row, space-between, align center */}
             <div
               ref={panelInnerRef}
