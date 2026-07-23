@@ -184,6 +184,25 @@
   }
 }
 
+/* The hero scales as one block. `--hero-u` is one Figma pixel: every size
+   inside the hero is written as `calc(var(--hero-u) * <figma px>)`, so type,
+   spacing and cards shrink and grow together and the composition over the video
+   never shifts. Below `lg` the mobile design keeps real pixels.
+
+   The unit takes whichever of the two axes is tighter — the viewport height
+   left under the 96px sticky header (+1px border) against the Figma 857, or the
+   viewport width against the Figma 1920. Height alone would blow the headline
+   up on a narrow-but-tall window, where the copy column is only ~500px wide. */
+.hero-scale {
+  --hero-u: 1px;
+}
+
+@media (min-width: 1024px) {
+  .hero-scale {
+    --hero-u: min((100dvh - 97px) / 857, 100vw / 1920);
+  }
+}
+
 /* Starting state for `components/animation/reveal.tsx` and the hero intro
    timeline. GSAP takes over on mount; without this the content would paint in
    its final position first and then jump back. */
