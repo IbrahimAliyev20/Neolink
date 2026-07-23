@@ -46,22 +46,25 @@ export function FaqSection() {
     if (!root || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
+      // Scrubbed like the other reveals, so it follows the scroll in both
+      // directions instead of toggling.
       gsap
         .timeline({
-          scrollTrigger: { trigger: root, start: "top 88%", once: true },
+          defaults: { ease: "none" },
+          scrollTrigger: {
+            trigger: root,
+            start: "top 90%",
+            end: "top 62%",
+            scrub: 0.6,
+          },
         })
         .from(".js-faq-avatar", {
           scale: 0.6,
           opacity: 0,
           duration: 0.5,
-          stagger: 0.09,
-          ease: "back.out(1.7)",
+          stagger: 0.12,
         })
-        .from(
-          ".js-faq-badge",
-          { x: -16, opacity: 0, duration: 0.5, ease: "power3.out" },
-          "-=0.25"
-        );
+        .from(".js-faq-badge", { x: -16, opacity: 0, duration: 0.4 }, "-=0.2");
     }, root);
 
     return () => ctx.kill();

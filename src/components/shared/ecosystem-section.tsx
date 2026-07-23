@@ -40,7 +40,7 @@ const loopGap = { "--logoloop-gap": "var(--partner-gap)" } as React.CSSPropertie
  */
 export function EcosystemSection() {
   return (
-    <div className="bg-white flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-0 lg:pb-[90px]">
+    <div className="flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-15 lg:pb-[90px]">
       <Reveal
         stagger={0.12}
         className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6"

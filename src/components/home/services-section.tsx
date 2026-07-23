@@ -39,7 +39,10 @@ const description =
  */
 export function ServicesSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-white pt-9 pb-3 lg:py-[90px]">
+    // `overflow-clip` rather than `overflow-hidden`: it clips the backdrop the
+    // same way but does not create a scroll container, which would stop the
+    // heading below from sticking.
+    <section className="relative w-full overflow-clip bg-white pt-9 pb-3 lg:py-[90px]">
       <Container className="relative 2xl:px-0">
         {/* Figma: `Burdaqal.az 1` — 800x534 at (-132, 396), opacity 72% */}
         <Parallax
@@ -59,9 +62,12 @@ export function ServicesSection() {
         {/* Figma: Frame 2147224630 — mobile column gap 32; desktop row, gap 102 */}
         <div className="relative flex flex-col gap-8 lg:flex-row lg:gap-[7.08%]">
           {/* Figma: Frame 16 — mobile centred, gap 16; desktop left, gap 24 / width 566 */}
+          {/* Sticks 95px below the top — clear of the 66px sticky header —
+              while the service list scrolls past, and stops once the row (the
+              section content) ends. */}
           <Reveal
             stagger={0.12}
-            className="flex min-w-0 flex-col gap-4 text-center lg:w-[39.31%] lg:gap-6 lg:text-left"
+            className="flex min-w-0 flex-col gap-4 text-center lg:sticky lg:top-[95px] lg:w-[39.31%] lg:self-start lg:gap-6 lg:text-left"
           >
             <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
               Biznesiniz üçün Güclü{" "}

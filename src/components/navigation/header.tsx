@@ -233,7 +233,7 @@ export function Header() {
 
   return (
     <header
-      className="relative w-full border-b border-[#f3f2f8] bg-white lg:border-[#e7e7ea]"
+      className="sticky top-0 z-50 w-full border-b border-[#f3f2f8] bg-white lg:border-[#e7e7ea]"
       onMouseLeave={() => setServicesOpen(false)}
     >
       <Container >

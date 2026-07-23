@@ -10,6 +10,8 @@ import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 /**
  * Figma desktop: `Frame 1` (1920x997, padding-x 240 → 1440 content column);
  * `Frame 8` sits at y=467, is 440 tall, so the frame closes with 90px below it.
+ * The build crops the empty 140px band off the top of that frame, so the
+ * section is 857 tall with the copy still 90 above the bottom edge.
  * Figma mobile: `Banner-hero` (375x369) — py 24 / px 16, single column with a
  * 32 gap, copy + buttons on top and the three 109x105 stat cards in one row.
  */
@@ -18,7 +20,7 @@ export function HeroSection() {
 
   // Opening timeline: the background settles while the copy, the buttons and
   // then the stat cards arrive. Elements start hidden via `[data-hero-anim]`
-  // in globals.css so nothing flashes before hydration.
+  // in globals.css so nothing flashes before hydration. It runs once, on load.
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
@@ -93,7 +95,10 @@ export function HeroSection() {
         className="js-hero-video pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom select-none"
       />
 
-      <Container className="relative flex flex-col justify-end py-6 lg:min-h-[51.93vw] lg:pt-[24.32vw] lg:pb-[4.69vw] 2xl:min-h-[997px] 2xl:px-0 2xl:pt-[467px] 2xl:pb-[90px]">
+      {/* The empty band above the copy is cropped off the top of the section:
+          heights and top padding lose 7.29vw (140px at 1920). The video is
+          `object-bottom`, so it loses the same strip instead of being squashed. */}
+      <Container className="relative flex flex-col justify-end py-6 lg:min-h-[44.64vw] lg:pt-[17.03vw] lg:pb-[4.69vw] 2xl:min-h-[857px] 2xl:px-0 2xl:pt-[327px] 2xl:pb-[90px]">
         {/* Figma: Frame 8 — mobile column gap 32; desktop row, gap 220, bottom aligned */}
         <div className="flex w-full flex-col items-start gap-8 lg:flex-row lg:items-end lg:gap-[15.28%]">
           {/* Figma: Frame 3 — mobile gap 20, desktop gap 72 / width 696 */}
