@@ -13,7 +13,7 @@ export function StatCard({ value, label, accent, className }: StatCardProps) {
   return (
     <div
       className={cn(
-        "w-[257px] shrink-0 overflow-hidden rounded-[12px] p-5 backdrop-blur-[16px]",
+        "w-full max-w-[257px] overflow-hidden rounded-[12px] p-5 backdrop-blur-[16px]",
         accent ? "bg-neo-teal-soft" : "bg-neo-surface",
         className
       )}

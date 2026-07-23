@@ -33,13 +33,13 @@ export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="w-full overflow-hidden bg-white py-[60px] 2xl:py-[90px]">
-      <Container className="flex flex-col gap-12 2xl:flex-row 2xl:gap-[102px] 2xl:px-0">
+    <section className="w-full overflow-hidden bg-white py-[60px] lg:py-[90px]">
+      <Container className="flex flex-col gap-12 lg:flex-row lg:gap-[7.08%] 2xl:px-0">
         {/* Figma: Frame 2147225017 — column, gap 102, width 566 */}
-        <div className="flex flex-col gap-10 2xl:w-[566px] 2xl:gap-[102px]">
+        <div className="flex min-w-0 flex-col gap-10 lg:w-[39.31%] lg:gap-[102px]">
           {/* Figma: Frame 16 — column, gap 24 */}
-          <div className="flex flex-col gap-4 2xl:gap-6">
-            <h2 className="text-[36px] leading-[46px] font-semibold tracking-[0] text-neo-ink 2xl:text-[56px] 2xl:leading-[72px]">
+          <div className="flex flex-col gap-4 lg:gap-6">
+            <h2 className="text-[36px] leading-[46px] font-semibold tracking-[0] text-neo-ink lg:text-[56px] lg:leading-[72px]">
               Ən Çox Verilən <span className="text-neo-teal">Suallar</span>
             </h2>
             <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -49,7 +49,7 @@ export function FaqSection() {
           </div>
 
           {/* Figma: Frame 2147225018 — column, gap 32, width 417 */}
-          <div className="flex flex-col gap-8 2xl:w-[417px]">
+          <div className="flex flex-col gap-8 lg:w-full lg:max-w-[417px]">
             {/* Figma: Frame 2147225017 — row, gap 12, align center */}
             <div className="flex items-center gap-3">
               {/* Figma: Support team — 3 avatars, 56px, overlap 12 */}
@@ -84,7 +84,7 @@ export function FaqSection() {
             {/* Figma: Common buttons — 417x48, #0D153A, r100, gap 16 */}
             <Link
               href="/contact"
-              className="flex h-12 w-full items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90 2xl:w-[417px]"
+              className="flex h-12 w-full items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
             >
               Əlaqəyə keç
               <ArrowUpRight className="h-6 w-6" strokeWidth={1.5} />
@@ -93,7 +93,7 @@ export function FaqSection() {
         </div>
 
         {/* Figma: FAQ — column, gap 10, width 740 */}
-        <div className="flex flex-col gap-[10px] 2xl:w-[740px]">
+        <div className="flex min-w-0 flex-col gap-[10px] lg:w-[51.39%]">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
 

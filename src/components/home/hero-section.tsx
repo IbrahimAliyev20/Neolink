@@ -22,19 +22,19 @@ export function HeroSection() {
         className="pointer-events-none absolute inset-0 h-full w-full object-cover object-bottom select-none"
       />
 
-      <Container className="relative flex flex-col pt-[120px] pb-[80px] 2xl:h-[997px] 2xl:px-0 2xl:pt-[467px] 2xl:pb-[90px]">
+      <Container className="relative flex flex-col justify-end pt-[120px] pb-[80px] lg:min-h-[51.93vw] lg:pt-[24.32vw] lg:pb-[4.69vw] 2xl:min-h-[997px] 2xl:px-0 2xl:pt-[467px] 2xl:pb-[90px]">
         {/* Figma: Frame 8 — row, gap 220, align-items: flex-end, height 440 */}
-        <div className="flex flex-col items-start gap-16 2xl:h-[440px] 2xl:flex-row 2xl:items-end 2xl:gap-[220px]">
+        <div className="flex w-full flex-col items-start gap-16 lg:flex-row lg:items-end lg:gap-[15.28%]">
           {/* Figma: Frame 3 — column, gap 72, width 696 */}
-          <div className="flex w-full flex-col gap-10 2xl:w-[696px] 2xl:gap-[72px]">
+          <div className="flex w-full min-w-0 flex-col gap-10 lg:w-[48.33%] lg:gap-[72px]">
             {/* Figma: Frame 2 — column, gap 24 */}
-            <div className="flex flex-col gap-4 2xl:gap-6">
-              <h1 className="text-[40px] leading-[52px] font-semibold tracking-[0] text-neo-ink md:text-[52px] md:leading-[66px] 2xl:text-[64px] 2xl:leading-[80px]">
+            <div className="flex flex-col gap-4 lg:gap-6">
+              <h1 className="text-[40px] leading-[52px] font-semibold tracking-[0] text-neo-ink md:text-[52px] md:leading-[66px] lg:text-[64px] lg:leading-[80px]">
                 Biznesinizi Gələcəyin{" "}
                 <span className="text-neo-teal">Rəqəmsal</span> Həlləri ilə
                 Gücləndiririk
               </h1>
-              <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted 2xl:text-[20px] 2xl:leading-[28px]">
+              <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted lg:text-[20px] lg:leading-[28px]">
                 Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in
                 mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend
                 ullamcorper.
@@ -42,7 +42,7 @@ export function HeroSection() {
             </div>
 
             {/* Figma: Frame 7 — row, gap 20, buttons 265.585x48, r100 */}
-            <div className="flex flex-col gap-4 sm:flex-row 2xl:gap-5">
+            <div className="flex flex-col gap-4 sm:flex-row lg:gap-5">
               <Link
                 href="/contact"
                 className="flex h-12 w-full items-center justify-center rounded-full bg-neo-teal px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:w-[265.59px]"
@@ -59,10 +59,10 @@ export function HeroSection() {
           </div>
 
           {/* Figma: Frame 6 — column, gap 10, align-items: flex-end, width 524 */}
-          <div className="flex w-full flex-col gap-[10px] 2xl:w-[524px] 2xl:items-end">
+          <div className="flex w-full min-w-0 flex-col gap-[10px] lg:w-[36.39%] lg:items-end">
             <StatCard value="15+" label="Sahə Üzrə Ekspert" />
             {/* Figma: Frame 5 — row, gap 10, align-items: center, width 524 */}
-            <div className="flex flex-col gap-[10px] sm:flex-row sm:items-center 2xl:w-[524px]">
+            <div className="flex w-full flex-col gap-[10px] sm:flex-row sm:items-center">
               <StatCard value="40+" label="Uğurla Tamamlanmış Layihə" />
               <StatCard accent value="98%" label="Müştəri Məmnuniyyəti" />
             </div>

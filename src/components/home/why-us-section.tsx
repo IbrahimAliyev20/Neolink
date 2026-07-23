@@ -9,11 +9,11 @@ import Container from "@/components/shared/container";
  */
 export function WhyUsSection() {
   return (
-    <section className="w-full py-[60px] 2xl:py-[90px]">
-      <Container className="flex flex-col gap-10 2xl:gap-12 2xl:px-0">
+    <section className="w-full py-[60px] lg:py-[90px]">
+      <Container className="flex flex-col gap-10 lg:gap-12 2xl:px-0">
         {/* Figma: Frame 16 — column, gap 24, width 788, centered */}
-        <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-4 2xl:gap-6">
-          <h2 className="text-center text-[32px] leading-[44px] font-semibold tracking-[0.01em] text-[#1c1c1e] 2xl:text-[40px] 2xl:leading-[56px]">
+        <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-4 lg:gap-6">
+          <h2 className="text-center text-[32px] leading-[44px] font-semibold tracking-[0.01em] text-[#1c1c1e] lg:text-[40px] lg:leading-[56px]">
             Niyə Məhz Neoline?
           </h2>
           <p className="max-w-[756px] text-center text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -25,11 +25,11 @@ export function WhyUsSection() {
         {/* Figma: Frame 2147225006 — column, gap 24 */}
         <div className="flex flex-col gap-6">
           {/* Figma: Frame 2147225004 — row, gap 24, height 360 */}
-          <div className="flex flex-col gap-6 2xl:h-[360px] 2xl:flex-row">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
             {/* Figma: Statistics-card-1 — 880x360, r20, border #E7E7EA, p 32/28 */}
-            <div className="relative flex h-[360px] w-full flex-col overflow-hidden rounded-[20px] border border-[#e7e7ea] bg-white px-7 py-8 2xl:w-[880px]">
+            <div className="relative flex min-h-[360px] w-full min-w-0 flex-col overflow-hidden rounded-[20px] border border-[#e7e7ea] bg-white px-7 py-8 lg:w-[61.1%]">
               <div className="flex h-full flex-col justify-between">
-                <h3 className="max-w-[465px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink 2xl:text-[40px] 2xl:leading-[56px]">
+                <h3 className="max-w-[465px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[40px] lg:leading-[56px]">
                   “Tək Tərəfdaş” Üstünlüyü
                 </h3>
                 <p className="max-w-[824px] text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -52,7 +52,7 @@ export function WhyUsSection() {
             </div>
 
             {/* Figma: Frame 2147225004 — 537x360 image card, r20 */}
-            <div className="relative h-[240px] w-full overflow-hidden rounded-[20px] 2xl:h-[360px] 2xl:w-[537px]">
+            <div className="relative h-[240px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:w-[37.24%]">
               <Image
                 src="/images/why-photo-card.png"
                 alt=""
@@ -64,11 +64,11 @@ export function WhyUsSection() {
           </div>
 
           {/* Figma: Frame 2147225005 — row, gap 24, height 360 */}
-          <div className="flex flex-col gap-6 2xl:h-[360px] 2xl:flex-row">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-stretch">
             {/* Figma: Statistics-card-2 — 340x360, r20, p 24 */}
-            <div className="flex h-[360px] w-full flex-col rounded-[20px] bg-white p-6 2xl:w-[340px]">
+            <div className="flex min-h-[360px] w-full min-w-0 flex-col rounded-[20px] bg-white p-6 lg:w-[23.61%]">
               <div className="flex h-full flex-col justify-between">
-                <h3 className="text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink 2xl:text-[40px] 2xl:leading-[56px]">
+                <h3 className="text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-neo-ink lg:text-[40px] lg:leading-[56px]">
                   İcradan Əvvəl Strategiya
                 </h3>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -80,9 +80,9 @@ export function WhyUsSection() {
             </div>
 
             {/* Figma: Statistics-card-3 — 712x360, #0D153A, r20, p 32/28 */}
-            <div className="flex h-[360px] w-full flex-col overflow-hidden rounded-[20px] bg-[#0d153a] px-7 py-8 2xl:w-[712px]">
+            <div className="flex min-h-[360px] w-full min-w-0 flex-col overflow-hidden rounded-[20px] bg-[#0d153a] px-7 py-8 lg:w-[49.44%]">
               <div className="flex h-full flex-col justify-between">
-                <h3 className="max-w-[553px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-white 2xl:text-[40px] 2xl:leading-[56px]">
+                <h3 className="max-w-[553px] text-[28px] leading-[40px] font-semibold tracking-[0.01em] text-white lg:text-[40px] lg:leading-[56px]">
                   Korporativ Təcrübə, Kompakt Yanaşma
                 </h3>
                 {/* Figma: Frame 2147225009 — row, gap 36, space-between */}
@@ -116,7 +116,7 @@ export function WhyUsSection() {
             </div>
 
             {/* Figma: Statistics-card-4 — 340x360, r20, p 24 */}
-            <div className="flex h-[360px] w-full flex-col rounded-[20px] bg-white p-6 2xl:w-[340px]">
+            <div className="flex min-h-[360px] w-full min-w-0 flex-col rounded-[20px] bg-white p-6 lg:w-[23.61%]">
               <div className="flex h-full flex-col justify-between">
                 {/* Figma: Frame 2147224998 — column, gap 16 */}
                 <div className="flex flex-col gap-4">

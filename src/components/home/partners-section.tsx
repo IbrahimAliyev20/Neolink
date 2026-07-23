@@ -77,11 +77,11 @@ function PartnerRow({
  */
 export function PartnersSection() {
   return (
-    <section className="w-full py-[60px] 2xl:py-[90px]">
-      <div className="flex flex-col gap-10 2xl:gap-12">
+    <section className="w-full py-[60px] lg:py-[90px]">
+      <div className="flex flex-col gap-10 lg:gap-12">
         {/* Figma: Frame 16 — column, gap 24, width 788, centered */}
-        <Container className="flex flex-col items-center gap-4 2xl:gap-6">
-          <h2 className="max-w-[788px] text-center text-[32px] leading-[44px] font-semibold tracking-[0.01em] text-[#1c1c1e] 2xl:text-[40px] 2xl:leading-[56px]">
+        <Container className="flex flex-col items-center gap-4 lg:gap-6">
+          <h2 className="max-w-[788px] text-center text-[32px] leading-[44px] font-semibold tracking-[0.01em] text-[#1c1c1e] lg:text-[40px] lg:leading-[56px]">
             Bütün İT Ekosisteminiz
           </h2>
           <p className="max-w-[756px] text-center text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">

@@ -32,7 +32,7 @@ const description =
  */
 export function ServicesSection() {
   return (
-    <section className="relative w-full overflow-hidden bg-white py-[60px] 2xl:py-[90px]">
+    <section className="relative w-full overflow-hidden bg-white py-[60px] lg:py-[90px]">
       <Container className="relative 2xl:px-0">
         {/* Figma: `Burdaqal.az 1` — 800x534 at (-132, 396), opacity 72% */}
         <Image
@@ -45,10 +45,10 @@ export function ServicesSection() {
         />
 
         {/* Figma: Frame 2147224630 — row, gap 102, width 1440 */}
-        <div className="relative flex flex-col gap-12 2xl:flex-row 2xl:gap-[102px]">
+        <div className="relative flex flex-col gap-12 lg:flex-row lg:gap-[7.08%]">
           {/* Figma: Frame 16 — column, gap 24, width 566 */}
-          <div className="flex flex-col gap-4 2xl:w-[566px] 2xl:gap-6">
-            <h2 className="text-[36px] leading-[46px] font-semibold tracking-[0] text-neo-ink 2xl:text-[56px] 2xl:leading-[72px]">
+          <div className="flex min-w-0 flex-col gap-4 lg:w-[39.31%] lg:gap-6">
+            <h2 className="text-[36px] leading-[46px] font-semibold tracking-[0] text-neo-ink lg:text-[56px] lg:leading-[72px]">
               Biznesiniz üçün Güclü{" "}
               <span className="text-neo-teal">İT Ekosistemi</span>
             </h2>
@@ -59,9 +59,9 @@ export function ServicesSection() {
           </div>
 
           {/* Figma: Frame 2147224629 — row, gap 95, width 772 */}
-          <div className="flex gap-8 2xl:w-[772px] 2xl:gap-[95px]">
+          <div className="flex min-w-0 gap-8 lg:w-[53.61%] lg:gap-[8%] xl:gap-[95px]">
             {/* Figma: Services-numbers — column, gap 16, width 72 */}
-            <div className="hidden w-[72px] shrink-0 flex-col items-center gap-4 2xl:flex">
+            <div className="hidden w-[72px] shrink-0 flex-col items-center gap-4 lg:flex">
               {services.map((service, index) => (
                 <div
                   key={service.title}
@@ -79,14 +79,14 @@ export function ServicesSection() {
             </div>
 
             {/* Figma: Frame 2147224619 — column, gap 36, width 605 */}
-            <div className="flex w-full flex-col gap-8 2xl:w-[605px] 2xl:gap-9">
+            <div className="flex w-full min-w-0 flex-col gap-8 lg:flex-1 lg:gap-9">
               {services.map((service) => (
                 <div
                   key={service.title}
-                  className="flex flex-col items-start gap-6 sm:flex-row sm:items-center 2xl:gap-8"
+                  className="flex flex-col items-start gap-6 sm:flex-row sm:items-center lg:gap-8"
                 >
                   {/* Figma: Frame 2147224617 — column, gap 16, width 333 */}
-                  <div className="flex flex-col gap-4 sm:w-[333px]">
+                  <div className="flex min-w-0 flex-col gap-4 sm:flex-1">
                     <h3 className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-neo-ink">
                       {service.title}
                     </h3>
@@ -100,7 +100,7 @@ export function ServicesSection() {
                     width={240}
                     height={169}
                     aria-hidden
-                    className="h-[169px] w-full shrink-0 rounded-[12px] bg-neo-teal object-cover sm:w-[240px]"
+                    className="aspect-[240/169] h-auto w-full shrink-0 rounded-[12px] bg-neo-teal object-cover sm:w-[40%] sm:max-w-[240px]"
                   />
                 </div>
               ))}

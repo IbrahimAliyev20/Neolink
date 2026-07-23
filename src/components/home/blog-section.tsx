@@ -42,25 +42,25 @@ function PostMeta({ className }: { className?: string }) {
  */
 export function BlogSection() {
   return (
-    <section className="w-full py-[60px] 2xl:py-[90px]">
-      <Container className="flex flex-col gap-10 2xl:gap-12 2xl:px-0">
+    <section className="w-full py-[60px] lg:py-[90px]">
+      <Container className="flex flex-col gap-10 lg:gap-12 2xl:px-0">
         {/* Figma: Frame 2147224638 — row, space-between, align center, gap 24 */}
-        <div className="flex flex-col gap-4 2xl:flex-row 2xl:items-center 2xl:justify-between 2xl:gap-6">
-          <h2 className="text-[36px] leading-[48px] font-semibold tracking-[0] text-[#1c1c1e] 2xl:w-[493px] 2xl:text-[48px] 2xl:leading-[64px]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+          <h2 className="text-[36px] leading-[48px] font-semibold tracking-[0] text-[#1c1c1e] lg:w-[34.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px]">
             Rəqəmsal Dünyadan Yeniliklər
           </h2>
-          <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted 2xl:w-[739px]">
+          <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted lg:w-[51.32%]">
             Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual
             məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın.
           </p>
         </div>
 
         {/* Figma: Frame 2147224631 — row, gap 20 */}
-        <div className="flex flex-col gap-5 2xl:flex-row">
+        <div className="flex flex-col gap-5 lg:flex-row">
           {/* Figma: Blog-wide — 710x440, r16, border #F2F4F8, gradient scrim */}
           <Link
             href="/blog"
-            className="relative block h-[420px] w-full overflow-hidden rounded-[16px] border border-[#f2f4f8] 2xl:h-[440px] 2xl:w-[710px]"
+            className="relative block aspect-[710/440] h-auto max-h-[440px] w-full min-w-0 overflow-hidden rounded-[16px] border border-[#f2f4f8] lg:w-[49.31%]"
           >
             <Image
               src="/images/blog-wide.png"
@@ -94,17 +94,17 @@ export function BlogSection() {
           </Link>
 
           {/* Figma: Frame 2147225052 — column, gap 48, centered, width 710 */}
-          <div className="flex flex-col items-center gap-8 2xl:w-[710px] 2xl:gap-12">
+          <div className="flex min-w-0 flex-col items-center gap-8 lg:w-[49.31%] lg:gap-12">
             {/* Figma: Frame 2147225051 — row, gap 20 */}
             <div className="flex w-full flex-col gap-5 sm:flex-row">
               {posts.map((post, index) => (
                 <Link
                   key={index}
                   href="/blog"
-                  className="flex w-full flex-col gap-4 2xl:w-[345px]"
+                  className="flex w-full min-w-0 flex-col gap-4"
                 >
                   {/* Figma: Frame 2147224960 — 345x264, r16, border #F2F4F8 */}
-                  <div className="relative h-[264px] w-full overflow-hidden rounded-[16px] border border-[#f2f4f8] bg-white">
+                  <div className="relative aspect-[345/264] h-auto max-h-[264px] w-full overflow-hidden rounded-[16px] border border-[#f2f4f8] bg-white">
                     <Image
                       src={post.image}
                       alt=""
