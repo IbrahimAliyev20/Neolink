@@ -1,20 +1,46 @@
+"use client";
+
 import Image from "next/image";
+import { toast } from "sonner";
 import Container from "@/components/shared/container";
 import type { BlogPost } from "@/lib/data/blogs";
 
 const shareLinks = [
-  { icon: "/icons/brand-instagram.svg", label: "Instagram", variant: "light" as const },
-  { icon: "/icons/link.svg", label: "Linki kopyala", variant: "dark" as const },
-  { icon: "/icons/brand-facebook.svg", label: "Facebook", variant: "light" as const },
-  { icon: "/icons/twitter-x.svg", label: "X (Twitter)", variant: "light" as const },
+  { icon: "/icons/brand-instagram.svg", label: "Instagram", action: "instagram" as const },
+  { icon: "/icons/link.svg", label: "Linki kopyala", action: "copy" as const },
+  { icon: "/icons/brand-facebook.svg", label: "Facebook", action: "facebook" as const },
+  { icon: "/icons/twitter-x.svg", label: "X (Twitter)", action: "x" as const },
 ];
 
-const shareLinksMobile = [
-  { icon: "/icons/brand-instagram.svg", label: "Instagram", variant: "light" as const },
-  { icon: "/icons/brand-instagram.svg", label: "Linki kopyala", variant: "dark" as const },
-  { icon: "/icons/brand-facebook.svg", label: "Facebook", variant: "light" as const },
-  { icon: "/icons/twitter-x.svg", label: "X (Twitter)", variant: "light" as const },
-];
+function handleShare(action: (typeof shareLinks)[number]["action"]) {
+  const url = window.location.href;
+
+  switch (action) {
+    case "copy":
+      navigator.clipboard
+        .writeText(url)
+        .then(() => toast.success("Link kopyalandı"))
+        .catch(() => toast.error("Link kopyalana bilmədi"));
+      break;
+    case "facebook":
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      break;
+    case "x":
+      window.open(
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
+        "_blank",
+        "noopener,noreferrer"
+      );
+      break;
+    case "instagram":
+      window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
+      break;
+  }
+}
 
 function ShareButtons({ variant }: { variant: "mobile" | "desktop" }) {
   return (
@@ -22,27 +48,50 @@ function ShareButtons({ variant }: { variant: "mobile" | "desktop" }) {
       className={
         variant === "mobile"
           ? "flex lg:hidden gap-1 items-center"
-          : "hidden lg:flex flex-col gap-3 items-start  shrink-0"
+          : "hidden lg:flex flex-col gap-3 items-start shrink-0 sticky top-28 self-start"
       }
     >
-      {(variant === "mobile" ? shareLinksMobile : shareLinks).map((share) => (
-        <button
-          key={share.label}
-          type="button"
-          aria-label={share.label}
-          className={`flex items-center justify-center rounded-full shrink-0 ${
-            variant === "mobile" ? "p-2" : "p-3"
-          } ${share.variant === "dark" ? "bg-[#3abdaa]" : "bg-white border border-[#e7e7ea]"}`}
-        >
-          <Image
-            src={share.icon}
-            alt=""
-            width={32}
-            height={32}
-            className={`shrink-0 ${variant === "mobile" ? "size-6" : "size-8"}`}
-          />
-        </button>
-      ))}
+      {shareLinks.map((share) => {
+        // Figma: the 32px (24px on mobile) icon box holds the glyph at a
+        // 16.67% inset. Most of our SVGs are cropped to the bare glyph, so
+        // they render smaller inside the box; twitter-x.svg already carries
+        // its own internal margins and fills the box directly.
+        const fillsBox = share.icon.includes("twitter");
+
+        return (
+          <button
+            key={share.label}
+            type="button"
+            aria-label={share.label}
+            onClick={() => handleShare(share.action)}
+            className={`group flex items-center justify-center rounded-full shrink-0 cursor-pointer transition-colors bg-white border border-[#e7e7ea] hover:bg-[#3abdaa] hover:border-[#3abdaa] ${
+              variant === "mobile" ? "p-2" : "p-3"
+            }`}
+          >
+            <span
+              className={`flex items-center justify-center shrink-0 ${
+                variant === "mobile" ? "size-6" : "size-8"
+              }`}
+            >
+              <Image
+                src={share.icon}
+                alt=""
+                width={32}
+                height={32}
+                className={`shrink-0 transition-[filter] group-hover:brightness-0 group-hover:invert ${
+                  fillsBox
+                    ? variant === "mobile"
+                      ? "size-6"
+                      : "size-8"
+                    : variant === "mobile"
+                      ? "size-4"
+                      : "size-[21px]"
+                }`}
+              />
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
