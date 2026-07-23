@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/animation/count-up";
 import { cn } from "@/lib/utils";
 
 type StatCardProps = {
@@ -28,7 +29,7 @@ export function StatCard({ value, label, accent, className }: StatCardProps) {
             accent ? "text-white" : "text-neo-ink"
           )}
         >
-          {value}
+          <CountUp value={value} delay={0.5} />
         </span>
         <span
           className={cn(

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 
@@ -40,7 +41,10 @@ const loopGap = { "--logoloop-gap": "var(--partner-gap)" } as React.CSSPropertie
 export function EcosystemSection() {
   return (
     <div className="bg-white flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-0 lg:pb-[90px]">
-      <div className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6">
+      <Reveal
+        stagger={0.12}
+        className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6"
+      >
         <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-7 tracking-[0.01em] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
           Bütün İT Ekosisteminiz
         </h2>
@@ -49,7 +53,7 @@ export function EcosystemSection() {
           sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət
           planı təqdim edəcəyik.
         </p>
-      </div>
+      </Reveal>
       <Container className="flex flex-col gap-[10px] items-center w-full [--partner-gap:10px] lg:gap-4 lg:[--partner-gap:16px]">
         <LogoLoop
           logos={createPartnerLogos()}

@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+import { ClipReveal } from "@/components/animation/clip-reveal";
+import { Parallax } from "@/components/animation/parallax";
+import { Reveal } from "@/components/animation/reveal";
+import { ServicesRail } from "@/components/home/services-rail";
 import Container from "@/components/shared/container";
 
 /** Figma: `Service card` instances — text block 333 + gap 32 + 240x169 visual. */
@@ -38,19 +42,27 @@ export function ServicesSection() {
     <section className="relative w-full overflow-hidden bg-white pt-9 pb-3 lg:py-[90px]">
       <Container className="relative 2xl:px-0">
         {/* Figma: `Burdaqal.az 1` — 800x534 at (-132, 396), opacity 72% */}
-        <Image
-          src="/images/services-backdrop.png"
-          alt=""
-          width={800}
-          height={534}
-          aria-hidden
+        <Parallax
+          amount={16}
           className="pointer-events-none absolute top-[396px] -left-[132px] hidden h-[534px] w-[800px] max-w-none opacity-[0.72] select-none 2xl:block"
-        />
+        >
+          <Image
+            src="/images/services-backdrop.png"
+            alt=""
+            width={800}
+            height={534}
+            aria-hidden
+            className="h-full w-full max-w-none object-contain"
+          />
+        </Parallax>
 
         {/* Figma: Frame 2147224630 — mobile column gap 32; desktop row, gap 102 */}
         <div className="relative flex flex-col gap-8 lg:flex-row lg:gap-[7.08%]">
           {/* Figma: Frame 16 — mobile centred, gap 16; desktop left, gap 24 / width 566 */}
-          <div className="flex min-w-0 flex-col gap-4 text-center lg:w-[39.31%] lg:gap-6 lg:text-left">
+          <Reveal
+            stagger={0.12}
+            className="flex min-w-0 flex-col gap-4 text-center lg:w-[39.31%] lg:gap-6 lg:text-left"
+          >
             <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
               Biznesiniz üçün Güclü{" "}
               <span className="text-neo-teal">İT Ekosistemi</span>
@@ -59,30 +71,18 @@ export function ServicesSection() {
               Böyüyən B2B şirkətləri üçün nəzərdə tutulmuş korporativ səviyyəli
               tam İT xidmətləri – hamısı bir mərkəzdən
             </p>
-          </div>
+          </Reveal>
 
           {/* Figma: Frame 2147224629 — mobile row gap 12; desktop gap 95, width 772 */}
           <div className="flex min-w-0 gap-3 lg:w-[53.61%] lg:gap-[8%] xl:gap-[95px]">
             {/* Figma: Services-numbers — column gap 16; width 36 mobile / 72 desktop */}
-            <div className="flex w-9 shrink-0 flex-col items-center gap-4 lg:w-[72px]">
-              {services.map((service, index) => (
-                <div
-                  key={service.title}
-                  className="flex flex-col items-center gap-4"
-                >
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-neo-teal text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-teal lg:h-[72px] lg:w-[72px] lg:text-[32px] lg:leading-[40px]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    aria-hidden
-                    className="h-[75px] w-px rounded-[20px] bg-[#7bd3c6] lg:h-[97.75px]"
-                  />
-                </div>
-              ))}
-            </div>
+            <ServicesRail count={services.length} />
 
             {/* Figma: Frame 2147224619 — column; gap 24 mobile / 36 desktop, width 605 */}
-            <div className="flex w-full min-w-0 flex-col gap-6 lg:flex-1 lg:gap-9">
+            <Reveal
+              stagger={0.14}
+              className="flex w-full min-w-0 flex-col gap-6 lg:flex-1 lg:gap-9"
+            >
               {services.map((service) => (
                 <div
                   key={service.title}
@@ -98,17 +98,19 @@ export function ServicesSection() {
                     </p>
                   </div>
                   {/* Figma: 112x79 mobile / 240x169 desktop, r12 */}
-                  <Image
-                    src={service.image}
-                    alt=""
-                    width={240}
-                    height={169}
-                    aria-hidden
-                    className="aspect-[240/169] h-auto w-[38%] max-w-[112px] shrink-0 rounded-[12px] bg-neo-teal object-cover lg:w-[40%] lg:max-w-[240px]"
-                  />
+                  <ClipReveal className="aspect-[240/169] w-[38%] max-w-[112px] shrink-0 overflow-hidden rounded-[12px] bg-neo-teal lg:w-[40%] lg:max-w-[240px]">
+                    <Image
+                      src={service.image}
+                      alt=""
+                      width={240}
+                      height={169}
+                      aria-hidden
+                      className="h-full w-full object-cover"
+                    />
+                  </ClipReveal>
                 </div>
               ))}
-            </div>
+            </Reveal>
           </div>
         </div>
 

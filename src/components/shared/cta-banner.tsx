@@ -1,6 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 
+import { MagneticLink } from "@/components/animation/magnetic-link";
+import { Parallax } from "@/components/animation/parallax";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 
 /**
@@ -13,18 +15,26 @@ import Container from "@/components/shared/container";
 export function CtaBanner() {
   return (
     <section className="relative w-full overflow-hidden">
-      <Image
-        src="/images/cta-banner-bg.png"
-        alt=""
-        fill
-        sizes="100vw"
-        aria-hidden
-        className="pointer-events-none object-cover object-center select-none"
-      />
+      <Parallax
+        amount={14}
+        className="pointer-events-none absolute inset-x-0 -inset-y-[8%] select-none"
+      >
+        <Image
+          src="/images/cta-banner-bg.png"
+          alt=""
+          fill
+          sizes="100vw"
+          aria-hidden
+          className="object-cover object-center"
+        />
+      </Parallax>
 
       <Container className="relative flex flex-col py-6 md:py-[60px] 2xl:h-[490px] 2xl:justify-center 2xl:px-0 2xl:py-[81px]">
         {/* Figma: Frame 2147224633 — column; gap 32 mobile / 64 desktop, width 706 */}
-        <div className="flex flex-col gap-8 md:gap-10 2xl:w-[706px] 2xl:gap-16">
+        <Reveal
+          stagger={0.14}
+          className="flex flex-col gap-8 md:gap-10 2xl:w-[706px] 2xl:gap-16"
+        >
           {/* Figma: Frame 16 — column; gap 20 mobile / 24 desktop */}
           <div className="flex flex-col gap-5 md:gap-4 2xl:gap-6">
             <h2 className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]">
@@ -39,20 +49,20 @@ export function CtaBanner() {
 
           {/* Figma: Frame 7 — row, gap 16; buttons 163.5x40 mobile, 265.585x48 desktop */}
           <div className="flex gap-4 2xl:gap-5">
-            <Link
+            <MagneticLink
               href="/contact"
               className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
             >
               Bizimlə əlaqə
-            </Link>
-            <Link
+            </MagneticLink>
+            <MagneticLink
               href="/services"
               className="flex h-10 flex-1 items-center justify-center rounded-full border border-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
             >
               Xidmətlərimiz
-            </Link>
+            </MagneticLink>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

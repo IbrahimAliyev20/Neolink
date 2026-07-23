@@ -2,6 +2,8 @@ import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Parallax } from "@/components/animation/parallax";
+import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 
 const posts = [
@@ -48,7 +50,10 @@ export function BlogSection() {
       <Container className="flex flex-col gap-6 lg:gap-12 2xl:px-0">
         {/* Figma: Frame 16 / Frame 2147224638 — mobile centred column gap 12;
             desktop row, space-between, align center, gap 24 */}
-        <div className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left"
+        >
           <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[34.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
             Rəqəmsal Dünyadan Yeniliklər
           </h2>
@@ -56,22 +61,27 @@ export function BlogSection() {
             Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual
             məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın.
           </p>
-        </div>
+        </Reveal>
 
         {/* Figma: Frame 2147224631 — mobile column gap 12; desktop row, gap 20 */}
-        <div className="flex flex-col gap-3 lg:flex-row lg:gap-5">
+        <Reveal
+          stagger={0.12}
+          className="flex flex-col gap-3 lg:flex-row lg:gap-5"
+        >
           {/* Figma: Blog-wide — 710x440, r16, border #F2F4F8, gradient scrim */}
           <Link
             href="/blog"
-            className="relative block aspect-[710/440] h-auto max-h-[440px] w-full min-w-0 overflow-hidden rounded-[14px] border border-[#f2f4f8] lg:w-[49.31%] lg:rounded-[16px]"
+            className="group/wide relative block aspect-[710/440] h-auto max-h-[440px] w-full min-w-0 overflow-hidden rounded-[14px] border border-[#f2f4f8] lg:w-[49.31%] lg:rounded-[16px]"
           >
-            <Image
-              src="/images/blog-wide.png"
-              alt=""
-              fill
-              sizes="(min-width: 1536px) 710px, 100vw"
-              className="object-cover"
-            />
+            <Parallax amount={12} className="absolute inset-x-0 -inset-y-[7%]">
+              <Image
+                src="/images/blog-wide.png"
+                alt=""
+                fill
+                sizes="(min-width: 1536px) 710px, 100vw"
+                className="object-cover transition-transform duration-500 group-hover/wide:scale-[1.04]"
+              />
+            </Parallax>
             <span
               aria-hidden
               className="absolute inset-0 opacity-[0.48]"
@@ -108,13 +118,13 @@ export function BlogSection() {
                   className="flex w-full min-w-0 flex-col gap-3 lg:gap-4"
                 >
                   {/* Figma: Frame 2147224960 — 167x128 r14 mobile / 345x264 r16 desktop */}
-                  <div className="relative aspect-[345/264] h-auto max-h-[264px] w-full overflow-hidden rounded-[14px] border border-[#f2f4f8] bg-white lg:rounded-[16px]">
+                  <div className="group/card relative aspect-[345/264] h-auto max-h-[264px] w-full overflow-hidden rounded-[14px] border border-[#f2f4f8] bg-white lg:rounded-[16px]">
                     <Image
                       src={post.image}
                       alt=""
                       fill
                       sizes="(min-width: 1536px) 345px, 100vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 group-hover/card:scale-[1.05]"
                     />
                   </div>
 
@@ -138,13 +148,16 @@ export function BlogSection() {
             {/* Figma: See all button — text 16/24 Medium + chevron 24 */}
             <Link
               href="/blog"
-              className="flex items-center gap-[6px] text-[16px] leading-[24px] font-medium tracking-[0] text-[#20201e]"
+              className="group/all flex items-center gap-[6px] text-[16px] leading-[24px] font-medium tracking-[0] text-[#20201e]"
             >
               Hamısına bax
-              <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
+              <ChevronRight
+                className="h-6 w-6 transition-transform duration-300 group-hover/all:translate-x-1"
+                strokeWidth={1.5}
+              />
             </Link>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

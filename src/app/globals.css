@@ -183,3 +183,31 @@
     animation: none;
   }
 }
+
+/* Starting state for `components/animation/reveal.tsx` and the hero intro
+   timeline. GSAP takes over on mount; without this the content would paint in
+   its final position first and then jump back. */
+[data-reveal="self"],
+[data-reveal="stagger"] > *,
+[data-hero-anim],
+.js-hero-stat {
+  opacity: 0;
+}
+
+[data-clip-reveal] {
+  clip-path: inset(0% 100% 0% 0%);
+}
+
+/* No JS (or reduced motion) means no tween ever runs, so never hide anything. */
+@media (scripting: none), (prefers-reduced-motion: reduce) {
+  [data-reveal="self"],
+  [data-reveal="stagger"] > *,
+  [data-hero-anim],
+  .js-hero-stat {
+    opacity: 1;
+  }
+
+  [data-clip-reveal] {
+    clip-path: none;
+  }
+}
