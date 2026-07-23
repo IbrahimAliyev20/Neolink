@@ -209,12 +209,6 @@ export const projects: Project[] = [
   },
 ];
 
-export function getFeaturedProject(category: ProjectCategory): Project | undefined {
-  return projects
-    .filter((project) => project.category === category)
-    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
-}
-
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((project) => project.slug === slug);
 }

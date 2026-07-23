@@ -18,7 +18,7 @@ export default async function BlogDetailPage({
 
   return (
     <>
-      <div className="bg-white flex flex-col items-center pb-[90px] w-full">
+      <div className="bg-white flex flex-col items-center pb-12 lg:pb-[90px] w-full">
         <HeroDetailSection post={post}>
           <ContentSection content={post.content} />
         </HeroDetailSection>
