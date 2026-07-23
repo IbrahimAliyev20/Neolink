@@ -1,0 +1,42 @@
+import Image from "next/image";
+import Container from "@/components/shared/container";
+import { CategoryTabs } from "@/components/shared/CategoryTabs";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { projectCategories, type Project, type ProjectCategory } from "@/lib/data/projects";
+
+export function GridSection({
+  activeCategory,
+  onChange,
+  projects,
+}: {
+  activeCategory: ProjectCategory;
+  onChange: (category: ProjectCategory) => void;
+  projects: Project[];
+}) {
+  return (
+    <div className="flex flex-col gap-9 items-center w-full">
+      <Container className="flex flex-col items-start w-full">
+        <CategoryTabs
+          categories={projectCategories}
+          activeCategory={activeCategory}
+          onChange={onChange}
+        />
+      </Container>
+
+      <Container className="flex flex-col gap-8 items-center w-full">
+        {projects.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            {projects.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </div>
+        )}
+
+        <span className="flex gap-1.5 items-center">
+          <span className="font-medium text-[#20201e] text-base leading-6">Hamısına bax</span>
+          <Image src="/icons/chevron-right-black.svg" alt="" width={24} height={24} />
+        </span>
+      </Container>
+    </div>
+  );
+}
