@@ -25,7 +25,7 @@ const supportAvatars = [
  */
 export function FaqSection() {
   const { data: faqs = [] } = useFaqs();
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
   const iconRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const supportRef = useRef<HTMLDivElement | null>(null);

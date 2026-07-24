@@ -1,51 +1,22 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
-
-const openVacancies = [
-  {
-    key: "devops-1",
-    title: "DevOps Engineer",
-    description:
-      "Biznes ehtiyaclarınızı və layihə məqsədlərinizi analiz edərək doğru strategiyanı müəyyənləşdiririk.",
-    date: "20 iyul 2026",
-    type: "Hibrid",
-  },
-  {
-    key: "devops-2",
-    title: "DevOps Engineer",
-    description:
-      "Biznes ehtiyaclarınızı və layihə məqsədlərinizi analiz edərək doğru strategiyanı müəyyənləşdiririk.",
-    date: "20 iyul 2026",
-    type: "Hibrid",
-  },
-  {
-    key: "devops-3",
-    title: "DevOps Engineer",
-    description:
-      "Biznes ehtiyaclarınızı və layihə məqsədlərinizi analiz edərək doğru strategiyanı müəyyənləşdiririk.",
-    date: "20 iyul 2026",
-    type: "Hibrid",
-  },
-  {
-    key: "devops-4",
-    title: "DevOps Engineer",
-    description:
-      "Biznes ehtiyaclarınızı və layihə məqsədlərinizi analiz edərək doğru strategiyanı müəyyənləşdiririk.",
-    date: "20 iyul 2026",
-    type: "Hibrid",
-  },
-] as const;
+import { useVacancies } from "@/services/vacancy/queries";
 
 function VacancyCard({
+  slug,
   title,
   description,
   date,
   type,
 }: {
+  slug: string;
   title: string;
   description: string;
   date: string;
@@ -77,20 +48,24 @@ function VacancyCard({
           </div>
         </div>
       </div>
-      <button
-        type="button"
+      <Link
+        href={`/${slug}`}
         className="bg-[#0d153a] flex gap-4 h-8 items-center justify-center px-6 py-2 rounded-full w-full lg:h-10 lg:py-2.5 lg:w-auto lg:shrink-0"
       >
         <span className="font-semibold text-white text-xs leading-4 tracking-[0.12px] whitespace-nowrap lg:font-medium lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
           Ətraflı bax
         </span>
         <ArrowUpRight className="h-4 w-4 lg:h-5 lg:w-5 text-white" strokeWidth={1.5} />
-      </button>
+      </Link>
     </div>
   );
 }
 
 export function JoinUsSection() {
+  const { data: openVacancies = [] } = useVacancies();
+
+  if (openVacancies.length === 0) return null;
+
   return (
     <div className="flex flex-col items-center justify-center pb-9 w-full lg:pb-[90px]">
       <Container className="flex flex-col lg:flex-row gap-5 lg:gap-16 items-start w-full">
@@ -148,10 +123,11 @@ export function JoinUsSection() {
         >
           {openVacancies.map((vacancy) => (
             <VacancyCard
-              key={vacancy.key}
-              title={vacancy.title}
+              key={vacancy.slug}
+              slug={vacancy.slug}
+              title={vacancy.name}
               description={vacancy.description}
-              date={vacancy.date}
+              date={vacancy.deadline}
               type={vacancy.type}
             />
           ))}

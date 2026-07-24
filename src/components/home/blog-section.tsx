@@ -61,7 +61,7 @@ export function BlogSection() {
             desktop row, space-between, align center, gap 24 */}
         <div className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left">
           <SplitLines>
-            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[34.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
+            <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[36.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
               Rəqəmsal Dünyadan Yeniliklər
             </h2>
           </SplitLines>
@@ -127,13 +127,15 @@ export function BlogSection() {
 
           {/* Figma: Frame 2147225052 — column, centered; mobile gap 24, desktop 48 */}
           <div className="flex min-w-0 flex-col items-center gap-6 lg:w-[49.31%] lg:gap-12">
-            {/* Figma: Frame 2147225054 / 2147225051 — row; mobile gap 12, desktop 20 */}
-            <div className="flex w-full gap-3 lg:gap-5">
+            {/* Figma: Frame 2147225054 / 2147225051 — row of two; mobile gap 12,
+                desktop 20. A grid keeps each card at half width even when only
+                one side post exists, so it never stretches to full size. */}
+            <div className="grid w-full grid-cols-2 gap-3 lg:gap-5">
               {sidePosts.map((post) => (
                 <Link
                   key={post.slug}
                   href={`/blogs/${post.slug}`}
-                  className="flex w-full min-w-0 flex-col gap-3 lg:gap-4"
+                  className="flex min-w-0 flex-col gap-3 lg:gap-4"
                 >
                   {/* Figma: Frame 2147224960 — 167x128 r14 mobile / 345x264 r16 desktop */}
                   <div className="group/card relative aspect-[345/264] h-auto max-h-[264px] w-full overflow-hidden rounded-[14px] border border-[#f2f4f8] bg-white lg:rounded-[16px]">

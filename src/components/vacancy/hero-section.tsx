@@ -2,13 +2,20 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, CalendarDays, Clock } from "lucide-react";
 import Container from "@/components/shared/container";
-import type { Vacancy } from "@/lib/data/vacancies";
+import devopsMuhendisiHero from "../../../public/images/vacancy/devops-muhendisi-hero.png";
 
-export function HeroSection({ vacancy }: { vacancy: Vacancy }) {
+export interface VacancyHero {
+  title: string;
+  date: string;
+  type: string;
+}
+
+export function HeroSection({ vacancy }: { vacancy: VacancyHero }) {
   return (
     <div className="relative w-full h-[500px] md:h-[704px]">
+      {/* The API carries no hero image, so a shared default is used. */}
       <Image
-        src={vacancy.heroImage}
+        src={devopsMuhendisiHero}
         alt=""
         fill
         className="object-cover"

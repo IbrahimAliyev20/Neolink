@@ -2,15 +2,20 @@
 
 import { useRef, useState } from "react";
 import { UploadCloud } from "lucide-react";
+import { toast } from "sonner";
 import Container from "@/components/shared/container";
+import { useVacancyForm } from "@/services/vacancy-form/mutations";
 
 const MAX_FILE_SIZE_MB = 5;
 
-export function ApplySection() {
+export function ApplySection({ vacancyId }: { vacancyId: string }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
+  const { mutate: sendApplication, isPending } = useVacancyForm();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   const applyFile = (file: File | undefined) => {
     if (!file) return;
@@ -21,6 +26,28 @@ export function ApplySection() {
     }
     setFileError(null);
     setSelectedFile(file);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isPending) return;
+    if (!selectedFile) {
+      setFileError("CV yükləyin");
+      return;
+    }
+
+    sendApplication(
+      { name, email, cv: selectedFile, vacancy_id: vacancyId },
+      {
+        onSuccess: () => {
+          toast.success("Müraciətiniz göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.");
+          setName("");
+          setEmail("");
+          setSelectedFile(null);
+        },
+        onError: () => toast.error("Müraciət göndərilə bilmədi. Yenidən cəhd edin."),
+      }
+    );
   };
 
   return (
@@ -55,7 +82,7 @@ export function ApplySection() {
           </p>
 
           <form
-            onSubmit={(event) => event.preventDefault()}
+            onSubmit={handleSubmit}
             className="flex flex-col gap-8 items-start w-full"
           >
             <div className="flex flex-col gap-6 items-start w-full">
@@ -66,6 +93,9 @@ export function ApplySection() {
                 <input
                   id="apply-name"
                   type="text"
+                  required
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
                   placeholder="Ad və soyadınızı daxil edin"
                   className="bg-white/12 border border-[#5d627b] rounded-xl px-4 py-3.5 w-full text-sm text-[#e7e7ea] placeholder:text-[#e7e7ea] focus:outline-none focus:border-[#3abdaa]"
                 />
@@ -78,6 +108,9 @@ export function ApplySection() {
                 <input
                   id="apply-email"
                   type="email"
+                  required
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
                   placeholder="E-poçt adresinizi daxil edin"
                   className="bg-white/12 border border-[#5d627b] rounded-xl px-4 py-3.5 w-full text-sm text-[#e7e7ea] placeholder:text-[#e7e7ea] focus:outline-none focus:border-[#3abdaa]"
                 />
@@ -133,10 +166,11 @@ export function ApplySection() {
 
             <button
               type="submit"
-              className="bg-[#61cabb] flex h-12 items-center justify-center px-6 py-3 rounded-full w-full"
+              disabled={isPending}
+              className="bg-[#61cabb] flex h-12 items-center justify-center px-6 py-3 rounded-full w-full transition-opacity disabled:opacity-70"
             >
               <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
-                Göndər
+                {isPending ? "Göndərilir..." : "Göndər"}
               </span>
             </button>
           </form>

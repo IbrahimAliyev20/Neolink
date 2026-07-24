@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { CalendarDays, Clock, ArrowUpRight, ChevronDown } from "lucide-react";
 import Container from "@/components/shared/container";
-import { vacancies } from "@/lib/data/vacancies";
+import { useVacancies } from "@/services/vacancy/queries";
 
 export function RelatedVacancies({ currentSlug }: { currentSlug: string }) {
-  const relatedVacancies = vacancies.filter((vacancy) => vacancy.slug !== currentSlug).slice(0, 2);
+  const { data: apiVacancies = [] } = useVacancies();
+
+  const relatedVacancies = apiVacancies
+    .filter((vacancy) => vacancy.slug !== currentSlug)
+    .slice(0, 2);
 
   if (relatedVacancies.length === 0) {
     return null;
@@ -32,7 +38,7 @@ export function RelatedVacancies({ currentSlug }: { currentSlug: string }) {
               <div className="flex flex-col gap-4 items-start flex-1 min-w-0">
                 <div className="flex flex-col gap-2.5 items-start w-full">
                   <p className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] w-full">
-                    {vacancy.title}
+                    {vacancy.name}
                   </p>
                   <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] w-full">
                     {vacancy.description}
@@ -42,7 +48,7 @@ export function RelatedVacancies({ currentSlug }: { currentSlug: string }) {
                   <div className="flex gap-1 items-center">
                     <CalendarDays className="h-5 w-5 text-[#5b606f]" strokeWidth={1.5} />
                     <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] whitespace-nowrap">
-                      {vacancy.date}
+                      {vacancy.deadline}
                     </p>
                   </div>
                   <div className="flex gap-1 items-center">
