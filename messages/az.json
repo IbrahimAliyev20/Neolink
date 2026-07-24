@@ -4,9 +4,9 @@
     "az": "AZ",
     "en": "EN",
     "ru": "RU",
-    "azFull": "Az",
-    "enFull": "En",
-    "ruFull": "Ru"
+    "azFull": "AZ",
+    "enFull": "EN",
+    "ruFull": "RU"
   },
   "nav": {
     "home": "Ana səhifə",
@@ -29,7 +29,8 @@
     "sending": "Göndərilir...",
     "cancel": "Ləğv et",
     "emailApply": "E-poçt ilə müraciət:",
-    "close": "Bağla"
+    "close": "Bağla",
+    "showMore": "Daha çox"
   },
   "footer": {
     "copyright": "Neoline Technology MMC | Bütün hüquqlar qorunur."
@@ -109,7 +110,8 @@
       "badge": "Səni Axtarırıq",
       "heading": "Neoline Ailəsinə Qoşulun",
       "desc": "Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət planı təqdim edəcəyik.",
-      "email": "career@neolinetech.az"
+      "email": "career@neolinetech.az",
+      "emailApply": "E-poçt ilə müraciət:"
     }
   },
   "services": {
@@ -136,17 +138,19 @@
       "nameLabel": "Ad, soyad",
       "namePlaceholder": "Ad və soyadınızı daxil edin",
       "emailLabel": "E-poçt",
-      "emailPlaceholder": "E-poçtunuu daxil edin",
+      "emailPlaceholder": "E-poçtunu daxil edin",
       "phoneLabel": "Telefon nömrəsi",
-      "phonePlaceholder": "Telefon nömrənizi daxi edin",
-      "errorToast": "Təklif göndərilə bilmədi. Yenidən cəhd edin."
+      "phonePlaceholder": "Telefon nömrənizi daxil edin",
+      "errorToast": "Təklif göndərilə bilmədi. Yenidən cəhd edin.",
+      "phoneInvalid": "Düzgün telefon nömrəsi daxil edin (9 rəqəm).",
+      "emailInvalid": "Düzgün e-poçt ünvanı daxil edin (@ olmalıdır)."
     }
   },
   "projects": {
     "hero": {
       "headingAccent": "Layihələrimizlə",
       "headingRest": "yaxından tanış olun",
-      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+      "desc": "Fərqli sahələrdə həyata keçirdiyimiz layihələrlə tanış olun və işlərimizin biznesə qatdığı dəyəri kəşf edin."
     },
     "detail": {
       "breadcrumb": "Layihələr",
@@ -197,9 +201,9 @@
     "nameLabel": "Ad, soyad",
     "namePlaceholder": "Ad və soyadınızı daxil edin",
     "emailFieldLabel": "E-poçt",
-    "emailPlaceholder": "E-poçtunuu daxil edin",
+    "emailPlaceholder": "E-poçtunu daxil edin",
     "phoneFieldLabel": "Telefon nömrəsi",
-    "phonePlaceholder": "Telefon nömrənizi daxi edin",
+    "phonePlaceholder": "Telefon nömrənizi daxil edin",
     "subjectLabel": "Mesaj başlığı",
     "subjectPlaceholder": "Mesaj başlığı",
     "messageLabel": "Mesajınız",
@@ -213,7 +217,9 @@
       "İT Konsultasiyası",
       "Texniki problem",
       "Digər"
-    ]
+    ],
+    "phoneInvalid": "Düzgün telefon nömrəsi daxil edin (9 rəqəm).",
+    "emailInvalid": "Düzgün e-poçt ünvanı daxil edin (@ olmalıdır)."
   },
   "vacancy": {
     "detail": {
@@ -239,11 +245,13 @@
       "fileTooBig": "Fayl {size}MB-dan kiçik olmalıdır",
       "cvRequired": "CV yükləyin",
       "successToast": "Müraciətiniz göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.",
-      "errorToast": "Müraciət göndərilə bilmədi. Yenidən cəhd edin."
+      "errorToast": "Müraciət göndərilə bilmədi. Yenidən cəhd edin.",
+      "fileType": "Yalnız PDF, DOC və ya DOCX faylı yükləyin",
+      "emailInvalid": "Düzgün e-poçt ünvanı daxil edin (@ olmalıdır)."
     },
     "other": {
       "heading": "Digər Vakansiyalarla Tanış olun",
-      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+      "desc": "Komandamıza qoşulmaq üçün açıq vakansiyalara nəzər salın və karyeranızda növbəti addımı atın."
     }
   },
   "metadata": {

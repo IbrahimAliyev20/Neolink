@@ -5,8 +5,9 @@ import { TestimonialsSection } from "@/components/about/testimonials-section";
 import { EcosystemSection } from "@/components/shared/ecosystem-section";
 import { JoinUsSection } from "@/components/about/join-us-section";
 
-export function generateMetadata() {
-  return getPageMetadata("About");
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return getPageMetadata("About", locale);
 }
 
 export default function AboutPage() {

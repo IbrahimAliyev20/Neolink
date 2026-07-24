@@ -2,8 +2,9 @@ import { getPageMetadata } from "@/services/meta-tag/api";
 import { HeroSection } from "@/components/services/hero-section";
 import { GridSection } from "@/components/services/grid-section";
 
-export function generateMetadata() {
-  return getPageMetadata("Service");
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return getPageMetadata("Service", locale);
 }
 
 export default function ServicePage() {

@@ -4,10 +4,11 @@ import { getAcceptLanguageHeader } from '@/lib/utils'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 const TOKEN_COOKIE_NAME = 'access_token'
+const REQUEST_TIMEOUT_MS = 10000
 
 const client: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
+  timeout: REQUEST_TIMEOUT_MS,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -43,12 +44,22 @@ const setupInterceptors = (): void => {
         config.headers.Authorization = `Bearer ${token}`
       }
 
-      
+      // For FormData, drop the default JSON Content-Type so axios/the browser
+      // sets `multipart/form-data` together with the required boundary.
+      if (config.data instanceof FormData && config.headers) {
+        delete config.headers['Content-Type']
+      }
+
+
       if (config.headers) {
         const configLocale = config.params?.locale || config.headers['X-Locale']
-        
+
         if (configLocale) {
           config.headers['Accept-Language'] = getAcceptLanguageHeader(configLocale)
+          // Consume the hint so it never leaks to the backend as a query
+          // param or custom header.
+          if (config.params?.locale) delete config.params.locale
+          if (config.headers['X-Locale']) delete config.headers['X-Locale']
         } else {
           const currentLocale = typeof window !== 'undefined' 
             ? window.location.pathname.split('/')[1] 

@@ -8,6 +8,7 @@ import Container from "@/components/shared/container";
 import { useVacancyForm } from "@/services/vacancy-form/mutations";
 
 const MAX_FILE_SIZE_MB = 5;
+const ALLOWED_EXTENSIONS = ["pdf", "doc", "docx"];
 
 export function ApplySection({ vacancyId }: { vacancyId: string }) {
   const t = useTranslations("vacancy.apply");
@@ -22,6 +23,12 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
 
   const applyFile = (file: File | undefined) => {
     if (!file) return;
+    const extension = file.name.split(".").pop()?.toLowerCase() ?? "";
+    if (!ALLOWED_EXTENSIONS.includes(extension)) {
+      setFileError(t("fileType"));
+      setSelectedFile(null);
+      return;
+    }
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
       setFileError(t("fileTooBig", { size: MAX_FILE_SIZE_MB }));
       setSelectedFile(null);
@@ -39,8 +46,16 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
       return;
     }
 
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    if (!trimmedName || !trimmedEmail) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      toast.error(t("emailInvalid"));
+      return;
+    }
+
     sendApplication(
-      { name, email, cv: selectedFile, vacancy_id: vacancyId },
+      { name: trimmedName, email: trimmedEmail, cv: selectedFile, vacancy_id: vacancyId },
       {
         onSuccess: () => {
           toast.success(t("successToast"));
@@ -59,29 +74,28 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
         <div className="flex flex-col gap-6 items-start flex-1 min-w-0 w-full lg:gap-9">
           <div className="flex flex-col gap-3 items-start w-full lg:gap-6">
             <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-[28px] tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-              Neoline Ailəsinə Qoşulun
+              {t("heading")}
             </h2>
             <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              Böyüməyə dəyər verən komandamızda bacarıqlarınızı nümayiş etdirin, yeni
-              texnologiyalarla işləyin və gələcəyin həllərini birlikdə formalaşdıraq.
+              {t("desc")}
             </p>
           </div>
           <div className="flex flex-col gap-1 items-start w-full">
             <p className="text-[#5b606f] text-base leading-6 tracking-[0.16px] w-full">
-              E-poçt ilə müraciət:
+              {tc("emailApply")}
             </p>
             <a
-              href="mailto:career@neolinetech.az"
+              href={`mailto:${t("email")}`}
               className="text-[#35ac9b] text-base leading-6 tracking-[0.16px] underline w-full"
             >
-              career@neolinetech.az
+              {t("email")}
             </a>
           </div>
         </div>
 
         <div className="bg-[#0d153a] flex flex-col gap-5 items-start justify-center p-3.5 pb-5 rounded-[14px] flex-1 min-w-0 w-full lg:gap-6 lg:p-6 lg:pb-6 lg:rounded-2xl">
           <p className="font-semibold text-white text-[20px] leading-[28px] tracking-[0.2px] lg:font-medium lg:text-2xl lg:leading-8 lg:tracking-[0.24px]">
-            Müraciət edin
+            {t("formTitle")}
           </p>
 
           <form
@@ -91,7 +105,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
             <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="apply-name" className="text-white text-sm tracking-[0.14px] px-1">
-                  Ad, soyad
+                  {t("nameLabel")}
                 </label>
                 <input
                   id="apply-name"
@@ -99,14 +113,14 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
                   required
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="Ad və soyadınızı daxil edin"
+                  placeholder={t("namePlaceholder")}
                   className="bg-white/12 border border-[#5d627b] rounded-xl px-4 py-3.5 w-full text-sm text-[#e7e7ea] placeholder:text-[#e7e7ea] focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
 
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="apply-email" className="text-white text-sm tracking-[0.14px] px-1">
-                  E-poçt
+                  {t("emailLabel")}
                 </label>
                 <input
                   id="apply-email"
@@ -114,15 +128,21 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="E-poçt adresinizi daxil edin"
+                  placeholder={t("emailPlaceholder")}
                   className="bg-white/12 border border-[#5d627b] rounded-xl px-4 py-3.5 w-full text-sm text-[#e7e7ea] placeholder:text-[#e7e7ea] focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
 
               <div className="flex flex-col gap-5 items-start w-full lg:gap-3">
-                <p className="font-medium text-white text-base tracking-[0.16px]">CV-niz</p>
+                <p className="font-medium text-white text-base tracking-[0.16px]">{t("cvLabel")}</p>
                 <div
                   onClick={() => fileInputRef.current?.click()}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      fileInputRef.current?.click();
+                    }
+                  }}
                   onDragOver={(event) => {
                     event.preventDefault();
                     setIsDragActive(true);
@@ -154,12 +174,12 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
                       <p className="text-[#3abdaa] text-xs tracking-[0.12px]">{selectedFile.name}</p>
                     ) : (
                       <div className="flex gap-1 items-start text-xs tracking-[0.12px]">
-                        <span className="text-[#3abdaa]">Buradan yükləyin</span>
-                        <span className="text-[#b3b5bc]">və ya sürükləyib buraxın</span>
+                        <span className="text-[#3abdaa]">{t("uploadHere")}</span>
+                        <span className="text-[#b3b5bc]">{t("uploadDrop")}</span>
                       </div>
                     )}
                     <p className="text-[#b3b5bc] text-[10px] tracking-[0.1px]">
-                      Maksimum fayl {MAX_FILE_SIZE_MB}MB
+                      {t("maxFile", { size: MAX_FILE_SIZE_MB })}
                     </p>
                   </div>
                 </div>
@@ -173,7 +193,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
               className="bg-[#61cabb] flex h-12 items-center justify-center px-6 py-3 rounded-full w-full transition-opacity disabled:opacity-70"
             >
               <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
-                {isPending ? "Göndərilir..." : "Göndər"}
+                {isPending ? tc("sending") : tc("send")}
               </span>
             </button>
           </form>

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getProjects, getProjectsByTag, getProjectBySlug } from './api'
 
 export const projectKeys = {
@@ -8,23 +9,26 @@ export const projectKeys = {
 }
 
 export const useProjects = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: projectKeys.all,
+    queryKey: [...projectKeys.all, locale],
     queryFn: getProjects,
   })
 }
 
 export const useProjectsByTag = (slug: string | undefined) => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: projectKeys.byTag(slug ?? ''),
+    queryKey: [...projectKeys.byTag(slug ?? ''), locale],
     queryFn: () => getProjectsByTag(slug as string),
     enabled: Boolean(slug),
   })
 }
 
 export const useProject = (slug: string) => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: projectKeys.bySlug(slug),
+    queryKey: [...projectKeys.bySlug(slug), locale],
     queryFn: () => getProjectBySlug(slug),
     enabled: Boolean(slug),
   })

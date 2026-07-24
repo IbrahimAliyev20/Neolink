@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getWhyNeoline } from './api'
 
 export const whyNeolineKeys = {
@@ -6,8 +7,9 @@ export const whyNeolineKeys = {
 }
 
 export const useWhyNeoline = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: whyNeolineKeys.all,
+    queryKey: [...whyNeolineKeys.all, locale],
     queryFn: getWhyNeoline,
   })
 }

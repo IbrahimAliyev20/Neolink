@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getVacancies, getVacancyBySlug } from './api'
 
 export const vacancyKeys = {
@@ -7,15 +8,17 @@ export const vacancyKeys = {
 }
 
 export const useVacancies = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: vacancyKeys.all,
+    queryKey: [...vacancyKeys.all, locale],
     queryFn: getVacancies,
   })
 }
 
 export const useVacancy = (slug: string) => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: vacancyKeys.bySlug(slug),
+    queryKey: [...vacancyKeys.bySlug(slug), locale],
     queryFn: () => getVacancyBySlug(slug),
     enabled: Boolean(slug),
   })

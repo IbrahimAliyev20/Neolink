@@ -9,6 +9,7 @@ import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import { accentHtml } from "@/lib/utils";
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useBanner } from "@/services/banner/queries";
 
 /**
@@ -78,7 +79,7 @@ export function CtaBanner() {
             <h2
               className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] lg:text-[56px] lg:leading-[72px]"
               dangerouslySetInnerHTML={{
-                __html: banner?.title ?? accentHtml(t("titleFallback")),
+                __html: sanitizeHtml(banner?.title ?? accentHtml(t.raw("titleFallback"))),
               }}
             />
             <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-[#e7e7ea] md:text-[16px] md:leading-[24px] lg:w-[631px]">

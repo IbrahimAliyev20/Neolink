@@ -50,10 +50,15 @@ export function Header() {
 
   // Services dropdown content, split into two columns. `image` is the photo the
   // 420x284 preview cross-fades to when the row is hovered.
-  const serviceItems = apiServices.map((service) => ({
+  // `previewIndex` is this service's slot in `previewImages` (index 0 is the
+  // default preview, so services start at 1). Threading it through avoids an
+  // `indexOf` lookup that would pick the wrong layer when two services share an
+  // image or an image is undefined.
+  const serviceItems = apiServices.map((service, index) => ({
     label: service.name,
     href: `/services/${service.slug}`,
     image: service.cover_image_home,
+    previewIndex: index + 1,
   }));
   const half = Math.ceil(serviceItems.length / 2);
   const serviceColumns = [
@@ -470,11 +475,7 @@ export function Header() {
                         {/* Figma: Service-title — row, space-between, 20/28 */}
                         <Link
                           href={service.href}
-                          onMouseEnter={() =>
-                            setPreviewIndex(
-                              previewImages.indexOf(service.image)
-                            )
-                          }
+                          onMouseEnter={() => setPreviewIndex(service.previewIndex)}
                           className="group flex items-center justify-between gap-4 text-[20px] leading-[28px] font-normal tracking-[0.01em] text-[#3b4153] transition-colors hover:font-semibold hover:text-neo-ink"
                         >
                           {service.label}
@@ -497,7 +498,7 @@ export function Header() {
               <div className="relative hidden h-[284px] w-[420px] shrink-0 overflow-hidden rounded-[20px] border border-[#e7e7ea] xl:block">
                 {previewImages.map((image, index) => (
                   <div
-                    key={image}
+                    key={index}
                     ref={(node) => {
                       previewRefs.current[index] = node;
                     }}

@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getTags } from './api'
 
 export const tagsKeys = {
@@ -6,8 +7,9 @@ export const tagsKeys = {
 }
 
 export const useTags = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: tagsKeys.all,
+    queryKey: [...tagsKeys.all, locale],
     queryFn: getTags,
   })
 }

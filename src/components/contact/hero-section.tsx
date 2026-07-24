@@ -14,7 +14,8 @@ import { useSocialMedia } from "@/services/social-media/queries";
 export function HeroSection() {
   const t = useTranslations("contact");
   const tc = useTranslations("common");
-  const messageSubjects = t.raw("subjects") as string[];
+  const rawSubjects = t.raw("subjects");
+  const messageSubjects = (Array.isArray(rawSubjects) ? rawSubjects : []) as string[];
   const { data: contact } = useContact();
   const { data: socialLinks = [] } = useSocialMedia();
   const [subject, setSubject] = useState<string | null>(null);
@@ -58,13 +59,25 @@ export function HeroSection() {
     event.preventDefault();
     if (isPending) return;
 
+    const trimmedEmail = email.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      toast.error(t("emailInvalid"));
+      return;
+    }
+
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length !== 9) {
+      toast.error(t("phoneInvalid"));
+      return;
+    }
+
     sendForm(
       {
-        name,
-        email,
-        phone: `+994${phone}`,
+        name: name.trim(),
+        email: trimmedEmail,
+        phone: `+994${phoneDigits}`,
         title: subject ?? "",
-        note: message,
+        note: message.trim(),
       },
       {
         onSuccess: () => {
@@ -228,9 +241,10 @@ export function HeroSection() {
                   <input
                     id="contact-phone"
                     type="tel"
+                    inputMode="numeric"
                     required
                     value={phone}
-                    onChange={(event) => setPhone(event.target.value)}
+                    onChange={(event) => setPhone(event.target.value.replace(/\D/g, ""))}
                     placeholder={t("phonePlaceholder")}
                     className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                   />

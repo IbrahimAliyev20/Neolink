@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getHowWeWork } from './api'
 
 export const howWeWorkKeys = {
@@ -6,8 +7,9 @@ export const howWeWorkKeys = {
 }
 
 export const useHowWeWork = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: howWeWorkKeys.all,
+    queryKey: [...howWeWorkKeys.all, locale],
     queryFn: getHowWeWork,
   })
 }

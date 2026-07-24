@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, K2D, Poppins } from "next/font/google";
 import "@/app/globals.css";
 import { notFound } from "next/navigation";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { QueryProvider } from "@/providers/QueryProvider";
@@ -40,10 +40,27 @@ const poppins = Poppins({
   weight: ["400"],
 });
 
-export const metadata: Metadata = {
-  title: "HR-vakansiyaları",
-  description: "HR-vakansiyaları",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      locale,
+      type: "website",
+    },
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -58,10 +75,10 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const {locale} = await params;
-  const messages = (await getMessages()) as Record<string, string>;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const messages = await getMessages();
   return (
     <html lang={locale}>
       <body

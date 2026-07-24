@@ -4,9 +4,9 @@
     "az": "AZ",
     "en": "EN",
     "ru": "RU",
-    "azFull": "Azərbaycanca",
-    "enFull": "English",
-    "ruFull": "Русский"
+    "azFull": "AZ",
+    "enFull": "EN",
+    "ruFull": "RU"
   },
   "nav": {
     "home": "Home",
@@ -29,7 +29,8 @@
     "sending": "Sending...",
     "cancel": "Cancel",
     "emailApply": "Apply by email:",
-    "close": "Close"
+    "close": "Close",
+    "showMore": "Show more"
   },
   "footer": {
     "copyright": "Neoline Technology LLC | All rights reserved."
@@ -109,7 +110,8 @@
       "badge": "We're Looking for You",
       "heading": "Join the Neoline Family",
       "desc": "Start with a technical audit that requires no financial commitment. We'll assess your existing systems, uncover weak points and provide a clear action plan.",
-      "email": "career@neolinetech.az"
+      "email": "career@neolinetech.az",
+      "emailApply": "Apply by email:"
     }
   },
   "services": {
@@ -139,14 +141,16 @@
       "emailPlaceholder": "Enter your email",
       "phoneLabel": "Phone number",
       "phonePlaceholder": "Enter your phone number",
-      "errorToast": "The request could not be sent. Please try again."
+      "errorToast": "The request could not be sent. Please try again.",
+      "phoneInvalid": "Please enter a valid phone number (9 digits).",
+      "emailInvalid": "Please enter a valid email address (must contain @)."
     }
   },
   "projects": {
     "hero": {
       "headingAccent": "Get to Know Our Projects",
       "headingRest": "Closely",
-      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+      "desc": "Explore the projects we have delivered across different fields and discover the value our work brings to businesses."
     },
     "detail": {
       "breadcrumb": "Projects",
@@ -213,7 +217,9 @@
       "IT consultation",
       "Technical issue",
       "Other"
-    ]
+    ],
+    "phoneInvalid": "Please enter a valid phone number (9 digits).",
+    "emailInvalid": "Please enter a valid email address (must contain @)."
   },
   "vacancy": {
     "detail": {
@@ -239,11 +245,13 @@
       "fileTooBig": "The file must be smaller than {size}MB",
       "cvRequired": "Please upload a CV",
       "successToast": "Your application has been sent. We'll contact you shortly.",
-      "errorToast": "The application could not be sent. Please try again."
+      "errorToast": "The application could not be sent. Please try again.",
+      "fileType": "Please upload a PDF, DOC or DOCX file",
+      "emailInvalid": "Please enter a valid email address (must contain @)."
     },
     "other": {
       "heading": "Explore Other Vacancies",
-      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+      "desc": "Explore our open positions and take the next step in your career with our team."
     }
   },
   "metadata": {

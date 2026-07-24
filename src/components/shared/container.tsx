@@ -8,7 +8,7 @@ import React from 'react'
  */
 function Container({ children,className }: { children: React.ReactNode,className?: string }) {
   return (
-    <div className={`max-w-[1440px] mx-auto px-4 md:px-[80px] 2xl:px-0 ${className}`}>
+    <div className={`max-w-[1440px] mx-auto px-4 md:px-[80px] 2xl:px-0 ${className ?? ""}`}>
         {children}
     </div>
   )

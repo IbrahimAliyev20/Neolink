@@ -19,16 +19,34 @@ export interface ServiceApiItem {
 
 interface ServiceListResponse {
   data: ServiceApiItem[]
+  meta?: { current_page: number; last_page: number }
 }
 
 interface ServiceShowResponse {
   data: ServiceApiItem
 }
 
-/** GET /services — all services, paginated (we only consume `data`). */
+/** One page of services plus the cursor info the "load more" button needs. */
+export interface ServicePage {
+  items: ServiceApiItem[]
+  currentPage: number
+  lastPage: number
+}
+
+/** GET /services — first page only (used by the header dropdown). */
 export const getServices = async (): Promise<ServiceApiItem[]> => {
   const response = await get<ServiceListResponse>('/services')
   return response.data
+}
+
+/** GET /services?page=N — a single paginated page (backend serves 6 per page). */
+export const getServicesPage = async (page: number): Promise<ServicePage> => {
+  const response = await get<ServiceListResponse>('/services', { params: { page } })
+  return {
+    items: response.data,
+    currentPage: response.meta?.current_page ?? page,
+    lastPage: response.meta?.last_page ?? page,
+  }
 }
 
 /** GET /service/show/{slug} — a single service's full record. */

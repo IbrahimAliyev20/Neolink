@@ -211,8 +211,7 @@ export function HeroSection() {
                 <span className="text-[#3abdaa]">{t("headingAccent")}</span> {t("headingRest")}
               </h1>
               <p data-hero-anim className="w-full text-base leading-6 tracking-[0.16px] text-[#5b606f]">
-                Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
-                fikirləri ilə gündəmdən geri qalmayın.
+                {t("desc")}
               </p>
 
               <div data-hero-anim className="absolute left-[110.81px] top-[196px] flex h-[72.5px] w-[81.29px] items-center justify-center">

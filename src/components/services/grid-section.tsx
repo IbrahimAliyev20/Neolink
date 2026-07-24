@@ -1,14 +1,18 @@
 "use client";
 
-import Link from "next/link";
+import { ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Reveal } from "@/components/animation/reveal";
 import { mapApiServices } from "@/lib/data/services";
-import { useServices } from "@/services/service/queries";
+import { useServicesInfinite } from "@/services/service/queries";
 
 export function GridSection() {
-  const { data: apiServices = [] } = useServices();
+  const tc = useTranslations("common");
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useServicesInfinite();
+  const apiServices = data?.pages.flatMap((page) => page.items) ?? [];
   const services = mapApiServices(apiServices);
 
   if (services.length === 0) return null;
@@ -20,7 +24,7 @@ export function GridSection() {
   }
 
   return (
-    <Container className="w-full">
+    <Container className="flex flex-col gap-8 items-center w-full">
       {/* Rows deal in one after another on scroll. Re-keyed on the count so the
           stagger plays once the API services arrive rather than snapping in. */}
       <Reveal
@@ -53,6 +57,18 @@ export function GridSection() {
           </div>
         ))}
       </Reveal>
+
+      {hasNextPage && (
+        <button
+          type="button"
+          onClick={() => fetchNextPage()}
+          disabled={isFetchingNextPage}
+          className="flex gap-1.5 items-center cursor-pointer disabled:opacity-60"
+        >
+          <span className="font-medium text-[#20201e] text-base leading-6">{tc("showMore")}</span>
+          <ChevronDown className="h-6 w-6" strokeWidth={1.5} />
+        </button>
+      )}
     </Container>
   );
 }

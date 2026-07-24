@@ -15,7 +15,6 @@ export const postServiceForm = async (payload: ServiceFormPayload) => {
     formData.append(key, value)
   })
 
-  return post('/service-form', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+  // Content-Type (with boundary) is set automatically for FormData — see client.ts.
+  return post('/service-form', formData)
 }

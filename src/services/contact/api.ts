@@ -33,7 +33,6 @@ export const postContactForm = async (payload: ContactFormPayload) => {
     formData.append(key, value)
   })
 
-  return post('/contact-form', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+  // Content-Type (with boundary) is set automatically for FormData — see client.ts.
+  return post('/contact-form', formData)
 }

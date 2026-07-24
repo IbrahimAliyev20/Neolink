@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { HeroSection } from "@/components/vacancy/hero-section";
 import { DetailSections, type VacancySection } from "@/components/vacancy/detail-sections";
 import { ApplySection } from "@/components/vacancy/apply-section";
@@ -10,6 +11,7 @@ import { useVacancy } from "@/services/vacancy/queries";
 export default function VacancyDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
+  const t = useTranslations("vacancy.detail");
 
   const { data: vacancy, isLoading } = useVacancy(slug);
 
@@ -20,18 +22,19 @@ export default function VacancyDetailPage() {
   if (!vacancy) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4 text-center text-[#5b606f]">
-        Vakansiya tapılmadı.
+        {t("notFound")}
       </div>
     );
   }
 
-  // Field names map to the section headings by content: `about` is the intro,
-  // `offer` holds the candidate requirements, `expectations` the perks. Empty
-  // sections are dropped.
+  // Field→heading mapping per the documented backend contract (see
+  // vacancy/api.ts): the `offer` field carries the candidate requirements shown
+  // under "Namizəddən gözləntilər", and `expectations` carries the perks shown
+  // under "Təkliflərimiz". Empty sections are dropped.
   const sections: VacancySection[] = [
-    { title: "Vakansiya haqqında", html: vacancy.about },
-    { title: "Namizəddən gözləntilər", html: vacancy.offer },
-    { title: "Təkliflərimiz", html: vacancy.expectations },
+    { title: t("sectionAbout"), html: vacancy.about },
+    { title: t("sectionExpectations"), html: vacancy.offer },
+    { title: t("sectionOffer"), html: vacancy.expectations },
   ].filter((section) => section.html.trim().length > 0);
 
   return (

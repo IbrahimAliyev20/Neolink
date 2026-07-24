@@ -27,10 +27,10 @@ function makeQueryClient() {
         refetchOnReconnect: true,
       },
       mutations: {
-        // Retry failed mutations once
-        retry: 1,
-        // Retry delay for mutations
-        retryDelay: 1000,
+        // Never auto-retry mutations: the form POSTs (CV application, contact,
+        // offer request) are not idempotent, so a retry risks duplicate
+        // submissions/emails.
+        retry: 0,
       },
     },
   })

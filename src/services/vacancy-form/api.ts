@@ -15,7 +15,6 @@ export const postVacancyForm = async (payload: VacancyFormPayload) => {
   formData.append('cv', payload.cv)
   formData.append('vacancy_id', payload.vacancy_id)
 
-  return post('/vacancy-form', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
+  // Content-Type (with boundary) is set automatically for FormData — see client.ts.
+  return post('/vacancy-form', formData)
 }

@@ -65,8 +65,10 @@ function VacancyCard({
 
 export function JoinUsSection() {
   const t = useTranslations("about.joinUs");
-  const { data: openVacancies = [] } = useVacancies();
+  const { data } = useVacancies();
+  const openVacancies = Array.isArray(data) ? data : [];
 
+  // No open vacancies → hide the whole section (heading, copy, email and cards).
   if (openVacancies.length === 0) return null;
 
   return (

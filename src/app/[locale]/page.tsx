@@ -6,8 +6,9 @@ import { HeroSection } from "@/components/home/hero-section";
 import { ServicesSection } from "@/components/home/services-section";
 import { WhyUsSection } from "@/components/home/why-us-section";
 
-export function generateMetadata() {
-  return getPageMetadata("Home");
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  return getPageMetadata("Home", locale);
 }
 
 export default function Home() {

@@ -8,6 +8,7 @@ import { StatCard } from "@/components/home/stat-card";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 import { accentHtml } from "@/lib/utils";
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useHero } from "@/services/hero/queries";
 import { useStatistics } from "@/services/statistics/queries";
 
@@ -110,7 +111,6 @@ export function HeroSection() {
       <video
         key={hero?.video ?? "fallback"}
         src={hero?.video ?? "/bg-video/260601_0002_image_to_video_1812.mp4"}
-        poster="/images/hero-bg.jpg"
         autoPlay
         muted
         loop
@@ -147,9 +147,11 @@ export function HeroSection() {
                   // `data-hero-anim` gets hidden by the CSS opacity rule and
                   // never animated back in. Strip both: the teal accent lives on
                   // a `color` attribute (not `style`), so it survives.
-                  __html: (hero?.title ?? accentHtml(t("titleFallback")))
-                    .replace(/\s*style="[^"]*"/gi, "")
-                    .replace(/\s*data-hero-(anim|title)="[^"]*"/gi, ""),
+                  __html: sanitizeHtml(
+                    (hero?.title ?? accentHtml(t.raw("titleFallback")))
+                      .replace(/\s*style="[^"]*"/gi, "")
+                      .replace(/\s*data-hero-(anim|title)="[^"]*"/gi, ""),
+                  ),
                 }}
               />
               <p data-hero-anim className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px] lg:text-[calc(var(--hero-u)*20)] lg:leading-[calc(var(--hero-u)*28)]">

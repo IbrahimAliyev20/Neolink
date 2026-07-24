@@ -36,8 +36,21 @@ export function OfferModal({
     event.preventDefault();
     if (isPending) return;
 
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (!trimmedName || !trimmedEmail) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      toast.error(t("emailInvalid"));
+      return;
+    }
+    if (phoneDigits.length !== 9) {
+      toast.error(t("phoneInvalid"));
+      return;
+    }
+
     sendOffer(
-      { name, email, phone: `+994${phone}`, service },
+      { name: trimmedName, email: trimmedEmail, phone: `+994${phoneDigits}`, service },
       {
         onSuccess: () => setIsSubmitted(true),
         onError: () => toast.error(t("errorToast")),
@@ -67,6 +80,9 @@ export function OfferModal({
     return (
       <div className="fixed inset-0 bg-black/24 flex items-center justify-center p-4 z-50" onClick={handleClose}>
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={t("successTitle")}
           className="bg-white border border-[#f3f2f8] shadow-[1px_1px_2px_0px_rgba(0,0,0,0.06)] rounded-2xl w-full max-w-[420px] relative"
           onClick={(event) => event.stopPropagation()}
         >
@@ -105,6 +121,9 @@ export function OfferModal({
       onClick={handleClose}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={t("title")}
         className="bg-white border border-[#e7e7ea] rounded-2xl w-full max-w-[624px] overflow-hidden"
         onClick={(event) => event.stopPropagation()}
       >
@@ -144,7 +163,7 @@ export function OfferModal({
 
             <div className="flex flex-col gap-2 items-start w-full">
               <label htmlFor="offer-email" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                E-poçt
+                {t("emailLabel")}
               </label>
               <input
                 id="offer-email"
@@ -152,14 +171,14 @@ export function OfferModal({
                 required
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="E-poçtunu daxil edin"
+                placeholder={t("emailPlaceholder")}
                 className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
               />
             </div>
 
             <div className="flex flex-col gap-2 items-start w-full">
               <label htmlFor="offer-phone" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                Telefon nömrəsi
+                {t("phoneLabel")}
               </label>
               <div className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl flex items-center gap-2 px-4 py-3.5 w-full focus-within:border-[#3abdaa]">
                 <span className="flex items-center gap-1 text-[#77777b] text-sm shrink-0">
@@ -169,10 +188,11 @@ export function OfferModal({
                 <input
                   id="offer-phone"
                   type="tel"
+                  inputMode="numeric"
                   required
                   value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                  placeholder="Telefon nömrənizi daxi edin"
+                  onChange={(event) => setPhone(event.target.value.replace(/\D/g, ""))}
+                  placeholder={t("phonePlaceholder")}
                   className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                 />
               </div>
@@ -186,7 +206,7 @@ export function OfferModal({
               className="bg-[#f7f7f7] flex flex-1 h-12 items-center justify-center px-6 py-3 rounded-full"
             >
               <span className="font-medium text-[#040711] text-base leading-6 tracking-[0.16px]">
-                Ləğv et
+                {tc("cancel")}
               </span>
             </button>
             <button
@@ -195,7 +215,7 @@ export function OfferModal({
               className="bg-[#61cabb] flex flex-1 h-12 items-center justify-center px-6 py-3 rounded-full transition-opacity disabled:opacity-70"
             >
               <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
-                {isPending ? "Göndərilir..." : "Göndər"}
+                {isPending ? tc("sending") : tc("send")}
               </span>
             </button>
           </div>

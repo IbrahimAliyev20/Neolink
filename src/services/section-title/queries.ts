@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
+import { useLocale } from 'next-intl'
 import { getSectionTitles } from './api'
 
 export const sectionTitleKeys = {
@@ -6,8 +7,9 @@ export const sectionTitleKeys = {
 }
 
 export const useSectionTitles = () => {
+  const locale = useLocale()
   return useQuery({
-    queryKey: sectionTitleKeys.all,
+    queryKey: [...sectionTitleKeys.all, locale],
     queryFn: getSectionTitles,
   })
 }
