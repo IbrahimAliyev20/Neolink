@@ -329,7 +329,12 @@ export function Header() {
       {mobileMounted && (
         <div
           ref={drawerRef}
-          className="absolute inset-x-0 top-full z-50 flex h-[calc(100vh-66px)] flex-col justify-between gap-4 overflow-y-auto bg-white px-4 pt-3 pb-11 opacity-0 will-change-[transform,opacity] lg:hidden"
+          // `100dvh` (dynamic viewport height), not `100vh`: on Android Chrome
+          // `vh` is the *largest* viewport, so it runs behind the address/nav
+          // bar and pushes the bottom-pinned CTA off screen. `dvh` tracks the
+          // actually-visible height, and the safe-area inset clears the gesture
+          // bar so "Bizimlə əlaqə" always stays on screen.
+          className="absolute inset-x-0 top-full z-50 flex h-[calc(100dvh-66px)] flex-col justify-between gap-4 overflow-y-auto bg-white px-4 pt-3 pb-[calc(2.75rem+env(safe-area-inset-bottom))] opacity-0 will-change-[transform,opacity] lg:hidden"
         >
           {/* Figma: Frame 2147225056 — rows, 1px #F7F7F7 separators */}
           <div className="flex flex-col">
