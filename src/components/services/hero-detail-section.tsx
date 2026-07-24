@@ -125,7 +125,11 @@ export function HeroDetailSection({ service }: { service: ServiceHero }) {
           </div>
         </div>
 
-        <OfferModal open={isOfferModalOpen} onClose={() => setIsOfferModalOpen(false)} />
+        <OfferModal
+          open={isOfferModalOpen}
+          onClose={() => setIsOfferModalOpen(false)}
+          service={service.title}
+        />
       </Container>
     </section>
   );

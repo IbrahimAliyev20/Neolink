@@ -9,6 +9,7 @@ import gsap from "gsap";
 
 import Container from "@/components/shared/container";
 import { useSetting } from "@/services/setting/queries";
+import { useServices } from "@/services/service/queries";
 
 /** Figma: `Header-menu` — 14/20, #3B4153, 2px gradient hover line below. */
 const menu = [
@@ -19,62 +20,8 @@ const menu = [
   { label: "Bloqlar", href: "/blogs" },
 ];
 
-/**
- * Figma: `Service-list-2` — two 440 columns, 4 services each. `image` is what
- * the 420x284 preview swaps to on hover (placeholders until real art lands).
- */
-const serviceColumns = [
-  [
-    {
-      label: "İT Konsaltinq",
-      href: "/services/consulting",
-      image: "/images/service-1.png",
-    },
-    {
-      label: "DevOps və Proqram Mühəndisliyi",
-      href: "/services/devops",
-      image: "/images/service-2.png",
-    },
-    {
-      label: "Bulud Xidmətləri",
-      href: "/services/cloud",
-      image: "/images/service-3.png",
-    },
-    {
-      label: "İT İnfrasutruktur",
-      href: "/services/infrastructure",
-      image: "/images/service-4.png",
-    },
-  ],
-  [
-    {
-      label: "İT Dəstək",
-      href: "/services/support",
-      image: "/images/why-photo-card.png",
-    },
-    {
-      label: "Təchizat və Satış",
-      href: "/services/supply",
-      image: "/images/blog-card-1.png",
-    },
-    {
-      label: "Kibertəhlükəsizlik",
-      href: "/services/security",
-      image: "/images/blog-card-2.png",
-    },
-    {
-      label: "Peşəkar Xidmətlər",
-      href: "/services/professional",
-      image: "/images/about-feature.jpg",
-    },
-  ],
-];
-
-/** Default preview plus every service image, in render order. */
-const previewImages = [
-  "/images/services-menu-feature.png",
-  ...serviceColumns.flat().map((service) => service.image),
-];
+/** Default preview art shown before any service row is hovered. */
+const DEFAULT_PREVIEW = "/images/services-menu-feature.png";
 
 /** Figma: `Hover-line` — 2px, r64, #EEFFFD → #3ABDAA → #EEFFFD. */
 const hoverLine =
@@ -87,7 +34,23 @@ const hoverLine =
  */
 export function Header() {
   const { data: setting } = useSetting();
+  const { data: apiServices = [] } = useServices();
   const pathname = usePathname();
+
+  // Services dropdown content, split into two columns. `image` is the photo the
+  // 420x284 preview cross-fades to when the row is hovered.
+  const serviceItems = apiServices.map((service) => ({
+    label: service.name,
+    href: `/services/${service.slug}`,
+    image: service.cover_image_home,
+  }));
+  const half = Math.ceil(serviceItems.length / 2);
+  const serviceColumns = [
+    serviceItems.slice(0, half),
+    serviceItems.slice(half),
+  ];
+  /** Default preview plus every service image, in render order. */
+  const previewImages = [DEFAULT_PREVIEW, ...serviceItems.map((s) => s.image)];
   const [servicesOpen, setServicesOpen] = useState(false);
   // Kept mounted through the closing tween so the panel can animate out too.
   const [panelMounted, setPanelMounted] = useState(false);
@@ -428,7 +391,7 @@ export function Header() {
             {/* Figma: Frame 2147224671 — row, space-between, align center */}
             <div
               ref={panelInnerRef}
-              className="flex w-full items-center justify-between gap-10 opacity-0 2xl:gap-[76px]"
+              className="flex w-full items-start justify-between gap-10 opacity-0 2xl:gap-[76px]"
             >
               {/* Figma: Frame 2147224666 — row, gap 64, width 944 */}
               <div className="flex flex-1 gap-8 2xl:w-[944px] 2xl:flex-none 2xl:gap-16">

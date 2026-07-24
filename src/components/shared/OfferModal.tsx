@@ -2,13 +2,44 @@
 
 import { useEffect, useState } from "react";
 import { X, ChevronDown, Check } from "lucide-react";
+import { toast } from "sonner";
+import { useServiceForm } from "@/services/service-form/mutations";
 
-export function OfferModal({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function OfferModal({
+  open,
+  onClose,
+  service = "",
+}: {
+  open: boolean;
+  onClose: () => void;
+  /** Service name sent with the offer request. */
+  service?: string;
+}) {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { mutate: sendOffer, isPending } = useServiceForm();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
 
   const handleClose = () => {
     onClose();
     setIsSubmitted(false);
+    setName("");
+    setEmail("");
+    setPhone("");
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isPending) return;
+
+    sendOffer(
+      { name, email, phone: `+994${phone}`, service },
+      {
+        onSuccess: () => setIsSubmitted(true),
+        onError: () => toast.error("Təklif göndərilə bilmədi. Yenidən cəhd edin."),
+      }
+    );
   };
 
   useEffect(() => {
@@ -90,10 +121,7 @@ export function OfferModal({ open, onClose }: { open: boolean; onClose: () => vo
         </div>
 
         <form
-          onSubmit={(event) => {
-            event.preventDefault();
-            setIsSubmitted(true);
-          }}
+          onSubmit={handleSubmit}
           className="flex flex-col gap-10 items-center p-6 w-full"
         >
           <div className="flex flex-col gap-6 items-start w-full">
@@ -104,6 +132,9 @@ export function OfferModal({ open, onClose }: { open: boolean; onClose: () => vo
               <input
                 id="offer-name"
                 type="text"
+                required
+                value={name}
+                onChange={(event) => setName(event.target.value)}
                 placeholder="Ad və soyadınızı daxil edin"
                 className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
               />
@@ -116,6 +147,9 @@ export function OfferModal({ open, onClose }: { open: boolean; onClose: () => vo
               <input
                 id="offer-email"
                 type="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
                 placeholder="E-poçtunuu daxil edin"
                 className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
               />
@@ -133,6 +167,9 @@ export function OfferModal({ open, onClose }: { open: boolean; onClose: () => vo
                 <input
                   id="offer-phone"
                   type="tel"
+                  required
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
                   placeholder="Telefon nömrənizi daxi edin"
                   className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                 />
@@ -152,10 +189,11 @@ export function OfferModal({ open, onClose }: { open: boolean; onClose: () => vo
             </button>
             <button
               type="submit"
-              className="bg-[#61cabb] flex flex-1 h-12 items-center justify-center px-6 py-3 rounded-full"
+              disabled={isPending}
+              className="bg-[#61cabb] flex flex-1 h-12 items-center justify-center px-6 py-3 rounded-full transition-opacity disabled:opacity-70"
             >
               <span className="font-medium text-white text-base leading-6 tracking-[0.16px]">
-                Göndər
+                {isPending ? "Göndərilir..." : "Göndər"}
               </span>
             </button>
           </div>

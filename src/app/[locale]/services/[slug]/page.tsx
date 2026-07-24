@@ -1,10 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Container from "@/components/shared/container";
-import { RichHtml } from "@/components/shared/RichHtml";
+import { stripHtml } from "@/lib/data/blogs";
 import { OtherServices } from "@/components/services/OtherServices";
 import { HeroDetailSection } from "@/components/services/hero-detail-section";
+import { WhatIncludedSection } from "@/components/services/what-included-section";
 import { useService } from "@/services/service/queries";
 
 export default function ServiceDetailPage() {
@@ -32,13 +32,11 @@ export default function ServiceDetailPage() {
           service={{
             slug: service.slug,
             title: service.name,
-            description: service.short_description,
+            description: stripHtml(service.description),
             heroImage: service.cover_image_home,
           }}
         />
-        <Container className="flex flex-col items-start w-full">
-          <RichHtml html={service.description} />
-        </Container>
+        <WhatIncludedSection slug={service.slug} />
       </div>
 
       <OtherServices currentSlug={service.slug} />
