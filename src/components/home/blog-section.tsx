@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,33 +8,30 @@ import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
-
-const posts = [
-  {
-    title: "Müasir Bizneslər üçün Xüsusi Proqram Təminatının Üstünlükləri",
-    image: "/images/blog-card-1.png",
-  },
-  {
-    title: "Müasir Bizneslər üçün Xüsusi Proqram Təminatının Üstünlükləri",
-    image: "/images/blog-card-2.png",
-  },
-];
-
-const date = "27 iyul 2026";
-const category = "Texnologiya";
-const excerpt =
-  "Standart həllərdən fərqli olaraq, xüsusi proqram təminatı biznesinizin ehtiyaclarına uyğun hazırlanır, iş proseslərini optimallaşdırır və uzunmüddətli inkişaf üçün daha çevik imkanlar yara";
+import { mapApiBlog } from "@/lib/data/blogs";
+import { useBlogs } from "@/services/blog/queries";
 
 /**
- * Figma: `Frame 2085665804` — date · category with a 2px dot. Typography and
- * horizontal padding come from the caller since the wide card and the small
- * cards differ (12/16 Medium vs 10/14 Regular on mobile).
+ * Figma: `Frame 2085665804` — date · category with a 2px dot. The API returns
+ * no date, so only the category is shown when a date is absent.
  */
-function PostMeta({ className }: { className?: string }) {
+function PostMeta({
+  category,
+  date,
+  className,
+}: {
+  category: string;
+  date?: string;
+  className?: string;
+}) {
   return (
     <div className={`flex items-center gap-[6px] ${className ?? ""}`}>
-      <span>{date}</span>
-      <span aria-hidden className="h-[2px] w-[2px] rounded-full bg-current" />
+      {date && (
+        <>
+          <span>{date}</span>
+          <span aria-hidden className="h-[2px] w-[2px] rounded-full bg-current" />
+        </>
+      )}
       <span>{category}</span>
     </div>
   );
@@ -46,6 +45,15 @@ function PostMeta({ className }: { className?: string }) {
  * centred heading, 343x213 wide card, then two 167 cards in a row (gap 12).
  */
 export function BlogSection() {
+  const { data: apiBlogs } = useBlogs();
+  const posts = (apiBlogs ?? []).map(mapApiBlog);
+
+  const featured = posts[0];
+  const sidePosts = posts.slice(1, 3);
+
+  // Nothing to show until the first blog loads.
+  if (!featured) return null;
+
   return (
     <section className="w-full py-9 lg:py-[90px]">
       <Container className="flex flex-col gap-6 lg:gap-12 ">
@@ -67,6 +75,7 @@ export function BlogSection() {
 
         {/* Figma: Frame 2147224631 — mobile column gap 12; desktop row, gap 20 */}
         <Reveal
+          key={posts.length}
           y={80}
           scale={0.94}
           blur={8}
@@ -75,12 +84,12 @@ export function BlogSection() {
         >
           {/* Figma: Blog-wide — 710x440, r16, border #F2F4F8, gradient scrim */}
           <Link
-            href="/blog"
+            href={`/blogs/${featured.slug}`}
             className="group/wide relative block aspect-[710/440] h-auto max-h-[440px] w-full min-w-0 overflow-hidden rounded-[14px] border border-[#f2f4f8] lg:w-[49.31%] lg:rounded-[16px]"
           >
             <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
               <Image
-                src="/images/blog-wide.png"
+                src={featured.image}
                 alt=""
                 fill
                 sizes="(min-width: 1536px) 710px, 100vw"
@@ -99,14 +108,18 @@ export function BlogSection() {
             {/* Figma: Frame 2085665803 — bottom aligned; mobile gap 12 / p 0 12 16,
                 desktop gap 24 / p 0 24 32 */}
             <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 px-3 pb-4 lg:gap-6 lg:px-6 lg:pb-8">
-              <PostMeta className="px-2 text-[12px] leading-[16px] font-medium tracking-[0] text-[#e7e7ea]" />
+              <PostMeta
+                category={featured.category}
+                date={featured.dateLabel}
+                className="px-2 text-[12px] leading-[16px] font-medium tracking-[0] text-[#e7e7ea]"
+              />
               {/* Figma: Content — mobile gap 8, desktop gap 12, px 8 */}
               <div className="flex flex-col gap-2 px-2 lg:gap-3">
                 <h3 className="line-clamp-2 max-w-[554px] text-[16px] leading-[24px] font-medium tracking-[0.01em] text-white lg:text-[24px] lg:leading-[32px] lg:font-semibold">
-                  Müasir Bizneslər Üçün Xüsusi Proqram Təminatının Üstünlükləri
+                  {featured.title}
                 </h3>
                 <p className="line-clamp-1 text-[12px] leading-[16px] font-normal tracking-[0.01em] text-[#e7e7ea] lg:text-[16px] lg:leading-[24px]">
-                  {excerpt}
+                  {featured.excerpt}
                 </p>
               </div>
             </div>
@@ -116,10 +129,10 @@ export function BlogSection() {
           <div className="flex min-w-0 flex-col items-center gap-6 lg:w-[49.31%] lg:gap-12">
             {/* Figma: Frame 2147225054 / 2147225051 — row; mobile gap 12, desktop 20 */}
             <div className="flex w-full gap-3 lg:gap-5">
-              {posts.map((post, index) => (
+              {sidePosts.map((post) => (
                 <Link
-                  key={index}
-                  href="/blog"
+                  key={post.slug}
+                  href={`/blogs/${post.slug}`}
                   className="flex w-full min-w-0 flex-col gap-3 lg:gap-4"
                 >
                   {/* Figma: Frame 2147224960 — 167x128 r14 mobile / 345x264 r16 desktop */}
@@ -135,14 +148,18 @@ export function BlogSection() {
 
                   {/* Figma: Frame 2085665803 — column; mobile gap 6, desktop 12 */}
                   <div className="flex flex-col gap-[6px] lg:gap-3">
-                    <PostMeta className="px-1 text-[10px] leading-[14px] font-normal tracking-[0.01em] text-neo-muted lg:px-2 lg:text-[12px] lg:leading-[16px] lg:font-medium lg:tracking-[0]" />
+                    <PostMeta
+                      category={post.category}
+                      date={post.dateLabel}
+                      className="px-1 text-[10px] leading-[14px] font-normal tracking-[0.01em] text-neo-muted lg:px-2 lg:text-[12px] lg:leading-[16px] lg:font-medium lg:tracking-[0]"
+                    />
                     {/* Figma: Content — column, gap 4; px 4 mobile / 8 desktop */}
                     <div className="flex flex-col gap-1 px-1 lg:px-2">
                       <h3 className="line-clamp-1 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-[#20201e] lg:text-[18px] lg:leading-[24px] lg:tracking-[0]">
                         {post.title}
                       </h3>
                       <p className="line-clamp-1 text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[16px] lg:leading-[24px]">
-                        {excerpt}
+                        {post.excerpt}
                       </p>
                     </div>
                   </div>
@@ -152,7 +169,7 @@ export function BlogSection() {
 
             {/* Figma: See all button — text 16/24 Medium + chevron 24 */}
             <Link
-              href="/blog"
+              href="/blogs"
               className="group/all flex items-center gap-[6px] text-[16px] leading-[24px] font-medium tracking-[0] text-[#20201e]"
             >
               Hamısına bax
