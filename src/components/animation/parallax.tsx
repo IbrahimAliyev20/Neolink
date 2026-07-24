@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh } from "@/lib/gsap";
 
 /**
  * Scrub-linked vertical drift for decorative imagery. Wrap the image and give
@@ -46,6 +46,8 @@ export function Parallax({
         }
       );
     }, el);
+
+    scheduleRefresh();
 
     return () => ctx.kill();
   }, [amount, from]);

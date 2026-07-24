@@ -8,7 +8,7 @@ import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh } from "@/lib/gsap";
 import { useFaqs } from "@/services/faq/queries";
 
 const supportAvatars = [
@@ -39,6 +39,11 @@ export function FaqSection() {
     const ctx = gsap.context(() => {
       // Scrubbed like the other reveals, so it follows the scroll in both
       // directions instead of toggling.
+      // Explicit `fromTo` (never `from`): on a client-nav remount a killed
+      // `from` tween leaves the avatars at opacity 0, and the next run then
+      // reads 0 as the destination and animates 0 → 0 — the images stay
+      // invisible. Explicit end values (opacity 1, scale/x back to natural)
+      // land them correctly on every visit.
       gsap
         .timeline({
           defaults: { ease: "none" },
@@ -49,14 +54,22 @@ export function FaqSection() {
             scrub: 0.6,
           },
         })
-        .from(".js-faq-avatar", {
-          scale: 0.6,
-          opacity: 0,
-          duration: 0.5,
-          stagger: 0.12,
-        })
-        .from(".js-faq-badge", { x: -16, opacity: 0, duration: 0.4 }, "-=0.2");
+        .fromTo(
+          ".js-faq-avatar",
+          { scale: 0.6, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.5, stagger: 0.12 }
+        )
+        .fromTo(
+          ".js-faq-badge",
+          { x: -16, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.4 },
+          "-=0.2"
+        );
     }, root);
+
+    // Re-measure once the page has settled after a navigation (this trigger is
+    // built directly here, not through the shared reveal components).
+    scheduleRefresh();
 
     return () => ctx.kill();
   }, []);

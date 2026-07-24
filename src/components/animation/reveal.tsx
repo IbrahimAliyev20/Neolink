@@ -2,7 +2,7 @@
 
 import { Children, useEffect, useRef, type ReactNode } from "react";
 
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh } from "@/lib/gsap";
 
 type RevealProps = {
   children: ReactNode;
@@ -103,6 +103,10 @@ export function Reveal({
     mm.add("(max-width: 1023.98px)", () => {
       build(0, x !== 0 && y === 0 ? 32 : y);
     });
+
+    // Re-measure once the page has settled — the trigger just built may have
+    // measured mid-navigation (or before this list's data mounted).
+    scheduleRefresh();
 
     return () => mm.revert();
   }, [y, x, scale, blur, stagger, start, end, childCount]);

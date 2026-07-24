@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh } from "@/lib/gsap";
 
 const OPEN = "inset(0% 0% 0% 0%)";
 const CLOSED = "inset(0% 100% 0% 0%)";
@@ -46,6 +46,8 @@ export function ClipReveal({
         }
       );
     }, el);
+
+    scheduleRefresh();
 
     return () => ctx.kill();
   }, []);

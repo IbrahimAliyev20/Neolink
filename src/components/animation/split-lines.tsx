@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 
-import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh, SplitText } from "@/lib/gsap";
 
 /**
  * Unrolls a heading line by line from behind a mask, scrubbed to the scroll
@@ -41,12 +41,16 @@ export function SplitLines({
         autoSplit: true,
         onSplit: (self) => {
           gsap.set(target, { opacity: 1 });
-          return gsap.from(self.lines, {
+          const tween = gsap.from(self.lines, {
             yPercent: 115,
             ease: "none",
             stagger: 0.35,
             scrollTrigger: { trigger: target, start, end, scrub: 0.6 },
           });
+          // Re-measure after the split builds — it lands after the webfont
+          // loads, well past the navigation the trigger was created during.
+          scheduleRefresh();
+          return tween;
         },
       });
     }, target);

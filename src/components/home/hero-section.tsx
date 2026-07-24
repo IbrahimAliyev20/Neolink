@@ -65,7 +65,16 @@ export function HeroSection() {
 
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from(".js-hero-video", { scale: 1.06, duration: 1.6, ease: "power2.out" }, 0)
+        // Explicit `fromTo` (never `from`) so a client-nav remount can't strand
+        // the video mid-zoom: `from` reads the current scale as its destination,
+        // and a killed tween can leave that at 1.06 so the next run animates
+        // 1.06 → 1.06 and never settles.
+        .fromTo(
+          ".js-hero-video",
+          { scale: 1.06 },
+          { scale: 1, duration: 1.6, ease: "power2.out" },
+          0
+        )
         .fromTo(
           "[data-hero-anim]:not([data-hero-title])",
           { opacity: 0, y: 28 },

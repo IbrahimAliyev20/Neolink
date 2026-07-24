@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import { gsap, prefersReducedMotion } from "@/lib/gsap";
+import { gsap, prefersReducedMotion, scheduleRefresh } from "@/lib/gsap";
 
 const ACTIVE = { backgroundColor: "#3abdaa", color: "#ffffff" };
 
@@ -45,6 +45,10 @@ export function ServicesRail({ count }: { count: number }) {
         if (lines[index]) tl.to(lines[index], { scaleY: 1, duration: 1 });
       });
     }, root);
+
+    // Re-measure after a navigation settles so the scrubbed rail tracks scroll
+    // from the right start point.
+    scheduleRefresh();
 
     return () => ctx.kill();
   }, [count]);

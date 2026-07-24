@@ -83,14 +83,18 @@ export function HeroSection() {
         });
       });
 
-      // The cards keep their natural opacity (the faded ones stay at 0.12):
-      // `from` reads each wrapper's current opacity as the destination, so the
-      // tween lands them exactly where the layout wants them.
+      // Explicit `fromTo` (never `from`) so a remount can't strand the cards.
+      // `from` reads the element's *current* opacity as the destination, and on
+      // a client navigation (or React's double-invoked effects) a killed tween
+      // leaves that at 0 — so the next run animates 0 → 0 and the cards stay
+      // invisible. The wrappers are always opacity 1 (the faded look lives on an
+      // inner box), so 1 is the correct, stable end for every card.
       gsap
         .timeline({ defaults: { ease: "power3.out" } })
-        .from(
+        .fromTo(
           "[data-hero-card]",
-          { opacity: 0, scale: 0.85, y: 24, duration: 0.9, stagger: 0.1, ease: "power2.out" },
+          { opacity: 0, scale: 0.85, y: 24 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "power2.out" },
           0
         )
         .fromTo(
