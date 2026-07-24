@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 import Container from "@/components/shared/container";
@@ -9,6 +10,8 @@ import { useVacancyForm } from "@/services/vacancy-form/mutations";
 const MAX_FILE_SIZE_MB = 5;
 
 export function ApplySection({ vacancyId }: { vacancyId: string }) {
+  const t = useTranslations("vacancy.apply");
+  const tc = useTranslations("common");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
@@ -20,7 +23,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
   const applyFile = (file: File | undefined) => {
     if (!file) return;
     if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
-      setFileError(`Fayl ${MAX_FILE_SIZE_MB}MB-dan kiçik olmalıdır`);
+      setFileError(t("fileTooBig", { size: MAX_FILE_SIZE_MB }));
       setSelectedFile(null);
       return;
     }
@@ -32,7 +35,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
     event.preventDefault();
     if (isPending) return;
     if (!selectedFile) {
-      setFileError("CV yükləyin");
+      setFileError(t("cvRequired"));
       return;
     }
 
@@ -40,12 +43,12 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
       { name, email, cv: selectedFile, vacancy_id: vacancyId },
       {
         onSuccess: () => {
-          toast.success("Müraciətiniz göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.");
+          toast.success(t("successToast"));
           setName("");
           setEmail("");
           setSelectedFile(null);
         },
-        onError: () => toast.error("Müraciət göndərilə bilmədi. Yenidən cəhd edin."),
+        onError: () => toast.error(t("errorToast")),
       }
     );
   };

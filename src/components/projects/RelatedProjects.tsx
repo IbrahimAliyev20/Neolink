@@ -1,13 +1,16 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { mapApiProject } from "@/lib/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { useProjects } from "@/services/project/queries";
 
 export function RelatedProjects({ currentSlug }: { currentSlug: string }) {
+  const t = useTranslations("projects.other");
+  const tc = useTranslations("common");
   const { data: apiProjects } = useProjects();
 
   // All projects except the one being viewed, capped at three.
@@ -24,11 +27,10 @@ export function RelatedProjects({ currentSlug }: { currentSlug: string }) {
     <div className="bg-white flex flex-col gap-6 items-center py-9 w-full lg:gap-12 lg:py-[90px]">
       <div className="flex flex-col gap-3 items-center text-center max-w-[343px] px-4 lg:gap-5 lg:max-w-[566px]">
         <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-          Digər Layihələrimizlə Tanış olum
+          {t("heading")}
         </h2>
         <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-          Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
-          fikirləri ilə gündəmdən geri qalmayın.
+          {t("desc")}
         </p>
       </div>
 
@@ -41,7 +43,7 @@ export function RelatedProjects({ currentSlug }: { currentSlug: string }) {
       </Container>
 
       <Link href="/projects" className="flex gap-1.5 items-center">
-        <span className="font-medium text-[#20201e] text-base leading-6">Hamısına bax</span>
+        <span className="font-medium text-[#20201e] text-base leading-6">{tc("seeAll")}</span>
         <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
       </Link>
     </div>

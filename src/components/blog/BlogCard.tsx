@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import type { BlogPost } from "@/lib/data/blogs";
 
 export function BlogCard({ post }: { post: BlogPost }) {

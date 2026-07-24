@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check, ChevronDown } from "lucide-react";
 import { toast } from "sonner";
 import Container from "@/components/shared/container";
@@ -10,16 +11,10 @@ import { useContactForm } from "@/services/contact/mutations";
 import { useContact } from "@/services/contact/queries";
 import { useSocialMedia } from "@/services/social-media/queries";
 
-const messageSubjects = [
-  "Əməkdaşlıq təklifi",
-  "Qiymət təklifi",
-  "İT Konsultasiyası",
-  "Texniki problem",
-  "Digər",
-];
-
-
 export function HeroSection() {
+  const t = useTranslations("contact");
+  const tc = useTranslations("common");
+  const messageSubjects = t.raw("subjects") as string[];
   const { data: contact } = useContact();
   const { data: socialLinks = [] } = useSocialMedia();
   const [subject, setSubject] = useState<string | null>(null);
@@ -29,17 +24,17 @@ export function HeroSection() {
   const contactInfo = [
     {
       icon: "/icons/phone.svg",
-      label: "Telefon nömrəsi",
+      label: t("phoneLabel"),
       lines: [contact?.phone_1, contact?.phone_2].filter(Boolean) as string[],
     },
     {
       icon: "/icons/mail.svg",
-      label: "E-poçt",
+      label: t("emailLabel"),
       lines: [contact?.email_1, contact?.email_2].filter(Boolean) as string[],
     },
     {
       icon: "/icons/map-pin.svg",
-      label: "Ünvan",
+      label: t("addressLabel"),
       lines: [contact?.address].filter(Boolean) as string[],
     },
   ].filter((item) => item.lines.length > 0);
@@ -73,9 +68,7 @@ export function HeroSection() {
       },
       {
         onSuccess: () => {
-          toast.success(
-            "Mesajınız göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq."
-          );
+          toast.success(t("successToast"));
           setName("");
           setEmail("");
           setPhone("");
@@ -83,7 +76,7 @@ export function HeroSection() {
           setMessage("");
         },
         onError: () => {
-          toast.error("Mesaj göndərilə bilmədi. Yenidən cəhd edin.");
+          toast.error(t("errorToast"));
         },
       }
     );
@@ -117,11 +110,10 @@ export function HeroSection() {
         <div className="flex flex-col gap-5 lg:gap-8 items-start w-full lg:flex-[574] lg:min-w-0">
           <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
             <h1 className="font-semibold text-white text-xl leading-7 tracking-[0.2px] lg:text-[48px] lg:leading-[64px] lg:tracking-normal">
-              Bizimlə Əlaqə
+              {t("title")}
             </h1>
             <p className="text-[#b3b5bc] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              Biznesiniz üçün düzgün texnoloji həlli birlikdə müəyyənləşdirək. Layihənizi
-              bizimlə paylaşın, sizə uyğun həll yollarını birlikdə planlaşdıraq.
+              {t("desc")}
             </p>
           </div>
 
@@ -153,7 +145,7 @@ export function HeroSection() {
 
             <div className="flex flex-col gap-4 items-start w-full">
               <p className="text-[#b3b5bc] text-xs leading-4 tracking-[0.12px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                Bizimlə sosial media vasitələri ilə əlaqə saxlayın
+                {t("socialPrompt")}
               </p>
               <div className="flex gap-3 items-start">
                 {socialLinks.map((social) => (
@@ -183,10 +175,10 @@ export function HeroSection() {
           <div className="flex flex-col gap-6 items-start w-full">
             <div className="flex flex-col gap-3 items-start w-full lg:gap-2">
               <p className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:font-medium lg:text-[32px] lg:leading-10 lg:tracking-[0.32px]">
-                Sualınız var ? Bizə yazın
+                {t("formTitle")}
               </p>
               <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
-                Məlumatlarınızı doldurun, komandamız ən qısa zamanda sizinlə əlaqə saxlayacaq.
+                {t("formDesc")}
               </p>
             </div>
 
@@ -196,7 +188,7 @@ export function HeroSection() {
             >
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-name" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                  Ad, soyad
+                  {t("nameLabel")}
                 </label>
                 <input
                   id="contact-name"
@@ -204,14 +196,14 @@ export function HeroSection() {
                   required
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  placeholder="Ad və soyadınızı daxil edin"
+                  placeholder={t("namePlaceholder")}
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
 
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-email" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                  E-poçt
+                  {t("emailFieldLabel")}
                 </label>
                 <input
                   id="contact-email"
@@ -219,14 +211,14 @@ export function HeroSection() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="E-poçtunu daxil edin"
+                  placeholder={t("emailPlaceholder")}
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
 
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-phone" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                  Telefon nömrəsi
+                  {t("phoneFieldLabel")}
                 </label>
                 <div className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl flex items-center gap-2 px-4 py-3.5 w-full focus-within:border-[#3abdaa]">
                   <span className="flex items-center gap-1 text-[#77777b] text-sm shrink-0">
@@ -239,7 +231,7 @@ export function HeroSection() {
                     required
                     value={phone}
                     onChange={(event) => setPhone(event.target.value)}
-                    placeholder="Telefon nömrənizi daxi edin"
+                    placeholder={t("phonePlaceholder")}
                     className="flex-1 min-w-0 bg-transparent text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none"
                   />
                 </div>
@@ -247,7 +239,7 @@ export function HeroSection() {
 
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-subject" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                  Mesaj başlığı
+                  {t("subjectLabel")}
                 </label>
                 <div ref={subjectRef} className="relative w-full">
                   <button
@@ -262,7 +254,7 @@ export function HeroSection() {
                         : "bg-[#f7f7f7] border border-[#e7e7ea]"
                     } ${subject ? "text-[#040711]" : "text-[#5b606f]"}`}
                   >
-                    {subject ?? "Mesaj başlığı"}
+                    {subject ?? t("subjectPlaceholder")}
                     <ChevronDown
                       className={`h-5 w-5 text-[#20201e] shrink-0 transition-transform ${
                         subjectOpen ? "rotate-180" : ""
@@ -306,11 +298,11 @@ export function HeroSection() {
 
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="contact-message" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                  Mesajınız
+                  {t("messageLabel")}
                 </label>
                 <textarea
                   id="contact-message"
-                  placeholder="Mesajınız"
+                  placeholder={t("messagePlaceholder")}
                   required
                   value={message}
                   onChange={(event) => setMessage(event.target.value)}
@@ -329,7 +321,7 @@ export function HeroSection() {
                 } disabled:opacity-70`}
               >
                 <span className="font-medium text-[#e7e8eb] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  {isPending ? "Göndərilir..." : "Göndər"}
+                  {isPending ? tc("sending") : tc("send")}
                 </span>
               </button>
             </form>

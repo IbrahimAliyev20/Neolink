@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import Container from "@/components/shared/container";
 import { Reveal } from "@/components/animation/reveal";
@@ -9,21 +10,24 @@ import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 import type { BlogPost } from "@/lib/data/blogs";
 
 const shareLinks = [
-  { icon: "/icons/brand-instagram.svg", label: "Instagram", action: "instagram" as const },
-  { icon: "/icons/link.svg", label: "Linki kopyala", action: "copy" as const },
-  { icon: "/icons/brand-facebook.svg", label: "Facebook", action: "facebook" as const },
-  { icon: "/icons/twitter-x.svg", label: "X (Twitter)", action: "x" as const },
+  { icon: "/icons/brand-instagram.svg", key: "instagram", action: "instagram" as const },
+  { icon: "/icons/link.svg", key: "copy", action: "copy" as const },
+  { icon: "/icons/brand-facebook.svg", key: "facebook", action: "facebook" as const },
+  { icon: "/icons/twitter-x.svg", key: "x", action: "x" as const },
 ];
 
-function handleShare(action: (typeof shareLinks)[number]["action"]) {
+function handleShare(
+  action: (typeof shareLinks)[number]["action"],
+  copyMessages: { success: string; error: string }
+) {
   const url = window.location.href;
 
   switch (action) {
     case "copy":
       navigator.clipboard
         .writeText(url)
-        .then(() => toast.success("Link kopyalandı"))
-        .catch(() => toast.error("Link kopyalana bilmədi"));
+        .then(() => toast.success(copyMessages.success))
+        .catch(() => toast.error(copyMessages.error));
       break;
     case "facebook":
       window.open(
@@ -46,6 +50,8 @@ function handleShare(action: (typeof shareLinks)[number]["action"]) {
 }
 
 function ShareButtons({ variant }: { variant: "mobile" | "desktop" }) {
+  const t = useTranslations("blog.detail");
+  const copyMessages = { success: t("copySuccess"), error: t("copyError") };
   return (
     <div
       className={
@@ -63,10 +69,10 @@ function ShareButtons({ variant }: { variant: "mobile" | "desktop" }) {
 
         return (
           <button
-            key={share.label}
+            key={share.key}
             type="button"
-            aria-label={share.label}
-            onClick={() => handleShare(share.action)}
+            aria-label={t(share.key)}
+            onClick={() => handleShare(share.action, copyMessages)}
             className={`group flex items-center justify-center rounded-full shrink-0 cursor-pointer transition-colors bg-white border border-[#e7e7ea] hover:bg-[#3abdaa] hover:border-[#3abdaa] ${
               variant === "mobile" ? "p-2" : "p-3"
             }`}
@@ -106,6 +112,7 @@ export function HeroDetailSection({
   post: BlogPost;
   children: React.ReactNode;
 }) {
+  const t = useTranslations("blog.detail");
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // On-load intro for the top of the article — the page only renders this once
@@ -194,7 +201,7 @@ export function HeroDetailSection({
               )}
               {post.dateLabel && (
                 <div className="flex gap-1 items-center font-medium text-[#4d4d4b] text-xs whitespace-nowrap lg:text-sm">
-                  <p>Dərc edildi:</p>
+                  <p>{t("published")}</p>
                   <p>{post.dateLabel}</p>
                 </div>
               )}
@@ -224,7 +231,7 @@ export function HeroDetailSection({
             </div>
 
             <div data-hero-anim className="flex lg:hidden gap-3 items-center">
-              <p className="font-medium text-[#4d4d4b] text-sm whitespace-nowrap">Paylaş:</p>
+              <p className="font-medium text-[#4d4d4b] text-sm whitespace-nowrap">{t("share")}</p>
               <ShareButtons variant="mobile" />
             </div>
 

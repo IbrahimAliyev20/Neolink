@@ -1,10 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ChevronRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import type { Project } from "@/lib/data/projects";
 
 export function HeroDetailSection({ project }: { project: Project }) {
+  const t = useTranslations("projects.detail");
   return (
     <div className="relative w-full h-[336px] lg:h-[704px]">
       {project.heroImage && (
@@ -23,7 +25,7 @@ export function HeroDetailSection({ project }: { project: Project }) {
         <Container className="py-4 w-full lg:pt-6 lg:pb-0">
           <div className="flex gap-1 items-center">
             <Link href="/projects" className="text-[#b3b5bc] text-xs">
-              Layihələr
+              {t("breadcrumb")}
             </Link>
             <ChevronRight className="h-4 w-4 text-[#b3b5bc]" strokeWidth={1.5} />
             <p className="font-medium text-white text-xs truncate max-w-[400px]">
@@ -39,15 +41,15 @@ export function HeroDetailSection({ project }: { project: Project }) {
           <div className="flex flex-col gap-6 items-start w-full lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-col gap-1 items-start text-sm leading-5 tracking-[0.14px] text-white lg:flex-row lg:flex-wrap lg:items-center lg:gap-9 lg:text-lg lg:leading-normal lg:tracking-[0.18px]">
               <div className="flex gap-2 items-center">
-                <p className="font-medium lg:font-semibold">Şirkət:</p>
+                <p className="font-medium lg:font-semibold">{t("company")}</p>
                 <p className="font-medium">{project.client}</p>
               </div>
               <div className="flex gap-2 items-center">
-                <p className="font-medium lg:font-semibold">Müddət:</p>
+                <p className="font-medium lg:font-semibold">{t("duration")}</p>
                 <p className="font-medium">{project.duration}</p>
               </div>
               <div className="flex gap-2 items-center">
-                <p className="font-medium lg:font-semibold">Sahə:</p>
+                <p className="font-medium lg:font-semibold">{t("field")}</p>
                 <p className="font-medium">{project.field}</p>
               </div>
             </div>

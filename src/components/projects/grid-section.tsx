@@ -1,4 +1,7 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Container from "@/components/shared/container";
 import { CategoryTabs } from "@/components/shared/CategoryTabs";
 import { ProjectCard } from "@/components/projects/ProjectCard";
@@ -16,6 +19,7 @@ export function GridSection({
   onChange: (category: string) => void;
   projects: Project[];
 }) {
+  const tc = useTranslations("common");
   return (
     <div className="flex flex-col gap-9 items-center w-full">
       <Container className="flex flex-col items-start w-full">
@@ -48,7 +52,7 @@ export function GridSection({
 
         <Reveal y={20} className="flex">
           <span className="flex gap-1.5 items-center">
-            <span className="font-medium text-[#20201e] text-base leading-6">Hamısına bax</span>
+            <span className="font-medium text-[#20201e] text-base leading-6">{tc("seeAll")}</span>
             <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
           </span>
         </Reveal>

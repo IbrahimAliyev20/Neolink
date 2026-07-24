@@ -1,6 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ChevronRight, CalendarDays, Clock } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import devopsMuhendisiHero from "../../../public/images/vacancy/devops-muhendisi-hero.png";
 
@@ -11,6 +12,7 @@ export interface VacancyHero {
 }
 
 export function HeroSection({ vacancy }: { vacancy: VacancyHero }) {
+  const t = useTranslations("vacancy.detail");
   return (
     <div className="relative w-full h-[500px] md:h-[704px]">
       {/* The API carries no hero image, so a shared default is used. */}
@@ -28,7 +30,7 @@ export function HeroSection({ vacancy }: { vacancy: VacancyHero }) {
         <Container className="pt-6 w-full">
           <div className="flex gap-1 items-center">
             <Link href="/about" className="text-[#b3b5bc] text-xs">
-              Haqqımızda
+              {t("breadcrumb")}
             </Link>
             <ChevronRight className="h-4 w-4 text-[#b3b5bc]" strokeWidth={1.5} />
             <p className="font-medium text-white text-xs truncate max-w-[400px]">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { mapApiBlog } from "@/lib/data/blogs";
 import { useBlog } from "@/services/blog/queries";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
@@ -8,6 +9,7 @@ import { HeroDetailSection } from "@/components/blog/hero-detail-section";
 import { BlogHtmlContent } from "@/components/blog/html-content";
 
 export default function BlogDetailPage() {
+  const t = useTranslations("blog.detail");
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
 
@@ -20,7 +22,7 @@ export default function BlogDetailPage() {
   if (!apiBlog) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4 text-center text-[#5b606f]">
-        Bloq tapılmadı.
+        {t("notFound")}
       </div>
     );
   }

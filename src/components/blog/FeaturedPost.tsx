@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 
 import { Parallax } from "@/components/animation/parallax";
 import type { BlogPost } from "@/lib/data/blogs";

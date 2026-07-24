@@ -2,9 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 
+import { Link } from "@/i18n/navigation";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 
 /**
@@ -44,6 +45,8 @@ function RotatedCard({
 }
 
 export function HeroSection() {
+  const t = useTranslations("projects.hero");
+  const tc = useTranslations("common");
   const rootRef = useRef<HTMLElement | null>(null);
 
   // Opening timeline, mirroring the home hero: the rotated cards pop in with a
@@ -141,11 +144,10 @@ export function HeroSection() {
         <div className="absolute top-[93px] left-4 flex w-[343px] flex-col items-center gap-6">
           <div className="flex w-full flex-col items-center gap-3 text-center">
             <h1 data-hero-anim data-hero-title className="w-[294px] text-xl leading-7 font-semibold tracking-[0.2px] text-[#1c1c1e]">
-              <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
+              <span className="text-[#3abdaa]">{t("headingAccent")}</span> {t("headingRest")}
             </h1>
             <p data-hero-anim className="w-full text-xs leading-4 tracking-[0.12px] text-[#5b606f]">
-              Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
-              fikirləri ilə gündəmdən geri qalmayın.
+              {t("desc")}
             </p>
           </div>
 
@@ -154,7 +156,7 @@ export function HeroSection() {
             href="/contact"
             className="flex h-10 w-[166px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 py-2.5 text-sm leading-5 font-medium tracking-[0.14px] text-white cursor-pointer transition-colors hover:bg-[#0d153a]/90"
           >
-            Təklif al
+            {tc("getOffer")}
             <ArrowUpRight className="size-5" strokeWidth={1.5} />
           </Link>
         </div>
@@ -206,7 +208,7 @@ export function HeroSection() {
           <div className="absolute left-[650px] top-[145px] flex w-[620px] flex-col items-center gap-9">
             <div className="relative flex w-full flex-col items-center gap-5 text-center">
               <h1 data-hero-anim data-hero-title className="w-[592px] text-[48px] leading-[64px] font-semibold text-[#1c1c1e]">
-                <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
+                <span className="text-[#3abdaa]">{t("headingAccent")}</span> {t("headingRest")}
               </h1>
               <p data-hero-anim className="w-full text-base leading-6 tracking-[0.16px] text-[#5b606f]">
                 Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
@@ -229,7 +231,7 @@ export function HeroSection() {
               href="/contact"
               className="flex h-12 w-[248px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-base leading-6 font-medium tracking-[0.16px] text-white cursor-pointer transition-colors hover:bg-[#0d153a]/90"
             >
-              Təklif al
+              {tc("getOffer")}
               <ArrowUpRight className="size-6" strokeWidth={1.5} />
             </Link>
           </div>

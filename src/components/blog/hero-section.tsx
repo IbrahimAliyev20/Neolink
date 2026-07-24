@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 import Container from "@/components/shared/container";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
@@ -8,6 +9,7 @@ import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 import type { BlogPost } from "@/lib/data/blogs";
 
 export function HeroSection({ featuredPost }: { featuredPost: BlogPost | undefined }) {
+  const t = useTranslations("blog.hero");
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // On-load intro, like the projects hero — not a scroll-scrubbed reveal, since
@@ -101,14 +103,13 @@ export function HeroSection({ featuredPost }: { featuredPost: BlogPost | undefin
             data-hero-title
             className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] w-full lg:text-[48px] lg:leading-[64px] lg:tracking-normal"
           >
-            Rəqəmsal Dünyadan Yeniliklər
+            {t("heading")}
           </h1>
           <p
             data-hero-anim
             className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]"
           >
-            Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
-            fikirləri ilə gündəmdən geri qalmayın.
+            {t("desc")}
           </p>
         </div>
 
