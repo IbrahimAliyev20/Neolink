@@ -25,8 +25,12 @@ export function FeaturedPost({ post }: { post: BlogPost }) {
         <div className="absolute inset-0 bg-gradient-to-b from-[rgba(237,237,237,0.06)] via-[44.723%] via-[rgba(36,37,38,0.27)] to-[rgba(14,14,17,0.48)]" />
         <div className="absolute bottom-0 left-0 flex flex-col gap-3 items-start px-3 pb-4 w-full lg:gap-6 lg:px-6 lg:pb-8">
           <div className="flex items-center gap-1.5 px-2">
-            <p className="font-medium text-[#e7e7ea] text-xs whitespace-nowrap">{post.dateLabel}</p>
-            <div className="bg-[#e7e7ea] rounded-full shrink-0 size-0.5" />
+            {post.dateLabel && (
+              <>
+                <p className="font-medium text-[#e7e7ea] text-xs whitespace-nowrap">{post.dateLabel}</p>
+                <div className="bg-[#e7e7ea] rounded-full shrink-0 size-0.5" />
+              </>
+            )}
             <p className="font-medium text-[#e7e7ea] text-xs whitespace-nowrap">{post.category}</p>
           </div>
           <div className="flex flex-col gap-2 items-start px-2 w-full lg:gap-3">

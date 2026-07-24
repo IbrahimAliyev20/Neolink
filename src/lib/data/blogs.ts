@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+import type { BlogApiItem } from "@/services/blog/api";
 import blog1 from "../../../public/images/blog/blog-1.jpg";
 import blog2 from "../../../public/images/blog/blog-2.jpg";
 import blog3 from "../../../public/images/blog/blog-3.jpg";
@@ -29,17 +31,43 @@ export type BlogContentSection =
   | { type: "text"; heading: string; blocks: BlogTextBlock[] }
   | { type: "gallery"; images: [typeof blog1, typeof blog1] };
 
+/** Local images are static imports; API blogs supply plain URL strings. */
+export type BlogImage = string | StaticImageData;
+
 export interface BlogPost {
   slug: string;
-  category: BlogCategory;
-  date: string;
-  dateLabel: string;
+  category: string;
+  /** Absent for API blogs (the endpoint returns no date). */
+  date?: string;
+  dateLabel?: string;
   title: string;
   excerpt: string;
-  image: typeof blog1;
+  image: BlogImage;
   readTime?: string;
-  coverImage?: typeof blog1;
+  coverImage?: BlogImage;
   content?: BlogContentSection[];
+}
+
+/** Turn the API's rich HTML body into a plain-text excerpt for the cards. */
+export function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** Map an API blog record onto the shape the cards already render. */
+export function mapApiBlog(item: BlogApiItem): BlogPost {
+  return {
+    slug: item.slug,
+    category: item.tag,
+    title: item.name,
+    excerpt: stripHtml(item.description),
+    image: item.image,
+    coverImage: item.image,
+    readTime: item.read_time ?? undefined,
+  };
 }
 
 const title = "Müasir Bizneslər üçün Xüsusi Proqram Təminatının Üstünlükləri";

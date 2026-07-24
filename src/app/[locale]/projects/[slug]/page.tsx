@@ -1,35 +1,38 @@
-import { notFound } from "next/navigation";
-import { getProjectBySlug } from "@/lib/data/projects";
+"use client";
+
+import { useParams } from "next/navigation";
+import { mapApiProject } from "@/lib/data/projects";
+import { useProject } from "@/services/project/queries";
 import { RelatedProjects } from "@/components/projects/RelatedProjects";
 import { HeroDetailSection } from "@/components/projects/hero-detail-section";
 import { DetailSections } from "@/components/projects/detail-sections";
 import { GallerySection } from "@/components/projects/gallery-section";
 
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
+export default function ProjectDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
 
-  if (
-    !project ||
-    !project.heroImage ||
-    !project.client ||
-    !project.duration ||
-    !project.field ||
-    !project.detailSections ||
-    !project.gallery
-  ) {
-    notFound();
+  const { data: apiProject, isLoading } = useProject(slug);
+
+  if (isLoading) {
+    return <div className="min-h-[60vh]" />;
   }
+
+  if (!apiProject) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4 text-center text-[#5b606f]">
+        Layihə tapılmadı.
+      </div>
+    );
+  }
+
+  const project = mapApiProject(apiProject);
 
   return (
     <>
       <HeroDetailSection project={project} />
-      <DetailSections sections={project.detailSections} />
-      <GallerySection gallery={project.gallery} />
+      {project.detailSections && <DetailSections sections={project.detailSections} />}
+      {project.gallery && <GallerySection gallery={project.gallery} />}
       <RelatedProjects currentSlug={project.slug} />
     </>
   );

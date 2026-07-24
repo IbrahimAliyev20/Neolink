@@ -1,3 +1,5 @@
+import type { StaticImageData } from "next/image";
+import type { ProjectApiItem } from "@/services/project/api";
 import projectMain from "../../../public/images/projects/project-main.jpg";
 import detailHeroBg from "../../../public/images/projects/detail/hero-bg.jpg";
 import detailGallery1 from "../../../public/images/projects/detail/gallery-1.jpg";
@@ -28,20 +30,48 @@ export interface ProjectDetailSection {
   paragraphs: string[];
 }
 
+/** Local images are static imports; API projects supply plain URL strings. */
+export type ProjectImage = string | StaticImageData;
+
 export interface Project {
   slug: string;
-  category: ProjectCategory;
+  category: string;
   tags: string[];
-  date: string;
+  /** Absent for API projects (the endpoint returns no date). */
+  date?: string;
   title: string;
   description: string;
-  image: typeof projectMain;
+  image: ProjectImage;
   client?: string;
   duration?: string;
   field?: string;
-  heroImage?: typeof projectMain;
+  heroImage?: ProjectImage;
   detailSections?: ProjectDetailSection[];
-  gallery?: [typeof projectMain, typeof projectMain];
+  gallery?: ProjectImage[];
+}
+
+/** Map an API project record onto the shape the cards and detail page render. */
+export function mapApiProject(item: ProjectApiItem): Project {
+  const detailSections: ProjectDetailSection[] = [
+    { number: "01", title: "Layihə Haqqında", paragraphs: [item.about] },
+    { number: "02", title: "Qarşıya Qoyulan Məqsəd", paragraphs: [item.goal] },
+    { number: "03", title: "Təqdim Etdiyimiz Həll", paragraphs: [item.solution] },
+  ].filter((section) => section.paragraphs.some(Boolean));
+
+  return {
+    slug: item.slug,
+    category: item.projecttags[0] ?? "",
+    tags: item.projecttags,
+    title: item.name,
+    description: item.about,
+    image: item.image,
+    heroImage: item.image,
+    client: item.company || undefined,
+    duration: item.duration || undefined,
+    field: item.projecttags[0],
+    detailSections,
+    gallery: item.images,
+  };
 }
 
 const title = "Korporativ İT İdarəetmə Platforması";

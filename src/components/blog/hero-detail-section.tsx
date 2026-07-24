@@ -110,19 +110,27 @@ export function HeroDetailSection({
           <h1 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] text-left w-full lg:text-center lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px] lg:max-w-[890px]">
             {post.title}
           </h1>
-          <div className="flex gap-2 items-center flex-wrap lg:justify-center">
-            <div className="flex gap-1.5 items-center lg:gap-2.5">
-              <Image src="/icons/clock9.svg" alt="" width={20} height={20} className="size-4 lg:size-5" />
-              <p className="font-medium text-[#4d4d4b] text-xs whitespace-nowrap lg:text-sm">
-                {post.readTime}
-              </p>
+          {(post.readTime || post.dateLabel) && (
+            <div className="flex gap-2 items-center flex-wrap lg:justify-center">
+              {post.readTime && (
+                <div className="flex gap-1.5 items-center lg:gap-2.5">
+                  <Image src="/icons/clock9.svg" alt="" width={20} height={20} className="size-4 lg:size-5" />
+                  <p className="font-medium text-[#4d4d4b] text-xs whitespace-nowrap lg:text-sm">
+                    {post.readTime}
+                  </p>
+                </div>
+              )}
+              {post.readTime && post.dateLabel && (
+                <div className="bg-[#989898] rounded-full shrink-0 size-1" />
+              )}
+              {post.dateLabel && (
+                <div className="flex gap-1 items-center font-medium text-[#4d4d4b] text-xs whitespace-nowrap lg:text-sm">
+                  <p>Dərc edildi:</p>
+                  <p>{post.dateLabel}</p>
+                </div>
+              )}
             </div>
-            <div className="bg-[#989898] rounded-full shrink-0 size-1" />
-            <div className="flex gap-1 items-center font-medium text-[#4d4d4b] text-xs whitespace-nowrap lg:text-sm">
-              <p>Dərc edildi:</p>
-              <p>{post.dateLabel}</p>
-            </div>
-          </div>
+          )}
         </div>
 
         <div className="flex flex-col lg:flex-row gap-4 items-start justify-center w-full">

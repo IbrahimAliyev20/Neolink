@@ -19,8 +19,12 @@ export function BlogCard({ post }: { post: BlogPost }) {
       </div>
       <div className="flex flex-col gap-1.5 items-start w-full lg:gap-3">
         <div className="flex items-center gap-1.5 px-1 lg:px-2">
-          <p className="font-normal text-[#5b606f] text-[10px] leading-[14px] tracking-[0.1px] whitespace-nowrap lg:font-medium lg:text-xs lg:leading-normal lg:tracking-normal">{post.dateLabel}</p>
-          <div className="bg-[#5b606f] rounded-full shrink-0 size-0.5" />
+          {post.dateLabel && (
+            <>
+              <p className="font-normal text-[#5b606f] text-[10px] leading-[14px] tracking-[0.1px] whitespace-nowrap lg:font-medium lg:text-xs lg:leading-normal lg:tracking-normal">{post.dateLabel}</p>
+              <div className="bg-[#5b606f] rounded-full shrink-0 size-0.5" />
+            </>
+          )}
           <p className="font-normal text-[#5b606f] text-[10px] leading-[14px] tracking-[0.1px] whitespace-nowrap lg:font-medium lg:text-xs lg:leading-normal lg:tracking-normal">{post.category}</p>
         </div>
         <div className="flex flex-col gap-1 items-start px-1 lg:px-2 w-full">

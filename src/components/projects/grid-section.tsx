@@ -2,22 +2,24 @@ import { ChevronRight } from "lucide-react";
 import Container from "@/components/shared/container";
 import { CategoryTabs } from "@/components/shared/CategoryTabs";
 import { ProjectCard } from "@/components/projects/ProjectCard";
-import { projectCategories, type Project, type ProjectCategory } from "@/lib/data/projects";
+import { type Project } from "@/lib/data/projects";
 
 export function GridSection({
+  categories,
   activeCategory,
   onChange,
   projects,
 }: {
-  activeCategory: ProjectCategory;
-  onChange: (category: ProjectCategory) => void;
+  categories: string[];
+  activeCategory: string;
+  onChange: (category: string) => void;
   projects: Project[];
 }) {
   return (
     <div className="flex flex-col gap-9 items-center w-full">
       <Container className="flex flex-col items-start w-full">
         <CategoryTabs
-          categories={projectCategories}
+          categories={categories}
           activeCategory={activeCategory}
           onChange={onChange}
         />

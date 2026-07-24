@@ -3,6 +3,8 @@ import Container from "@/components/shared/container";
 import type { Project } from "@/lib/data/projects";
 
 export function GallerySection({ gallery }: { gallery: NonNullable<Project["gallery"]> }) {
+  if (gallery.length === 0) return null;
+
   return (
     <Container className="flex flex-col items-center w-full pt-5 pb-9 lg:pt-12 lg:pb-[90px]">
       <div className="flex flex-col gap-3 lg:flex-row lg:gap-6 items-start w-full">

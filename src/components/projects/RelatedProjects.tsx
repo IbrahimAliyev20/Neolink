@@ -1,11 +1,20 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/shared/container";
-import { projects } from "@/lib/data/projects";
+import { mapApiProject } from "@/lib/data/projects";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { useProjects } from "@/services/project/queries";
 
 export function RelatedProjects({ currentSlug }: { currentSlug: string }) {
-  const relatedProjects = projects.filter((project) => project.slug !== currentSlug).slice(0, 3);
+  const { data: apiProjects } = useProjects();
+
+  // All projects except the one being viewed, capped at three.
+  const relatedProjects = (apiProjects ?? [])
+    .filter((project) => project.slug !== currentSlug)
+    .slice(0, 3)
+    .map(mapApiProject);
 
   if (relatedProjects.length === 0) {
     return null;

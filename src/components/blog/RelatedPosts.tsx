@@ -1,11 +1,20 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/shared/container";
-import { blogPosts } from "@/lib/data/blogs";
+import { mapApiBlog } from "@/lib/data/blogs";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { useBlogs } from "@/services/blog/queries";
 
 export function RelatedPosts({ currentSlug }: { currentSlug: string }) {
-  const relatedPosts = blogPosts.filter((post) => post.slug !== currentSlug).slice(0, 4);
+  const { data: apiBlogs } = useBlogs();
+
+  // All blogs except the one being read, capped at four.
+  const relatedPosts = (apiBlogs ?? [])
+    .filter((post) => post.slug !== currentSlug)
+    .slice(0, 4)
+    .map(mapApiBlog);
 
   if (relatedPosts.length === 0) {
     return null;

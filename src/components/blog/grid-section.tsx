@@ -2,20 +2,22 @@ import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { CategoryTabs } from "@/components/shared/CategoryTabs";
-import { blogCategories, type BlogCategory, type BlogPost } from "@/lib/data/blogs";
+import { type BlogPost } from "@/lib/data/blogs";
 
 export function GridSection({
+  categories,
   activeCategory,
   onChange,
   posts,
 }: {
-  activeCategory: BlogCategory;
-  onChange: (category: BlogCategory) => void;
+  categories: string[];
+  activeCategory: string;
+  onChange: (category: string) => void;
   posts: BlogPost[];
 }) {
   return (
     <Container className="flex flex-col gap-6 items-start w-full">
-      <CategoryTabs categories={blogCategories} activeCategory={activeCategory} onChange={onChange} />
+      <CategoryTabs categories={categories} activeCategory={activeCategory} onChange={onChange} />
 
       {posts.length > 0 && (
         /* Keyed on the category so switching tabs remounts the reveal and the

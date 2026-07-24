@@ -1,26 +1,37 @@
-import { notFound } from "next/navigation";
-import { getBlogPostBySlug } from "@/lib/data/blogs";
+"use client";
+
+import { useParams } from "next/navigation";
+import { mapApiBlog } from "@/lib/data/blogs";
+import { useBlog } from "@/services/blog/queries";
 import { RelatedPosts } from "@/components/blog/RelatedPosts";
 import { HeroDetailSection } from "@/components/blog/hero-detail-section";
-import { ContentSection } from "@/components/blog/content-section";
+import { BlogHtmlContent } from "@/components/blog/html-content";
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = getBlogPostBySlug(slug);
+export default function BlogDetailPage() {
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
 
-  if (!post || !post.content || !post.coverImage) {
-    notFound();
+  const { data: apiBlog, isLoading } = useBlog(slug);
+
+  if (isLoading) {
+    return <div className="min-h-[60vh]" />;
   }
+
+  if (!apiBlog) {
+    return (
+      <div className="flex min-h-[60vh] items-center justify-center px-4 text-center text-[#5b606f]">
+        Bloq tapılmadı.
+      </div>
+    );
+  }
+
+  const post = mapApiBlog(apiBlog);
 
   return (
     <>
-      <div className="bg-white flex flex-col items-center pb-12 lg:pb-[90px] w-full">
+      <div className="bg-white flex flex-col items-center pb-12 lg:pb-[90px] w-full pt-8 lg:pt-16">
         <HeroDetailSection post={post}>
-          <ContentSection content={post.content} />
+          <BlogHtmlContent html={apiBlog.description} />
         </HeroDetailSection>
       </div>
 
