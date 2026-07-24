@@ -2,8 +2,9 @@
 
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
@@ -45,6 +46,8 @@ function PostMeta({
  * centred heading, 343x213 wide card, then two 167 cards in a row (gap 12).
  */
 export function BlogSection() {
+  const t = useTranslations("home.blog");
+  const tc = useTranslations("common");
   const { data: apiBlogs } = useBlogs();
   const posts = (apiBlogs ?? []).map(mapApiBlog);
 
@@ -62,13 +65,12 @@ export function BlogSection() {
         <div className="flex flex-col gap-3 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:text-left">
           <SplitLines>
             <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[36px] md:leading-[48px] lg:w-[36.24%] lg:shrink-0 lg:text-[48px] lg:leading-[64px] lg:tracking-[0]">
-              Rəqəmsal Dünyadan Yeniliklər
+              {t("heading")}
             </h2>
           </SplitLines>
           <Reveal y={44} blur={8} className="w-full lg:w-[51.32%]">
             <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-              Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual
-              məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın.
+              {t("desc")}
             </p>
           </Reveal>
         </div>
@@ -174,7 +176,7 @@ export function BlogSection() {
               href="/blogs"
               className="group/all flex items-center gap-[6px] text-[16px] leading-[24px] font-medium tracking-[0] text-[#20201e]"
             >
-              Hamısına bax
+              {tc("seeAll")}
               <ChevronRight
                 className="h-6 w-6 transition-transform duration-300 group-hover/all:translate-x-1"
                 strokeWidth={1.5}

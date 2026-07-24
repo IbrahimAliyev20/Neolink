@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
@@ -12,6 +13,7 @@ import { useSectionTitle } from "@/services/section-title/queries";
 import aboutProcess from "../../../public/images/about-process.jpg";
 
 export function HowWeWorkSection() {
+  const t = useTranslations("about.howWeWork");
   const { data: processSteps = [] } = useHowWeWork();
   const { data: sectionTitle } = useSectionTitle("How We Work");
 
@@ -23,13 +25,12 @@ export function HowWeWorkSection() {
             <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
               <SplitLines>
                 <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] lg:text-[56px] lg:leading-[72px] lg:tracking-normal lg:max-w-[566px]">
-                  {sectionTitle?.title ?? "Necə işləyirik?"}
+                  {sectionTitle?.title ?? t("titleFallback")}
                 </h2>
               </SplitLines>
               <Reveal y={44} blur={8} className="w-full">
                 <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  {sectionTitle?.description ??
-                    "Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq. Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün prosesi peşəkar komandamızla birlikdə idarə edirik."}
+                  {sectionTitle?.description ?? t("descFallback")}
                 </p>
               </Reveal>
             </div>

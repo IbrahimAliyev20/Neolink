@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { StatCard } from "@/components/home/stat-card";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
+import { accentHtml } from "@/lib/utils";
 import { useHero } from "@/services/hero/queries";
 import { useStatistics } from "@/services/statistics/queries";
 
@@ -18,6 +20,8 @@ import { useStatistics } from "@/services/statistics/queries";
  * 32 gap, copy + buttons on top and the three 109x105 stat cards in one row.
  */
 export function HeroSection() {
+  const t = useTranslations("home.hero");
+  const tc = useTranslations("common");
   const rootRef = useRef<HTMLElement | null>(null);
   const { data: hero, isLoading: heroLoading } = useHero();
   const { data: stats } = useStatistics();
@@ -135,14 +139,11 @@ export function HeroSection() {
                 data-hero-title
                 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[calc(var(--hero-u)*64)] lg:leading-[calc(var(--hero-u)*80)] lg:tracking-[0]"
                 dangerouslySetInnerHTML={{
-                  __html:
-                    hero?.title ??
-                    'Biznesinizi Gələcəyin <span style="color:#009999">Rəqəmsal</span> Həlləri ilə Gücləndiririk',
+                  __html: hero?.title ?? accentHtml(t("titleFallback")),
                 }}
               />
               <p data-hero-anim className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px] lg:text-[calc(var(--hero-u)*20)] lg:leading-[calc(var(--hero-u)*28)]">
-                {hero?.description ??
-                  "Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend ullamcorper."}
+                {hero?.description ?? t("descFallback")}
               </p>
             </div>
 
@@ -152,13 +153,13 @@ export function HeroSection() {
                 href="/contact"
                 className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
               >
-                Bizimlə əlaqə
+                {tc("contactUs")}
               </MagneticLink>
               <MagneticLink
                 href="/services"
                 className="flex h-10 flex-1 items-center justify-center rounded-full bg-white px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-ink transition-colors hover:bg-white/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
               >
-                Xidmətlərimiz
+                {tc("ourServices")}
               </MagneticLink>
             </div>
           </div>
@@ -169,7 +170,7 @@ export function HeroSection() {
             <StatCard
               className="js-hero-stat order-1 flex-1 lg:order-none lg:w-full lg:flex-none"
               value={stats?.[0]?.number ?? "15+"}
-              label={stats?.[0]?.title ?? "Sahə Üzrə Ekspert"}
+              label={stats?.[0]?.title ?? t("statExpert")}
             />
             {/* `contents` lets both cards join the mobile row; at lg this
                 becomes Figma's `Frame 5` (row, gap 10). */}
@@ -177,13 +178,13 @@ export function HeroSection() {
               <StatCard
                 className="js-hero-stat order-3 flex-1 lg:order-none"
                 value={stats?.[1]?.number ?? "40+"}
-                label={stats?.[1]?.title ?? "Uğurla Tamamlanmış Layihə"}
+                label={stats?.[1]?.title ?? t("statProjects")}
               />
               <StatCard
                 accent
                 className="js-hero-stat order-2 flex-1 lg:order-none"
                 value={stats?.[2]?.number ?? "98%"}
-                label={stats?.[2]?.title ?? "Müştəri Məmnuniyyəti"}
+                label={stats?.[2]?.title ?? t("statSatisfaction")}
               />
             </div>
           </div>

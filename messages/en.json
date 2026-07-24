@@ -1,1 +1,251 @@
-{}
+{
+  "lang": {
+    "aria": "Language selection",
+    "az": "AZ",
+    "en": "EN",
+    "ru": "RU",
+    "azFull": "Azərbaycanca",
+    "enFull": "English",
+    "ruFull": "Русский"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "services": "Services",
+    "projects": "Projects",
+    "blogs": "Blogs",
+    "contact": "Contact",
+    "contactCta": "Contact us",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+  "common": {
+    "seeAll": "See all",
+    "viewDetails": "View details",
+    "contactUs": "Contact us",
+    "ourServices": "Our services",
+    "getOffer": "Get an offer",
+    "send": "Send",
+    "sending": "Sending...",
+    "cancel": "Cancel",
+    "emailApply": "Apply by email:",
+    "close": "Close"
+  },
+  "footer": {
+    "copyright": "Neoline Technology LLC | All rights reserved."
+  },
+  "home": {
+    "hero": {
+      "titleFallback": "We Empower Your Business with the <accent>Digital</accent> Solutions of the Future",
+      "descFallback": "Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend ullamcorper.",
+      "statExpert": "Domain Experts",
+      "statProjects": "Successfully Completed Projects",
+      "statSatisfaction": "Customer Satisfaction"
+    },
+    "whyUs": {
+      "heading": "Why Neoline?",
+      "desc": "Founded in 2022, Neoline Technology was created to replace the chaos of multiple IT contractors with a single accountable partner.",
+      "partnerTitle": "The “Single Partner” Advantage",
+      "partnerDesc": "Hardware, software, cloud solutions and security — all under one roof. When Neoline was founded, it reunited systems that had been managed separately by one driver.",
+      "strategyTitle": "Strategy Before Execution",
+      "strategyDesc": "We don't just sell hardware. We audit every client, assess the risks and build an IT development plan tailored to your goals.",
+      "corporateTitle": "Corporate Experience, Compact Approach",
+      "statLabel": "Partnerships",
+      "statDesc": "We don't just sell hardware. We audit every client, assess the risks and build an IT development plan tailored to your goals."
+    },
+    "services": {
+      "headingPre": "A Powerful IT",
+      "headingAccent": "Ecosystem for Your Business",
+      "desc": "Enterprise-grade, full IT services designed for growing B2B companies — all from a single hub."
+    },
+    "blog": {
+      "heading": "News from the Digital World",
+      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+    },
+    "faq": {
+      "headingPre": "Frequently Asked",
+      "headingAccent": "Questions",
+      "desc": "Our team is always ready to determine the right solution for you and answer all your questions.",
+      "support": "We're here 24/7",
+      "contactCta": "Get in touch",
+      "open": "Open",
+      "closeItem": "Close"
+    },
+    "ecosystem": {
+      "heading": "Your Entire IT Ecosystem",
+      "desc": "Start with a technical audit that requires no financial commitment. We'll assess your existing systems, uncover weak points and provide a clear action plan.",
+      "partnerAria": "Partner logos"
+    }
+  },
+  "cta": {
+    "titleFallback": "Build the Digital Solutions of the Future <accent>Today</accent>!",
+    "descFallback": "Let's take the first step together to build innovative software and digital products tailored to your business goals."
+  },
+  "about": {
+    "hero": {
+      "titleFallback": "Get to Know Us Closely",
+      "descFallback": "Neoline is an innovative software company that supports the digital growth of modern businesses. We build web platforms, mobile apps, corporate systems and custom software solutions tailored to organizations' needs. Our goal is to present technology not merely as a tool, but as a strategic value that contributes to business growth."
+    },
+    "feature": {
+      "title1Fallback": "Our Mission",
+      "desc1Fallback": "At Neoline, our mission is to deliver innovative and reliable software solutions that accelerate businesses' digital transformation. We deeply analyze the problems our clients face and build tailored solutions that add real value to their operations. In every project we treat user experience, functionality and technical excellence as our top priorities.",
+      "title2Fallback": "Our Vision for the Future",
+      "desc2Fallback": "Our goal is to become one of the leading software companies distinguished by its innovative approach, technical expertise and high service quality. In the ever-changing world of technology we don't just follow trends — we turn them into practical and effective solutions for businesses. Our future vision is to contribute to the digital growth of companies operating across various industries."
+    },
+    "howWeWork": {
+      "titleFallback": "How We Work?",
+      "descFallback": "At Neoline we approach every project in a planned, transparent and results-driven way. From analysis to development, from deployment to technical support, we manage the entire process together with our professional team."
+    },
+    "testimonials": {
+      "titleFallback": "Partnerships Built on Trust!",
+      "descFallback": "Behind every successful project stand trust, transparent collaboration and shared goals. Our clients' opinions are not just feedback to us — they are the most valuable indicator of our continuous growth.",
+      "ready": "Ready to get started?",
+      "readyDesc": "We understand your goals, build solutions tailored to your needs and bring your project to life successfully.",
+      "start": "Let's begin",
+      "prevAria": "Previous review",
+      "nextAria": "Next review"
+    },
+    "joinUs": {
+      "badge": "We're Looking for You",
+      "heading": "Join the Neoline Family",
+      "desc": "Start with a technical audit that requires no financial commitment. We'll assess your existing systems, uncover weak points and provide a clear action plan.",
+      "email": "career@neolinetech.az"
+    }
+  },
+  "services": {
+    "hero": {
+      "heading": "Get to Know Our Services Closely",
+      "desc": "Enterprise-grade, full IT services designed for growing B2B companies — all from a single hub."
+    },
+    "detail": {
+      "notFound": "Service not found."
+    },
+    "whatIncluded": {
+      "heading": "What Does This Service Include?",
+      "lead": "By deeply analyzing your business needs, we help you build a more secure, efficient and future-ready IT infrastructure. The solutions we offer support the sustainable growth and digital transformation of your business."
+    },
+    "other": {
+      "heading": "Our Other Services",
+      "desc": "Explore the additional services we offer to meet the diverse needs of your business."
+    },
+    "offerModal": {
+      "title": "Get an offer",
+      "successTitle": "Your request has been sent!",
+      "successDesc": "Your request has been registered. Our team will review it and contact you as soon as possible.",
+      "nameLabel": "Full name",
+      "namePlaceholder": "Enter your full name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email",
+      "phoneLabel": "Phone number",
+      "phonePlaceholder": "Enter your phone number",
+      "errorToast": "The request could not be sent. Please try again."
+    }
+  },
+  "projects": {
+    "hero": {
+      "headingAccent": "Get to Know Our Projects",
+      "headingRest": "Closely",
+      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+    },
+    "detail": {
+      "breadcrumb": "Projects",
+      "company": "Company:",
+      "duration": "Duration:",
+      "field": "Field:",
+      "notFound": "Project not found.",
+      "sectionAbout": "About the Project",
+      "sectionGoal": "The Goal Set",
+      "sectionSolution": "The Solution We Delivered"
+    },
+    "other": {
+      "heading": "Explore Our Other Projects",
+      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+    }
+  },
+  "blog": {
+    "hero": {
+      "heading": "News from the Digital World",
+      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+    },
+    "detail": {
+      "share": "Share:",
+      "instagram": "Instagram",
+      "copy": "Copy link",
+      "facebook": "Facebook",
+      "x": "X (Twitter)",
+      "copySuccess": "Link copied",
+      "copyError": "The link could not be copied",
+      "published": "Published:",
+      "notFound": "Blog not found."
+    },
+    "other": {
+      "heading": "Explore Our Other Blogs",
+      "desc": "Explore the additional services we offer to meet the diverse needs of your business."
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "desc": "Let's determine the right technology solution for your business together. Share your project with us and we'll plan the best solutions together.",
+    "phoneLabel": "Phone number",
+    "emailLabel": "Email",
+    "addressLabel": "Address",
+    "socialPrompt": "Reach out to us via social media",
+    "formTitle": "Have a question? Write to us",
+    "formDesc": "Fill in your details and our team will contact you as soon as possible.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Enter your full name",
+    "emailFieldLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "phoneFieldLabel": "Phone number",
+    "phonePlaceholder": "Enter your phone number",
+    "subjectLabel": "Message subject",
+    "subjectPlaceholder": "Message subject",
+    "messageLabel": "Your message",
+    "messagePlaceholder": "Your message",
+    "successToast": "Your message has been sent. We'll contact you shortly.",
+    "errorToast": "The message could not be sent. Please try again.",
+    "mapTitle": "Neoline office location on the map",
+    "subjects": [
+      "Partnership proposal",
+      "Price quote",
+      "IT consultation",
+      "Technical issue",
+      "Other"
+    ]
+  },
+  "vacancy": {
+    "detail": {
+      "breadcrumb": "About us",
+      "notFound": "Vacancy not found.",
+      "sectionAbout": "About the vacancy",
+      "sectionExpectations": "What we expect from the candidate",
+      "sectionOffer": "What we offer"
+    },
+    "apply": {
+      "heading": "Join the Neoline Family",
+      "desc": "Showcase your skills in a team that values growth, work with new technologies and let's shape the solutions of the future together.",
+      "email": "career@neolinetech.az",
+      "formTitle": "Apply now",
+      "nameLabel": "Full name",
+      "namePlaceholder": "Enter your full name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "Enter your email address",
+      "cvLabel": "Your CV",
+      "uploadHere": "Upload here",
+      "uploadDrop": "or drag and drop",
+      "maxFile": "Maximum file {size}MB",
+      "fileTooBig": "The file must be smaller than {size}MB",
+      "cvRequired": "Please upload a CV",
+      "successToast": "Your application has been sent. We'll contact you shortly.",
+      "errorToast": "The application could not be sent. Please try again."
+    },
+    "other": {
+      "heading": "Explore Other Vacancies",
+      "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
+    }
+  },
+  "metadata": {
+    "title": "Neoline Technology",
+    "description": "An innovative software company supporting the digital growth of businesses."
+  }
+}

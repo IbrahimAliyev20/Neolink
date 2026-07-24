@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
@@ -10,6 +11,7 @@ import { useAbout } from "@/services/about/queries";
 import aboutFeature from "../../../public/images/about-feature.jpg";
 
 export function FeatureSection() {
+  const t = useTranslations("about.feature");
   const { data: about } = useAbout();
 
   return (
@@ -36,20 +38,18 @@ export function FeatureSection() {
         >
           <div className="bg-white border border-[#e7e7ea] flex flex-col gap-4 items-start px-3.5 py-4 rounded-2xl w-full lg:gap-10 lg:px-7 lg:py-6 lg:rounded-[20px]">
             <p className="font-medium text-[#040711] text-xl leading-7 tracking-[0.2px] whitespace-nowrap lg:text-[32px] lg:leading-10 lg:tracking-[0.32px]">
-              {about?.title_1 ?? "Missiyamız"}
+              {about?.title_1 ?? t("title1Fallback")}
             </p>
             <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              {about?.description_1 ??
-                "Neoline olaraq missiyamız bizneslərin rəqəmsal transformasiya prosesini sürətləndirən, innovativ və etibarlı proqram təminatı həlləri təqdim etməkdir. Müştərilərimizin qarşılaşdığı problemləri dərindən analiz edərək onların fəaliyyətinə real dəyər qatan fərdi həllər hazırlayırıq. Hər layihədə istifadəçi təcrübəsini, funksionallığı və texnoloji mükəmməlliyi əsas prioritet kimi qəbul edirik."}
+              {about?.description_1 ?? t("desc1Fallback")}
             </p>
           </div>
           <div className="bg-[#0d153a] border border-[#e7e7ea] flex flex-col gap-4 items-start px-3.5 py-4 rounded-2xl w-full text-[#e7e7ea] lg:gap-10 lg:px-7 lg:py-6 lg:rounded-[20px]">
             <p className="font-medium text-xl leading-7 tracking-[0.2px] whitespace-nowrap lg:text-[32px] lg:leading-10 lg:tracking-[0.32px]">
-              {about?.title_2 ?? "Gələcəyə Baxışımız"}
+              {about?.title_2 ?? t("title2Fallback")}
             </p>
             <p className="text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              {about?.description_2 ??
-                "Məqsədimiz innovativ yanaşması, texniki peşəkarlığı və yüksək xidmət keyfiyyəti ilə seçilən aparıcı proqram təminatı şirkətlərindən birinə çevrilməkdir. Texnologiyanın daim dəyişən dünyasında yenilikləri izləməklə kifayətlənmir, onları bizneslər üçün praktik və effektiv həllərə çeviririk. Gələcək vizyonumuz müxtəlif sahələrdə fəaliyyət göstərən şirkətlərin rəqəmsal inkişafına töhfə verməkdir."}
+              {about?.description_2 ?? t("desc2Fallback")}
             </p>
           </div>
         </Reveal>

@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Next.js 16 (App Router, Turbopack) HR vacancy site (`hr-vacancy`). The `next-intl` wiring exists in the repo but is **not used** — see the hard rules below.
+Next.js 16 (App Router, Turbopack) HR vacancy site (`hr-vacancy`). Multilingual via `next-intl`: **az (default), en, ru**.
 
 ## Hard rules (do not violate)
 
-- **No i18n. Ever.** This project has no language system and will not get one. Write all user-facing text as plain literals directly in the components (Azerbaijani). Never use `useTranslations` / `getTranslations` / `t(...)`, never add keys to `messages/az.json` or `messages/en.json` (both are intentionally `{}` and must stay empty), and never introduce new translation files. Do not delete the existing `next-intl` setup (`src/i18n/*`, `src/proxy.ts`, `NextIntlClientProvider`, the `[locale]` segment) — leave it untouched and ignore it.
+- **i18n is active (az/en/ru).** All user-facing static text lives in `messages/az.json`, `messages/en.json`, `messages/ru.json` and is read via `useTranslations` (client) / `getTranslations` (server). Never hardcode new user-facing strings as literals — add a key to all three message files and reference it. Keep the three files in sync (every key present in all three). Locales & prefix strategy live in `src/i18n/routing.ts` (`localePrefix: 'as-needed'` — az has no URL prefix, en/ru are `/en`, `/ru`). For internal navigation use the locale-aware `Link` / `useRouter` / `usePathname` from `@/i18n/navigation` (not `next/link` / `next/navigation`) so the active locale is preserved. Backend content is already localized via the `Accept-Language` header derived from the URL locale (see `src/lib/api/client.ts`) — only static UI text needs message keys.
 - **No auth.** Authentication is out of scope. Do not build, wire up, or modify auth screens, auth flows, or token handling. Leave the existing `src/app/[locale]/(auth)/...` routes, `src/components/auth/`, and the `access_token` logic in `src/lib/api/client.ts` exactly as they are.
 
 ## Commands

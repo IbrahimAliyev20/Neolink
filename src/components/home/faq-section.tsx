@@ -3,6 +3,7 @@
 import { ArrowUpRight, Headphones, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Reveal } from "@/components/animation/reveal";
@@ -24,6 +25,7 @@ const supportAvatars = [
  * gap: intro (gap 28) above the accordion, 44px avatars and a full-width button.
  */
 export function FaqSection() {
+  const t = useTranslations("home.faq");
   const { data: faqs = [] } = useFaqs();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const panelRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -115,13 +117,12 @@ export function FaqSection() {
           <div className="flex flex-col gap-4 lg:gap-6">
             <SplitLines>
               <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[56px] lg:leading-[72px] lg:tracking-[0]">
-                Ən Çox Verilən <span className="text-neo-teal">Suallar</span>
+                {t("headingPre")} <span className="text-neo-teal">{t("headingAccent")}</span>
               </h2>
             </SplitLines>
             <Reveal y={44} blur={8} className="w-full">
               <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-                Komandamız sizə uyğun həlli müəyyənləşdirmək və bütün suallarınızı
-                cavablandırmaq üçün hər zaman hazırdır.
+                {t("desc")}
               </p>
             </Reveal>
           </div>
@@ -154,7 +155,7 @@ export function FaqSection() {
                   strokeWidth={1.5}
                 />
                 <span className="text-[12px] leading-[16px] font-semibold tracking-[0.01em] text-[#3b4153]">
-                  7/24 yanınızdayıq
+                  {t("support")}
                 </span>
               </div>
             </div>
@@ -165,7 +166,7 @@ export function FaqSection() {
               strength={0.15}
               className="group/cta flex h-10 w-full items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90 lg:h-12 lg:text-[16px] lg:leading-[24px]"
             >
-              Əlaqəyə keç
+              {t("contactCta")}
               <ArrowUpRight
                 className="h-5 w-5 transition-transform duration-300 group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 lg:h-6 lg:w-6"
                 strokeWidth={1.5}
@@ -221,7 +222,7 @@ export function FaqSection() {
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
-                  aria-label={isOpen ? "Bağla" : "Aç"}
+                  aria-label={isOpen ? t("closeItem") : t("open")}
                   className="flex h-8 w-8 shrink-0 cursor-pointer items-center justify-center rounded-full border border-[#f6f6f6] bg-white text-[#20201e]"
                 >
                   <span

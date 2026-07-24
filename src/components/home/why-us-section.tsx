@@ -1,13 +1,23 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { CountUp } from "@/components/animation/count-up";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
+import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { useWhyNeoline } from "@/services/why-neoline/queries";
+import { useLogosWhy } from "@/services/logo/queries";
+
+/** Falls back to the static logos when the API list is empty. */
+const FALLBACK_LOGOS: LogoItem[] = [
+  { src: "/images/logo-1.png", width: 200, height: 38 },
+  { src: "/images/logo-2.png", width: 161, height: 72 },
+  { src: "/images/logo-3.png", width: 209, height: 45 },
+];
 
 /**
  * Figma desktop: `Frame 2147224640` (1920x1100) — "Niyə Məhz Neoline?".
@@ -18,17 +28,26 @@ import { useWhyNeoline } from "@/services/why-neoline/queries";
  * the dark card is 224).
  */
 export function WhyUsSection() {
+  const t = useTranslations("home.whyUs");
   // API order: [0] "20+ Əməkdaşlıq" (stat card), [1] "İcradan Əvvəl
   // Strategiya", [2] "“Tək Tərəfdaş” Üstünlüyü".
   const { data: items } = useWhyNeoline();
+  const { data: apiLogosWhy = [] } = useLogosWhy();
+  const whyLogos: LogoItem[] =
+    apiLogosWhy.length > 0
+      ? apiLogosWhy.map((logo) => ({ src: logo.logo, href: logo.link || undefined }))
+      : FALLBACK_LOGOS;
   const statItem = items?.[0];
   const strategyItem = items?.[1];
   const partnerItem = items?.[2];
-  // "20+ Əməkdaşlıq" → CountUp value + label.
-  const [statNumber, ...statLabelParts] = (
-    statItem?.title ?? "20+ Əməkdaşlıq"
-  ).split(" ");
-  const statLabel = statLabelParts.join(" ");
+  // "20+ Əməkdaşlıq" → CountUp value + label; localized fallback when no API.
+  let statNumber = "20+";
+  let statLabel = t("statLabel");
+  if (statItem?.title) {
+    const parts = statItem.title.split(" ");
+    statNumber = parts[0];
+    statLabel = parts.slice(1).join(" ");
+  }
 
   return (
     <section className="w-full py-9 lg:py-[90px]">
@@ -37,13 +56,12 @@ export function WhyUsSection() {
         <div className="mx-auto flex w-full max-w-[788px] flex-col items-center gap-3 lg:gap-6">
           <SplitLines>
             <h2 className="text-center text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-[#1c1c1e] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
-              Niyə Məhz Neoline?
+              {t("heading")}
             </h2>
           </SplitLines>
           <Reveal y={44} blur={8} className="w-full max-w-[756px]">
             <p className="text-center text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-              2022-ci ildə qurulan Neoline Technology, çoxsaylı İT podratçıların
-              xaosunu tək məsuliyyətli tərəfdaşla əvəz etmək üçün yaradıb.
+              {t("desc")}
             </p>
           </Reveal>
         </div>
@@ -63,11 +81,10 @@ export function WhyUsSection() {
             <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:flex-[880] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between gap-9 lg:gap-0">
                 <h3 className="max-w-[247px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
-                  {partnerItem?.title ?? "“Tək Tərəfdaş” Üstünlüyü"}
+                  {partnerItem?.title ?? t("partnerTitle")}
                 </h3>
                 <p className="max-w-[824px] text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-                  {partnerItem?.description ??
-                    "Avadanlıq, proqram təminatı, bulud həlləri və təhlükəsizlik hamısı bir dam altında. Neoline yarananda bir sürücü tərəfindən ayrı-ayrı idarə olunan sistemlərini yenidən birləşdirdi."}
+                  {partnerItem?.description ?? t("partnerDesc")}
                 </p>
               </div>
 
@@ -112,11 +129,10 @@ export function WhyUsSection() {
             <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
               <div className="flex h-full flex-col justify-between">
                 <h3 className="text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
-                  {strategyItem?.title ?? "İcradan Əvvəl Strategiya"}
+                  {strategyItem?.title ?? t("strategyTitle")}
                 </h3>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
-                  {strategyItem?.description ??
-                    "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."}
+                  {strategyItem?.description ?? t("strategyDesc")}
                 </p>
               </div>
             </div>
@@ -125,38 +141,20 @@ export function WhyUsSection() {
             <div className="flex min-h-[224px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:flex-[712] lg:rounded-[20px] lg:px-7 lg:py-8">
               <div className="flex h-full flex-col justify-between">
                 <h3 className="max-w-[553px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-white md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
-                  Korporativ Təcrübə, Kompakt Yanaşma
+                  {t("corporateTitle")}
                 </h3>
-                {/* Figma: Frame 2147225009 — row, gap 36, space-between; mobile
-                    shows only the first two logos (161x31 and 130x58). No
-                    wrapping: below 1920 the logos shrink inside their boxes
-                    (`object-contain`) rather than dropping to a second line. */}
-                <div className="flex items-start justify-between gap-4 xl:gap-9">
-                  <Image
-                    src="/images/logo-1.png"
-                    alt=""
-                    width={200}
-                    height={38}
-                    aria-hidden
-                    className="h-[31px] w-[161px] min-w-0 object-contain opacity-70 lg:h-[38px] lg:w-[200px]"
-                  />
-                  <Image
-                    src="/images/logo-2.png"
-                    alt=""
-                    width={161}
-                    height={72}
-                    aria-hidden
-                    className="h-[58px] w-[130px] min-w-0 object-contain opacity-[0.72] lg:h-[72px] lg:w-[161px]"
-                  />
-                  <Image
-                    src="/images/logo-3.png"
-                    alt=""
-                    width={209}
-                    height={45}
-                    aria-hidden
-                    className="hidden h-[45px] w-[209px] min-w-0 object-contain opacity-[0.72] lg:block"
-                  />
-                </div>
+                {/* Figma: Frame 2147225009 — logos loop endlessly right to left. */}
+                <LogoLoop
+                  logos={whyLogos}
+                  direction="left"
+                  speed={32}
+                  gap={36}
+                  logoHeight={38}
+                  fadeOut
+                  fadeOutColor="#0d153a"
+                  className="opacity-70"
+                  ariaLabel="Partnyor loqoları"
+                />
               </div>
             </div>
 
@@ -173,8 +171,7 @@ export function WhyUsSection() {
                   </span>
                 </div>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
-                  {statItem?.description ??
-                    "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."}
+                  {statItem?.description ?? t("statDesc")}
                 </p>
               </div>
             </div>

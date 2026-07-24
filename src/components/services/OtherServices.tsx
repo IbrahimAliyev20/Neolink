@@ -1,7 +1,8 @@
 "use client";
 
 import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { mapApiServices } from "@/lib/data/services";
 import { ServiceCard } from "@/components/services/ServiceCard";
@@ -10,6 +11,8 @@ import { SplitLines } from "@/components/animation/split-lines";
 import { useServices } from "@/services/service/queries";
 
 export function OtherServices({ currentSlug }: { currentSlug: string }) {
+  const t = useTranslations("services.other");
+  const tc = useTranslations("common");
   const { data: apiServices = [] } = useServices();
 
   // Every service except the current one, capped at two, laid out with the same
@@ -27,13 +30,12 @@ export function OtherServices({ currentSlug }: { currentSlug: string }) {
       <div className="flex flex-col gap-3 items-center text-center max-w-[343px] px-4 lg:gap-5 lg:max-w-[646px]">
         <SplitLines>
           <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-            Digər Xidmətlərimiz
+            {t("heading")}
           </h2>
         </SplitLines>
         <Reveal y={40} blur={8} className="w-full">
           <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-            Biznesinizin müxtəlif ehtiyaclarını qarşılamaq üçün təqdim etdiyimiz əlavə
-            xidmətlərlə tanış olun.
+            {t("desc")}
           </p>
         </Reveal>
       </div>
@@ -61,7 +63,7 @@ export function OtherServices({ currentSlug }: { currentSlug: string }) {
 
       <Reveal y={20} className="flex">
         <Link href="/services" className="flex gap-1.5 items-center">
-          <span className="font-medium text-[#20201e] text-base leading-6">Hamısına bax</span>
+          <span className="font-medium text-[#20201e] text-base leading-6">{tc("seeAll")}</span>
           <ChevronRight className="h-6 w-6" strokeWidth={1.5} />
         </Link>
       </Reveal>

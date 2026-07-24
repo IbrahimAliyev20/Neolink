@@ -8,6 +8,7 @@ export interface BlogApiItem {
   /** Rich HTML body. */
   description: string
   read_time: string | null
+  created_at: string
   /** Tag / category name, e.g. "Rəqəmsal Transformasiya". */
   tag: string
   meta_title: string

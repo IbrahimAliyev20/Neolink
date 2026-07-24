@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
@@ -47,6 +48,7 @@ const loopGap = { "--logoloop-gap": "var(--partner-gap)" } as React.CSSPropertie
  * heading (gap 12) above two partner rows (gap 10) of 160x82 cards.
  */
 export function EcosystemSection() {
+  const t = useTranslations("home.ecosystem");
   const { data: logos = [] } = useLogos();
 
   if (logos.length === 0) return null;
@@ -58,14 +60,12 @@ export function EcosystemSection() {
       <div className="flex flex-col gap-3 items-center text-center max-w-[788px] px-4 lg:gap-6">
         <SplitLines>
           <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-7 tracking-[0.01em] md:text-[32px] md:leading-[44px] lg:text-[40px] lg:leading-[56px]">
-            Bütün İT Ekosisteminiz
+            {t("heading")}
           </h2>
         </SplitLines>
         <Reveal y={44} blur={8} className="w-full max-w-[756px]">
           <p className="text-[#5b606f] text-[12px] leading-4 tracking-[0.01em] md:text-base md:leading-6">
-            Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud
-            sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət
-            planı təqdim edəcəyik.
+            {t("desc")}
           </p>
         </Reveal>
       </div>
@@ -77,7 +77,7 @@ export function EcosystemSection() {
           style={loopGap}
           fadeOut
           fadeOutColor="#ffffff"
-          ariaLabel="Partnyor loqoları"
+          ariaLabel={t("partnerAria")}
         />
         <LogoLoop
           logos={partnerLogos}
@@ -86,7 +86,7 @@ export function EcosystemSection() {
           style={loopGap}
           fadeOut
           fadeOutColor="#ffffff"
-          ariaLabel="Partnyor loqoları"
+          ariaLabel={t("partnerAria")}
         />
       </Container>
     </div>

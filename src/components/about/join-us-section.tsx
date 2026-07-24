@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 
+import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
@@ -22,6 +23,7 @@ function VacancyCard({
   date: string;
   type: string;
 }) {
+  const tc = useTranslations("common");
   return (
     <div className="bg-white border border-[#e7e7ea] flex flex-col gap-4 items-start p-3.5 rounded-2xl w-full lg:flex-row lg:items-center lg:p-6">
       <div className="flex flex-col gap-4 items-start flex-1 min-w-0 w-full">
@@ -50,18 +52,19 @@ function VacancyCard({
       </div>
       <Link
         href={`/${slug}`}
-        className="bg-[#0d153a] flex gap-4 h-8 items-center justify-center px-6 py-2 rounded-full w-full lg:h-10 lg:py-2.5 lg:w-auto lg:shrink-0"
+        className="group bg-[#0d153a] flex gap-4 h-8 items-center justify-center px-6 py-2 rounded-full w-full transition-colors duration-300 hover:bg-[#3abdaa] lg:h-10 lg:py-2.5 lg:w-auto lg:shrink-0"
       >
         <span className="font-semibold text-white text-xs leading-4 tracking-[0.12px] whitespace-nowrap lg:font-medium lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
-          Ətraflı bax
+          {tc("viewDetails")}
         </span>
-        <ArrowUpRight className="h-4 w-4 lg:h-5 lg:w-5 text-white" strokeWidth={1.5} />
+        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 lg:h-5 lg:w-5 text-white" strokeWidth={1.5} />
       </Link>
     </div>
   );
 }
 
 export function JoinUsSection() {
+  const t = useTranslations("about.joinUs");
   const { data: openVacancies = [] } = useVacancies();
 
   if (openVacancies.length === 0) return null;
@@ -82,31 +85,29 @@ export function JoinUsSection() {
           <div className="-rotate-[6.89deg] bg-[#0d153a] flex gap-2 items-center justify-center px-3 py-2 rounded-full lg:gap-2.5 lg:px-4 lg:py-2.5">
             <Image src="/icons/briefcase.svg" alt="" width={21} height={21} className="size-4 lg:size-[21px]" />
             <p className="font-medium text-[#3abdaa] text-xs leading-4 tracking-[0.12px] whitespace-nowrap lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
-              Səni Axtarırıq
+              {t("badge")}
             </p>
           </div>
           <div className="flex flex-col gap-4 items-start w-full lg:gap-9">
             <div className="flex flex-col gap-3 items-start justify-center w-full lg:gap-6">
               <SplitLines>
                 <h2 className="font-semibold text-[#1c1c1e] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
-                  Neoline Ailəsinə Qoşulun
+                  {t("heading")}
                 </h2>
               </SplitLines>
               <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud
-                sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın
-                fəaliyyət planı təqdim edəcəyik.
+                {t("desc")}
               </p>
             </div>
             <div className="flex flex-col gap-1 items-start w-full">
               <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                E-poçt ilə müraciət:
+                {t("emailApply")}
               </p>
               <a
-                href="mailto:career@neolinetech.az"
+                href={`mailto:${t("email")}`}
                 className="text-[#35ac9b] text-base leading-6 tracking-[0.16px] underline w-full"
               >
-                career@neolinetech.az
+                {t("email")}
               </a>
             </div>
           </div>

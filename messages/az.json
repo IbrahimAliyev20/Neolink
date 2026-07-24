@@ -1,1 +1,251 @@
-{}
+{
+  "lang": {
+    "aria": "Dil seçimi",
+    "az": "AZ",
+    "en": "EN",
+    "ru": "RU",
+    "azFull": "Azərbaycanca",
+    "enFull": "English",
+    "ruFull": "Русский"
+  },
+  "nav": {
+    "home": "Ana səhifə",
+    "about": "Haqqımızda",
+    "services": "Xidmətlər",
+    "projects": "Layihələr",
+    "blogs": "Bloqlar",
+    "contact": "Əlaqə",
+    "contactCta": "Bizimlə əlaqə",
+    "menuOpen": "Menyunu aç",
+    "menuClose": "Menyunu bağla"
+  },
+  "common": {
+    "seeAll": "Hamısına bax",
+    "viewDetails": "Ətraflı bax",
+    "contactUs": "Bizimlə əlaqə",
+    "ourServices": "Xidmətlərimiz",
+    "getOffer": "Təklif al",
+    "send": "Göndər",
+    "sending": "Göndərilir...",
+    "cancel": "Ləğv et",
+    "emailApply": "E-poçt ilə müraciət:",
+    "close": "Bağla"
+  },
+  "footer": {
+    "copyright": "Neoline Technology MMC | Bütün hüquqlar qorunur."
+  },
+  "home": {
+    "hero": {
+      "titleFallback": "Biznesinizi Gələcəyin <accent>Rəqəmsal</accent> Həlləri ilə Gücləndiririk",
+      "descFallback": "Lorem ipsum dolor sit amet consectetur. Fusce elit molestie in mi amet. Feugiat ultrices eu gravida pellentesque risus eleifend ullamcorper.",
+      "statExpert": "Sahə Üzrə Ekspert",
+      "statProjects": "Uğurla Tamamlanmış Layihə",
+      "statSatisfaction": "Müştəri Məmnuniyyəti"
+    },
+    "whyUs": {
+      "heading": "Niyə Məhz Neoline?",
+      "desc": "2022-ci ildə qurulan Neoline Technology, çoxsaylı İT podratçıların xaosunu tək məsuliyyətli tərəfdaşla əvəz etmək üçün yaradıb.",
+      "partnerTitle": "“Tək Tərəfdaş” Üstünlüyü",
+      "partnerDesc": "Avadanlıq, proqram təminatı, bulud həlləri və təhlükəsizlik hamısı bir dam altında. Neoline yarananda bir sürücü tərəfindən ayrı-ayrı idarə olunan sistemlərini yenidən birləşdirdi.",
+      "strategyTitle": "İcradan Əvvəl Strategiya",
+      "strategyDesc": "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq.",
+      "corporateTitle": "Korporativ Təcrübə, Kompakt Yanaşma",
+      "statLabel": "Əməkdaşlıq",
+      "statDesc": "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."
+    },
+    "services": {
+      "headingPre": "Biznesiniz üçün Güclü",
+      "headingAccent": "İT Ekosistemi",
+      "desc": "Böyüyən B2B şirkətləri üçün nəzərdə tutulmuş korporativ səviyyəli tam İT xidmətləri – hamısı bir mərkəzdən"
+    },
+    "blog": {
+      "heading": "Rəqəmsal Dünyadan Yeniliklər",
+      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+    },
+    "faq": {
+      "headingPre": "Ən Çox Verilən",
+      "headingAccent": "Suallar",
+      "desc": "Komandamız sizə uyğun həlli müəyyənləşdirmək və bütün suallarınızı cavablandırmaq üçün hər zaman hazırdır.",
+      "support": "7/24 yanınızdayıq",
+      "contactCta": "Əlaqəyə keç",
+      "open": "Aç",
+      "closeItem": "Bağla"
+    },
+    "ecosystem": {
+      "heading": "Bütün İT Ekosisteminiz",
+      "desc": "Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət planı təqdim edəcəyik.",
+      "partnerAria": "Partnyor loqoları"
+    }
+  },
+  "cta": {
+    "titleFallback": "Gələcəyin Rəqəmsal Həllərini <accent>Bu Gün</accent> Qurun!",
+    "descFallback": "Biznes məqsədlərinizə uyğun innovativ proqram təminatı və rəqəmsal məhsullar hazırlamaq üçün ilk addımı birlikdə ataq."
+  },
+  "about": {
+    "hero": {
+      "titleFallback": "Bizi Yaxından Tanıyın",
+      "descFallback": "Neoline müasir bizneslərin rəqəmsal inkişafını dəstəkləyən innovativ proqram təminatı şirkətidir. Biz müəssisələrin ehtiyaclarına uyğun veb platformalar, mobil tətbiqlər, korporativ sistemlər və fərdi proqram həlləri hazırlayırıq. Məqsədimiz texnologiyanı sadəcə alət kimi deyil, bizneslərin inkişafına töhfə verən strateji dəyər kimi təqdim etməkdir."
+    },
+    "feature": {
+      "title1Fallback": "Missiyamız",
+      "desc1Fallback": "Neoline olaraq missiyamız bizneslərin rəqəmsal transformasiya prosesini sürətləndirən, innovativ və etibarlı proqram təminatı həlləri təqdim etməkdir. Müştərilərimizin qarşılaşdığı problemləri dərindən analiz edərək onların fəaliyyətinə real dəyər qatan fərdi həllər hazırlayırıq. Hər layihədə istifadəçi təcrübəsini, funksionallığı və texnoloji mükəmməlliyi əsas prioritet kimi qəbul edirik.",
+      "title2Fallback": "Gələcəyə Baxışımız",
+      "desc2Fallback": "Məqsədimiz innovativ yanaşması, texniki peşəkarlığı və yüksək xidmət keyfiyyəti ilə seçilən aparıcı proqram təminatı şirkətlərindən birinə çevrilməkdir. Texnologiyanın daim dəyişən dünyasında yenilikləri izləməklə kifayətlənmir, onları bizneslər üçün praktik və effektiv həllərə çeviririk. Gələcək vizyonumuz müxtəlif sahələrdə fəaliyyət göstərən şirkətlərin rəqəmsal inkişafına töhfə verməkdir."
+    },
+    "howWeWork": {
+      "titleFallback": "Necə işləyirik?",
+      "descFallback": "Neoline olaraq hər layihəyə planlı, şəffaf və nəticəyönümlü yanaşırıq. Analizdən inkişaf mərhələsinə, tətbiqdən texniki dəstəyə qədər bütün prosesi peşəkar komandamızla birlikdə idarə edirik."
+    },
+    "testimonials": {
+      "titleFallback": "Etibarla Qurulan Əməkdaşlıqlar!",
+      "descFallback": "Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı inkişafımızın ən dəyərli göstəricisidir.",
+      "ready": "Başlamağa hazırsınız?",
+      "readyDesc": "Məqsədlərinizi anlayır, ehtiyaclarınıza uyğun həllər hazırlayır və layihənizi uğurla həyata keçiririk.",
+      "start": "Gəlin başlayaq",
+      "prevAria": "Əvvəlki rəy",
+      "nextAria": "Növbəti rəy"
+    },
+    "joinUs": {
+      "badge": "Səni Axtarırıq",
+      "heading": "Neoline Ailəsinə Qoşulun",
+      "desc": "Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət planı təqdim edəcəyik.",
+      "email": "career@neolinetech.az"
+    }
+  },
+  "services": {
+    "hero": {
+      "heading": "Xidmətlərimizlə Yaxından Tanış Olun",
+      "desc": "Böyüyən B2B şirkətləri üçün nəzərdə tutulmuş korporativ səviyyəli tam İT xidmətləri – hamısı bir mərkəzdən"
+    },
+    "detail": {
+      "notFound": "Xidmət tapılmadı."
+    },
+    "whatIncluded": {
+      "heading": "Bu Xidmətə Nələr Daxildir ?",
+      "lead": "Biznes ehtiyaclarınızı dərindən analiz edərək, daha təhlükəsiz, səmərəli və gələcəyə hazır İT infrastrukturu qurmağınıza kömək edirik. Təklif etdiyimiz həllər biznesinizin dayanıqlı inkişafını və rəqəmsal transformasiyasını dəstəkləyir."
+    },
+    "other": {
+      "heading": "Digər Xidmətlərimiz",
+      "desc": "Biznesinizin müxtəlif ehtiyaclarını qarşılamaq üçün təqdim etdiyimiz əlavə xidmətlərlə tanış olun."
+    },
+    "offerModal": {
+      "title": "Təklif al",
+      "successTitle": "Təklifiniz göndərildi!",
+      "successDesc": "Müraciətiniz qeydə alındı. Komandamız onu nəzərdən keçirəcək və ən qısa zamanda sizinlə əlaqə saxlayacaq.",
+      "nameLabel": "Ad, soyad",
+      "namePlaceholder": "Ad və soyadınızı daxil edin",
+      "emailLabel": "E-poçt",
+      "emailPlaceholder": "E-poçtunuu daxil edin",
+      "phoneLabel": "Telefon nömrəsi",
+      "phonePlaceholder": "Telefon nömrənizi daxi edin",
+      "errorToast": "Təklif göndərilə bilmədi. Yenidən cəhd edin."
+    }
+  },
+  "projects": {
+    "hero": {
+      "headingAccent": "Layihələrimizlə",
+      "headingRest": "yaxından tanış olun",
+      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+    },
+    "detail": {
+      "breadcrumb": "Layihələr",
+      "company": "Şirkət:",
+      "duration": "Müddət:",
+      "field": "Sahə:",
+      "notFound": "Layihə tapılmadı.",
+      "sectionAbout": "Layihə Haqqında",
+      "sectionGoal": "Qarşıya Qoyulan Məqsəd",
+      "sectionSolution": "Təqdim Etdiyimiz Həll"
+    },
+    "other": {
+      "heading": "Digər Layihələrimizlə Tanış olum",
+      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+    }
+  },
+  "blog": {
+    "hero": {
+      "heading": "Rəqəmsal Dünyadan Yeniliklər",
+      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+    },
+    "detail": {
+      "share": "Paylaş:",
+      "instagram": "Instagram",
+      "copy": "Linki kopyala",
+      "facebook": "Facebook",
+      "x": "X (Twitter)",
+      "copySuccess": "Link kopyalandı",
+      "copyError": "Link kopyalana bilmədi",
+      "published": "Dərc edildi:",
+      "notFound": "Bloq tapılmadı."
+    },
+    "other": {
+      "heading": "Digər Bloqlarla Tanış olun",
+      "desc": "Biznesinizin müxtəlif ehtiyaclarını qarşılamaq üçün təqdim etdiyimiz əlavə xidmətlərlə tanış olun."
+    }
+  },
+  "contact": {
+    "title": "Bizimlə Əlaqə",
+    "desc": "Biznesiniz üçün düzgün texnoloji həlli birlikdə müəyyənləşdirək. Layihənizi bizimlə paylaşın, sizə uyğun həll yollarını birlikdə planlaşdıraq.",
+    "phoneLabel": "Telefon nömrəsi",
+    "emailLabel": "E-poçt",
+    "addressLabel": "Ünvan",
+    "socialPrompt": "Bizimlə sosial media vasitələri ilə əlaqə saxlayın",
+    "formTitle": "Sualınız var ? Bizə yazın",
+    "formDesc": "Məlumatlarınızı doldurun, komandamız ən qısa zamanda sizinlə əlaqə saxlayacaq.",
+    "nameLabel": "Ad, soyad",
+    "namePlaceholder": "Ad və soyadınızı daxil edin",
+    "emailFieldLabel": "E-poçt",
+    "emailPlaceholder": "E-poçtunuu daxil edin",
+    "phoneFieldLabel": "Telefon nömrəsi",
+    "phonePlaceholder": "Telefon nömrənizi daxi edin",
+    "subjectLabel": "Mesaj başlığı",
+    "subjectPlaceholder": "Mesaj başlığı",
+    "messageLabel": "Mesajınız",
+    "messagePlaceholder": "Mesajınız",
+    "successToast": "Mesajınız göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.",
+    "errorToast": "Mesaj göndərilə bilmədi. Yenidən cəhd edin.",
+    "mapTitle": "Neoline ofisinin xəritədə yeri",
+    "subjects": [
+      "Əməkdaşlıq təklifi",
+      "Qiymət təklifi",
+      "İT Konsultasiyası",
+      "Texniki problem",
+      "Digər"
+    ]
+  },
+  "vacancy": {
+    "detail": {
+      "breadcrumb": "Haqqımızda",
+      "notFound": "Vakansiya tapılmadı.",
+      "sectionAbout": "Vakansiya haqqında",
+      "sectionExpectations": "Namizəddən gözləntilər",
+      "sectionOffer": "Təkliflərimiz"
+    },
+    "apply": {
+      "heading": "Neoline Ailəsinə Qoşulun",
+      "desc": "Böyüməyə dəyər verən komandamızda bacarıqlarınızı nümayiş etdirin, yeni texnologiyalarla işləyin və gələcəyin həllərini birlikdə formalaşdıraq.",
+      "email": "career@neolinetech.az",
+      "formTitle": "Müraciət edin",
+      "nameLabel": "Ad, soyad",
+      "namePlaceholder": "Ad və soyadınızı daxil edin",
+      "emailLabel": "E-poçt",
+      "emailPlaceholder": "E-poçt adresinizi daxil edin",
+      "cvLabel": "CV-niz",
+      "uploadHere": "Buradan yükləyin",
+      "uploadDrop": "və ya sürükləyib buraxın",
+      "maxFile": "Maksimum fayl {size}MB",
+      "fileTooBig": "Fayl {size}MB-dan kiçik olmalıdır",
+      "cvRequired": "CV yükləyin",
+      "successToast": "Müraciətiniz göndərildi. Tezliklə sizinlə əlaqə saxlayacağıq.",
+      "errorToast": "Müraciət göndərilə bilmədi. Yenidən cəhd edin."
+    },
+    "other": {
+      "heading": "Digər Vakansiyalarla Tanış olun",
+      "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
+    }
+  },
+  "metadata": {
+    "title": "Neoline Technology",
+    "description": "Bizneslərin rəqəmsal inkişafını dəstəkləyən innovativ proqram təminatı şirkəti."
+  }
+}

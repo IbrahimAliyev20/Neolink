@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
@@ -19,14 +20,13 @@ import aboutContactArt from "../../../public/images/about-contact-art.png";
 const stripQuotes = (text: string) => text.replace(/^"+|"+$/g, "");
 
 export function TestimonialsSection() {
+  const t = useTranslations("about.testimonials");
   const { data: testimonials = [] } = useCollaborations();
   const { data: sectionTitle } = useSectionTitle("Collaboration");
   const [index, setIndex] = useState(0);
 
   // Figma colours the last word teal; the API sends the title as plain text.
-  const titleWords = (
-    sectionTitle?.title ?? "Etibarla Qurulan Əməkdaşlıqlar!"
-  ).split(" ");
+  const titleWords = (sectionTitle?.title ?? t("titleFallback")).split(" ");
   const titleStart = titleWords.slice(0, -1).join(" ");
   const titleAccent = titleWords[titleWords.length - 1];
 
@@ -51,8 +51,7 @@ export function TestimonialsSection() {
             className="w-full lg:max-w-[656px] lg:flex-1 lg:min-w-0"
           >
             <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-              {sectionTitle?.description ??
-                "Hər uğurlu layihənin arxasında etibar, şəffaf əməkdaşlıq və ortaq məqsədlər dayanır. Müştərilərimizin fikirləri bizim üçün yalnız rəy deyil, davamlı inkişafımızın ən dəyərli göstəricisidir."}
+              {sectionTitle?.description ?? t("descFallback")}
             </p>
           </Reveal>
         </div>
@@ -89,7 +88,7 @@ export function TestimonialsSection() {
                 <div className="flex gap-3 items-center">
                   <button
                     type="button"
-                    aria-label="Əvvəlki rəy"
+                    aria-label={t("prevAria")}
                     onClick={goPrev}
                     disabled={count < 2}
                     className="bg-white/12 flex items-center justify-center p-2 rounded-full cursor-pointer transition-colors enabled:hover:bg-white/20 disabled:opacity-50"
@@ -98,7 +97,7 @@ export function TestimonialsSection() {
                   </button>
                   <button
                     type="button"
-                    aria-label="Növbəti rəy"
+                    aria-label={t("nextAria")}
                     onClick={goNext}
                     disabled={count < 2}
                     className="bg-white/12 flex items-center justify-center p-2 rounded-full cursor-pointer transition-colors enabled:hover:bg-white/20 disabled:opacity-50"
@@ -133,11 +132,10 @@ export function TestimonialsSection() {
             <div className="flex flex-col gap-4 items-start px-3.5 pb-3.5 flex-1 justify-end lg:gap-6 lg:px-8 lg:pb-8">
               <div className="flex flex-col gap-2 items-start w-full lg:gap-3">
                 <p className="font-medium text-[#040711] text-base leading-6 tracking-[0.16px] lg:text-2xl lg:leading-8 lg:tracking-[0.24px]">
-                  Başlamağa hazırsınız?
+                  {t("ready")}
                 </p>
                 <p className="text-[#5b606f] text-xs leading-4 tracking-[0.12px] lg:text-sm lg:leading-5 lg:tracking-[0.14px]">
-                  Məqsədlərinizi anlayır, ehtiyaclarınıza uyğun həllər hazırlayır və
-                  layihənizi uğurla həyata keçiririk.
+                  {t("readyDesc")}
                 </p>
               </div>
               <Link
@@ -145,7 +143,7 @@ export function TestimonialsSection() {
                 className="bg-[#0d153a] flex gap-4 h-10 items-center justify-center px-6 py-2.5 rounded-full w-full cursor-pointer transition-colors hover:bg-[#0d153a]/90 lg:h-12 lg:py-3"
               >
                 <span className="font-medium text-[#3abdaa] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  Gəlin başlayaq
+                  {t("start")}
                 </span>
                 <ArrowUpRight className="h-5 w-5 lg:h-6 lg:w-6 text-[#3abdaa]" strokeWidth={1.5} />
               </Link>

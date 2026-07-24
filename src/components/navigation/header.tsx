@@ -2,22 +2,24 @@
 
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 
+import { Link, usePathname } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
+import { LanguageSwitcher } from "@/components/navigation/language-switcher";
 import { useSetting } from "@/services/setting/queries";
 import { useServices } from "@/services/service/queries";
 
 /** Figma: `Header-menu` — 14/20, #3B4153, 2px gradient hover line below. */
-const menu = [
-  { label: "Ana səhifə", href: "/" },
-  { label: "Haqqımızda", href: "/about" },
-  { label: "Xidmətlər", href: "/services", hasMenu: true },
-  { label: "Layihələr", href: "/projects" },
-  { label: "Bloqlar", href: "/blogs" },
+type MenuItem = { key: string; href: string; hasMenu?: boolean };
+const menu: MenuItem[] = [
+  { key: "home", href: "/" },
+  { key: "about", href: "/about" },
+  { key: "services", href: "/services", hasMenu: true },
+  { key: "projects", href: "/projects" },
+  { key: "blogs", href: "/blogs" },
 ];
 
 /** Default preview art shown before any service row is hovered. */
@@ -33,6 +35,7 @@ const hoverLine =
  * Hovering "Xidmətlər" opens `Service-list-2`, the full-width services panel.
  */
 export function Header() {
+  const t = useTranslations("nav");
   const { data: setting } = useSetting();
   const { data: apiServices = [] } = useServices();
   const pathname = usePathname();
@@ -239,7 +242,7 @@ export function Header() {
                         : "font-normal text-[#3b4153]"
                     }`}
                   >
-                    {item.label}
+                    {t(item.key)}
                     {item.hasMenu && (
                       <ChevronDown
                         className={`h-4 w-4 transition-transform ${
@@ -262,28 +265,35 @@ export function Header() {
             })}
           </nav>
 
-          {/* Figma: Common buttons — 151x48, #0D153A, r100 */}
-          <Link
-            href="/contact"
-            className="hidden h-12 shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] whitespace-nowrap text-white transition-colors hover:bg-[#0d153a]/90 lg:flex"
-          >
-            Bizimlə əlaqə
-          </Link>
+          {/* Language switcher + contact CTA (desktop). */}
+          <div className="hidden shrink-0 items-center gap-3 lg:flex">
+            <LanguageSwitcher />
+            <Link
+              href="/contact"
+              className="flex h-12 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[16px] leading-[24px] font-medium tracking-[0.01em] whitespace-nowrap text-white transition-colors hover:bg-[#0d153a]/90"
+            >
+              {t("contactCta")}
+            </Link>
+          </div>
 
-          {/* Tablet / mobile trigger — the desktop nav collapses below lg. */}
-          <button
-            type="button"
-            onClick={() => setMobileOpen((open) => !open)}
-            aria-label={mobileOpen ? "Menyunu bağla" : "Menyunu aç"}
-            aria-expanded={mobileOpen}
-            className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center text-black lg:hidden"
-          >
-            {mobileOpen ? (
-              <X className="h-6 w-6" strokeWidth={1.5} />
-            ) : (
-              <Menu className="h-6 w-6" strokeWidth={1.5} />
-            )}
-          </button>
+          {/* Language switcher stays visible on mobile, beside the menu trigger. */}
+          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+            <LanguageSwitcher />
+            {/* Tablet / mobile trigger — the desktop nav collapses below lg. */}
+            <button
+              type="button"
+              onClick={() => setMobileOpen((open) => !open)}
+              aria-label={mobileOpen ? t("menuClose") : t("menuOpen")}
+              aria-expanded={mobileOpen}
+              className="flex h-6 w-6 shrink-0 cursor-pointer items-center justify-center text-black"
+            >
+              {mobileOpen ? (
+                <X className="h-6 w-6" strokeWidth={1.5} />
+              ) : (
+                <Menu className="h-6 w-6" strokeWidth={1.5} />
+              )}
+            </button>
+          </div>
         </div>
       </Container>
 
@@ -321,7 +331,7 @@ export function Header() {
                         mobileServicesOpen ? "pb-6" : "py-4"
                       }`}
                     >
-                      {item.label}
+                      {t(item.key)}
                       <ChevronDown
                         className={`h-6 w-6 shrink-0 text-[#8e929c] transition-transform ${
                           mobileServicesOpen ? "rotate-180" : ""
@@ -362,7 +372,7 @@ export function Header() {
                     isLast ? "" : "border-b border-[#f7f7f7]"
                   }`}
                 >
-                  {item.label}
+                  {t(item.key)}
                 </Link>
               );
             })}
@@ -374,7 +384,7 @@ export function Header() {
             onClick={() => setMobileOpen(false)}
             className="flex h-10 w-full shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
           >
-            Bizimlə əlaqə
+            {t("contactCta")}
           </Link>
         </div>
       )}

@@ -1,18 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import Container from "@/components/shared/container";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import { useServiceInclude } from "@/services/service-include/queries";
 
-// The heading and lead paragraph are the same on every service; only the item
-// cards come from `/service-include/{slug}`.
-const HEADING = "Bu Xidmətə Nələr Daxildir ?";
-const LEAD =
-  "Biznes ehtiyaclarınızı dərindən analiz edərək, daha təhlükəsiz, səmərəli və gələcəyə hazır İT infrastrukturu qurmağınıza kömək edirik. Təklif etdiyimiz həllər biznesinizin dayanıqlı inkişafını və rəqəmsal transformasiyasını dəstəkləyir.";
-
 export function WhatIncludedSection({ slug }: { slug: string }) {
+  const t = useTranslations("services.whatIncluded");
   const { data: items = [] } = useServiceInclude(slug);
 
   if (items.length === 0) return null;
@@ -22,12 +18,12 @@ export function WhatIncludedSection({ slug }: { slug: string }) {
       <div className="flex flex-col gap-4 items-start w-full lg:gap-6 lg:flex-1 lg:min-w-0">
         <SplitLines>
           <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px] lg:max-w-[452px]">
-            {HEADING}
+            {t("heading")}
           </h2>
         </SplitLines>
         <Reveal y={44} blur={8} className="w-full">
           <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-            {LEAD}
+            {t("lead")}
           </p>
         </Reveal>
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { X, ChevronDown, Check } from "lucide-react";
 import { toast } from "sonner";
 import { useServiceForm } from "@/services/service-form/mutations";
@@ -15,6 +16,8 @@ export function OfferModal({
   /** Service name sent with the offer request. */
   service?: string;
 }) {
+  const t = useTranslations("services.offerModal");
+  const tc = useTranslations("common");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { mutate: sendOffer, isPending } = useServiceForm();
   const [name, setName] = useState("");
@@ -37,7 +40,7 @@ export function OfferModal({
       { name, email, phone: `+994${phone}`, service },
       {
         onSuccess: () => setIsSubmitted(true),
-        onError: () => toast.error("Təklif göndərilə bilmədi. Yenidən cəhd edin."),
+        onError: () => toast.error(t("errorToast")),
       }
     );
   };
@@ -70,7 +73,7 @@ export function OfferModal({
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Bağla"
+            aria-label={tc("close")}
             className="absolute right-4 top-4 flex items-center justify-center size-6 text-[#5b606f]"
           >
             <X className="h-6 w-6" strokeWidth={1.5} />
@@ -83,11 +86,10 @@ export function OfferModal({
               </div>
               <div className="flex flex-col gap-3 items-center text-center w-full">
                 <p className="font-medium text-[#20201e] text-2xl leading-8">
-                  Təklifiniz göndərildi!
+                  {t("successTitle")}
                 </p>
                 <p className="text-[#77777b] text-sm leading-5">
-                  Müraciətiniz qeydə alındı. Komandamız onu nəzərdən keçirəcək və ən qısa
-                  zamanda sizinlə əlaqə saxlayacaq.
+                  {t("successDesc")}
                 </p>
               </div>
             </div>
@@ -108,12 +110,12 @@ export function OfferModal({
       >
         <div className="border-b border-[#e7e7ea] flex items-center justify-between px-6 py-5 w-full">
           <p className="font-medium text-[#040711] text-2xl leading-8 tracking-[0.24px]">
-            Təklif al
+            {t("title")}
           </p>
           <button
             type="button"
             onClick={handleClose}
-            aria-label="Bağla"
+            aria-label={tc("close")}
             className="flex items-center justify-center size-6 text-[#5b606f]"
           >
             <X className="h-6 w-6" strokeWidth={1.5} />
@@ -127,7 +129,7 @@ export function OfferModal({
           <div className="flex flex-col gap-6 items-start w-full">
             <div className="flex flex-col gap-2 items-start w-full">
               <label htmlFor="offer-name" className="text-[#040711] text-sm tracking-[0.14px] px-1">
-                Ad, soyad
+                {t("nameLabel")}
               </label>
               <input
                 id="offer-name"
@@ -135,7 +137,7 @@ export function OfferModal({
                 required
                 value={name}
                 onChange={(event) => setName(event.target.value)}
-                placeholder="Ad və soyadınızı daxil edin"
+                placeholder={t("namePlaceholder")}
                 className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
               />
             </div>

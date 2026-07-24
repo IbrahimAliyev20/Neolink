@@ -2,8 +2,9 @@
 
 import { Copyright } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { toExternalUrl } from "@/lib/utils";
 import { useSetting } from "@/services/setting/queries";
@@ -11,12 +12,12 @@ import { useSocialMedia } from "@/services/social-media/queries";
 
 /** Figma: `Header-menu` items — 14/20 Regular, #8E929C, px 8 / py 4. */
 const menu = [
-  { label: "Haqqımızda", href: "/about" },
-  { label: "Xidmətlər", href: "/services" },
-  { label: "Layihələr", href: "/projects" },
-  { label: "Bloqlar", href: "/blogs" },
-  { label: "Əlaqə", href: "/contact" },
-];
+  { key: "about", href: "/about" },
+  { key: "services", href: "/services" },
+  { key: "projects", href: "/projects" },
+  { key: "blogs", href: "/blogs" },
+  { key: "contact", href: "/contact" },
+] as const;
 
 
 /**
@@ -28,6 +29,7 @@ const menu = [
  * divider, then the social icons above the copyright line.
  */
 export function Footer() {
+  const t = useTranslations();
   const { data: setting } = useSetting();
   const { data: socials = [] } = useSocialMedia();
 
@@ -56,7 +58,7 @@ export function Footer() {
                   href={item.href}
                   className="px-2 py-1 text-[14px] leading-[20px] font-normal tracking-[0.01em] text-[#8e929c] transition-colors hover:text-neo-ink"
                 >
-                  {item.label}
+                  {t(`nav.${item.key}`)}
                 </Link>
               ))}
             </nav>
@@ -75,14 +77,14 @@ export function Footer() {
                 strokeWidth={1.5}
               />
               <span className="font-poppins text-[14px] leading-[20px] font-normal tracking-[0]">
-                Neoline Technology MMC | Bütün hüquqlar qorunur.
+                {t("footer.copyright")}
               </span>
             </div>
 
             {/* Figma: Social media icons — row, gap 8 */}
             <div className="flex items-center gap-2">
               {socials.map((social) => (
-                <Link
+                <a
                   key={social.link}
                   href={toExternalUrl(social.link)}
                   target="_blank"
@@ -98,7 +100,7 @@ export function Footer() {
                     aria-hidden
                     className="h-6 w-6 object-contain"
                   />
-                </Link>
+                </a>
               ))}
             </div>
           </div>

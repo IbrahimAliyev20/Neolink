@@ -11,6 +11,14 @@ export function toExternalUrl(link: string): string {
   return link.startsWith('http') ? link : `https://${link}`
 }
 
+/** Translation fallbacks mark the teal-accented word with `<accent>…</accent>`;
+ *  turn it into the inline styled span used when injecting the string as HTML. */
+export function accentHtml(value: string): string {
+  return value
+    .replaceAll('<accent>', '<span style="color:#009999">')
+    .replaceAll('</accent>', '</span>')
+}
+
 export function getCurrentLocale(): string {
   // Check if we're in browser environment
   if (typeof window !== 'undefined') {

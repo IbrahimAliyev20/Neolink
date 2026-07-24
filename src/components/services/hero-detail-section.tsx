@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { ArrowUpRight } from "lucide-react";
 import Container from "@/components/shared/container";
 import { OfferModal } from "@/components/shared/OfferModal";
@@ -17,6 +18,7 @@ export interface ServiceHero {
 }
 
 export function HeroDetailSection({ service }: { service: ServiceHero }) {
+  const tc = useTranslations("common");
   const rootRef = useRef<HTMLElement | null>(null);
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
@@ -101,7 +103,7 @@ export function HeroDetailSection({ service }: { service: ServiceHero }) {
                 className="bg-[#3abdaa] flex gap-4 h-10 items-center justify-center px-6 py-2.5 rounded-full w-full lg:gap-2 lg:h-12 lg:px-16 lg:py-3 lg:w-auto"
               >
                 <span className="font-medium text-white text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-                  Təklif al
+                  {tc("getOffer")}
                 </span>
                 <ArrowUpRight className="h-5 w-5 text-white" strokeWidth={1.5} />
               </button>

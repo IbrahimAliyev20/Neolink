@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
+import { Link } from "@/i18n/navigation";
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
@@ -20,6 +21,7 @@ import { useServices } from "@/services/service/queries";
  * card column, and the backdrop strip (343x101) closing the section.
  */
 export function ServicesSection() {
+  const t = useTranslations("home.services");
   const { data: services = [] } = useServices();
 
   if (services.length === 0) return null;
@@ -56,14 +58,13 @@ export function ServicesSection() {
                 between lg and 2xl the column is ~440 and 56px wraps badly. */}
             <SplitLines>
               <h2 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[40px] lg:leading-[52px] lg:tracking-[0] 2xl:text-[56px] 2xl:leading-[72px]">
-                Biznesiniz üçün Güclü{" "}
-                <span className="text-neo-teal">İT Ekosistemi</span>
+                {t("headingPre")}{" "}
+                <span className="text-neo-teal">{t("headingAccent")}</span>
               </h2>
             </SplitLines>
             <Reveal y={44} blur={8} className="w-full">
               <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
-                Böyüyən B2B şirkətləri üçün nəzərdə tutulmuş korporativ səviyyəli
-                tam İT xidmətləri – hamısı bir mərkəzdən
+                {t("desc")}
               </p>
             </Reveal>
           </div>
@@ -87,7 +88,7 @@ export function ServicesSection() {
                 <Link
                   href={`/services/${service.slug}`}
                   key={service.slug}
-                  className="flex items-center gap-4 lg:gap-8"
+                  className="group flex items-center gap-4 lg:gap-8"
                 >
                   {/* Figma: Frame 2147224617 — column; gap 11 mobile / 16 desktop */}
                   <div className="flex min-w-0 flex-1 flex-col gap-[11px] lg:gap-4">
@@ -106,7 +107,7 @@ export function ServicesSection() {
                       width={240}
                       height={169}
                       aria-hidden
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.3]"
                     />
                   </ClipReveal>
                 </Link>

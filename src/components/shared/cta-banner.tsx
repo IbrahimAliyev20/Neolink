@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
+import { usePathname } from "@/i18n/navigation";
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import Container from "@/components/shared/container";
+import { accentHtml } from "@/lib/utils";
 import { useBanner } from "@/services/banner/queries";
 
 /**
@@ -17,6 +19,8 @@ import { useBanner } from "@/services/banner/queries";
  * and two half-width 40px buttons in one row.
  */
 export function CtaBanner() {
+  const t = useTranslations("cta");
+  const tc = useTranslations("common");
   const { data: banner } = useBanner();
   const pathname = usePathname();
   // Hide the button that points to the page you're already on.
@@ -58,14 +62,11 @@ export function CtaBanner() {
             <h2
               className="text-[24px] leading-[32px] font-medium tracking-[0.01em] text-white md:text-[36px] md:leading-[46px] md:font-semibold md:tracking-[0] lg:text-[56px] lg:leading-[72px]"
               dangerouslySetInnerHTML={{
-                __html:
-                  banner?.title ??
-                  'Gələcəyin Rəqəmsal Həllərini <span style="color:#009999">Bu Gün</span> Qurun!',
+                __html: banner?.title ?? accentHtml(t("titleFallback")),
               }}
             />
             <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-[#e7e7ea] md:text-[16px] md:leading-[24px] lg:w-[631px]">
-              {banner?.description ??
-                "Biznes məqsədlərinizə uyğun innovativ proqram təminatı və rəqəmsal məhsullar hazırlamaq üçün ilk addımı birlikdə ataq."}
+              {banner?.description ?? t("descFallback")}
             </p>
           </div>
 
@@ -76,7 +77,7 @@ export function CtaBanner() {
                 href="/contact"
                 className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
               >
-                Bizimlə əlaqə
+                {tc("contactUs")}
               </MagneticLink>
             )}
             {!onServices && (
@@ -84,7 +85,7 @@ export function CtaBanner() {
                 href="/services"
                 className="flex h-10 flex-1 items-center justify-center rounded-full border border-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
               >
-                Xidmətlərimiz
+                {tc("ourServices")}
               </MagneticLink>
             )}
           </div>

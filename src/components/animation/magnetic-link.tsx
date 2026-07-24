@@ -1,14 +1,14 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, type ReactNode } from "react";
 
+import { Link } from "@/i18n/navigation";
 import { gsap, prefersReducedMotion } from "@/lib/gsap";
 
 /**
- * A `next/link` that leans towards the cursor while hovered and springs back on
- * leave. It renders the same anchor with the same classes as a plain `Link`, so
- * it can replace one without touching the layout.
+ * A locale-aware `Link` that leans towards the cursor while hovered and springs
+ * back on leave. It renders the same anchor with the same classes as a plain
+ * `Link`, so it can replace one without touching the layout.
  */
 export function MagneticLink({
   href,
