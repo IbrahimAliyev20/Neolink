@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
-import { MagneticLink } from "@/components/animation/magnetic-link";
+import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import Container from "@/components/shared/container";
@@ -161,17 +161,16 @@ export function FaqSection() {
             </div>
 
             {/* Figma: Common buttons — full width, h40 mobile / 417x48 desktop, #0D153A, r100, gap 16 */}
-            <MagneticLink
+            <Link
               href="/contact"
-              strength={0.15}
-              className="group/cta flex h-10 w-full items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90 lg:h-12 lg:text-[16px] lg:leading-[24px]"
+              className="btn-cta group/cta flex h-10 w-full items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white hover:bg-[#0d153a]/90 lg:h-12 lg:text-[16px] lg:leading-[24px]"
             >
               {t("contactCta")}
               <ArrowUpRight
                 className="h-5 w-5 transition-transform duration-300 group-hover/cta:translate-x-1 group-hover/cta:-translate-y-1 lg:h-6 lg:w-6"
                 strokeWidth={1.5}
               />
-            </MagneticLink>
+            </Link>
           </div>
         </div>
 
