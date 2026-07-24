@@ -1,19 +1,30 @@
 import Image from "next/image";
 import Container from "@/components/shared/container";
+import { Reveal } from "@/components/animation/reveal";
+import { SplitLines } from "@/components/animation/split-lines";
 import type { ServiceDetail } from "@/lib/data/service-details";
 
 export function WhatIncludedSection({ service }: { service: ServiceDetail }) {
   return (
     <Container className="flex flex-col gap-6 items-center lg:flex-row lg:gap-12 w-full">
       <div className="flex flex-col gap-4 items-start w-full lg:gap-6 lg:flex-1 lg:min-w-0">
-        <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px] lg:max-w-[452px]">
-          {service.whatIncludedTitle}
-        </h2>
-        <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
-          {service.whatIncludedDescription}
-        </p>
+        <SplitLines>
+          <h2 className="font-semibold text-[#040711] text-xl leading-7 tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px] lg:max-w-[452px]">
+            {service.whatIncludedTitle}
+          </h2>
+        </SplitLines>
+        <Reveal y={44} blur={8} className="w-full">
+          <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
+            {service.whatIncludedDescription}
+          </p>
+        </Reveal>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 w-full lg:flex-[1.5] lg:min-w-0">
+      <Reveal
+        y={40}
+        stagger={0.12}
+        end="top 50%"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4 w-full lg:flex-[1.5] lg:min-w-0"
+      >
         {service.whatIncluded.map((item) => (
           <div
             key={item.title}
@@ -32,7 +43,7 @@ export function WhatIncludedSection({ service }: { service: ServiceDetail }) {
             </div>
           </div>
         ))}
-      </div>
+      </Reveal>
     </Container>
   );
 }

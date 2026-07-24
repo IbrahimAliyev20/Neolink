@@ -94,11 +94,15 @@ export function JoinUsSection() {
   return (
     <div className="flex flex-col items-center justify-center pb-9 w-full lg:pb-[90px]">
       <Container className="flex flex-col lg:flex-row gap-5 lg:gap-16 items-start w-full">
+        {/* Left copy sticks 100px below the top (clear of the sticky header)
+            while the taller vacancy list scrolls past it, like the home
+            services section. `self-start` keeps it from stretching to the row
+            height so it has room to move. */}
         <Reveal
           y={56}
           scale={0.92}
           stagger={0.22}
-          className="flex flex-col gap-3 items-start flex-[576] min-w-0 w-full"
+          className="flex flex-col gap-3 items-start flex-[576] min-w-0 w-full lg:sticky lg:top-[100px] lg:self-start"
         >
           <div className="-rotate-[6.89deg] bg-[#0d153a] flex gap-2 items-center justify-center px-3 py-2 rounded-full lg:gap-2.5 lg:px-4 lg:py-2.5">
             <Image src="/icons/briefcase.svg" alt="" width={21} height={21} className="size-4 lg:size-[21px]" />
