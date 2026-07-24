@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import Link from "next/link";
 
 import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
@@ -6,29 +9,7 @@ import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
 import { ServicesRail } from "@/components/home/services-rail";
 import Container from "@/components/shared/container";
-
-/** Figma: `Service card` instances — text block 333 + gap 32 + 240x169 visual. */
-const services = [
-  {
-    title: "İT Konsaltinq",
-    image: "/images/service-1.png",
-  },
-  {
-    title: "DevOps və Proqram Mühəndisliyi",
-    image: "/images/service-2.png",
-  },
-  {
-    title: "Bulud Xidmətləri",
-    image: "/images/service-3.png",
-  },
-  {
-    title: "İT İnfrastruktur",
-    image: "/images/service-4.png",
-  },
-];
-
-const description =
-  "İT strategiyası iş hədəflərinizə uyğunlaşdırılır. Yol xəritəsi, risk auditləri və uyğunluq çərçivəsi (ISO 27001, GDPR, SOC 2).";
+import { useServices } from "@/services/service/queries";
 
 /**
  * Figma desktop: `Frame 2147224639` (1920x971, white, py 90, px 240, clipped).
@@ -39,6 +20,10 @@ const description =
  * card column, and the backdrop strip (343x101) closing the section.
  */
 export function ServicesSection() {
+  const { data: services = [] } = useServices();
+
+  if (services.length === 0) return null;
+
   return (
     // `overflow-clip` rather than `overflow-hidden`: it clips the backdrop the
     // same way but does not create a scroll container, which would stop the
@@ -90,6 +75,7 @@ export function ServicesSection() {
 
             {/* Figma: Frame 2147224619 — column; gap 24 mobile / 36 desktop, width 605 */}
             <Reveal
+              key={services.length}
               x={72}
               y={0}
               blur={6}
@@ -98,23 +84,24 @@ export function ServicesSection() {
               className="flex w-full min-w-0 flex-col gap-6 lg:flex-1 lg:gap-9"
             >
               {services.map((service) => (
-                <div
-                  key={service.title}
+                <Link
+                  href={`/services/${service.slug}`}
+                  key={service.slug}
                   className="flex items-center gap-4 lg:gap-8"
                 >
                   {/* Figma: Frame 2147224617 — column; gap 11 mobile / 16 desktop */}
                   <div className="flex min-w-0 flex-1 flex-col gap-[11px] lg:gap-4">
                     <h3 className="text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px] 2xl:text-[24px] 2xl:leading-[32px]">
-                      {service.title}
+                      {service.name}
                     </h3>
                     <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[14px] lg:leading-[22px] 2xl:text-[16px] 2xl:leading-[24px]">
-                      {description}
+                      {service.short_description}
                     </p>
                   </div>
                   {/* Figma: 112x79 mobile / 240x169 desktop, r12 */}
                   <ClipReveal className="aspect-[240/169] w-[38%] max-w-[112px] shrink-0 overflow-hidden rounded-[12px] bg-neo-teal lg:w-[40%] lg:max-w-[240px]">
                     <Image
-                      src={service.image}
+                      src={service.cover_image_home}
                       alt=""
                       width={240}
                       height={169}
@@ -122,7 +109,7 @@ export function ServicesSection() {
                       className="h-full w-full object-cover"
                     />
                   </ClipReveal>
-                </div>
+                </Link>
               ))}
             </Reveal>
           </div>

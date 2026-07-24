@@ -7,9 +7,16 @@ import Container from "@/components/shared/container";
 import { OfferModal } from "@/components/shared/OfferModal";
 import { Parallax } from "@/components/animation/parallax";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
-import type { ServiceDetail } from "@/lib/data/service-details";
+import type { ServiceImage } from "@/lib/data/services";
 
-export function HeroDetailSection({ service }: { service: ServiceDetail }) {
+export interface ServiceHero {
+  slug: string;
+  title: string;
+  description: string;
+  heroImage: ServiceImage;
+}
+
+export function HeroDetailSection({ service }: { service: ServiceHero }) {
   const rootRef = useRef<HTMLElement | null>(null);
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 

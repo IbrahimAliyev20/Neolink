@@ -1,14 +1,22 @@
+"use client";
+
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/shared/container";
-import { services } from "@/lib/data/services";
+import { mapApiServices } from "@/lib/data/services";
 import { ServiceCard } from "@/components/services/ServiceCard";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
-import type { ServiceSlug } from "@/lib/data/service-details";
+import { useServices } from "@/services/service/queries";
 
-export function OtherServices({ currentSlug }: { currentSlug: ServiceSlug }) {
-  const otherServices = services.filter((service) => service.slug !== currentSlug).slice(0, 2);
+export function OtherServices({ currentSlug }: { currentSlug: string }) {
+  const { data: apiServices = [] } = useServices();
+
+  // Every service except the current one, capped at two, laid out with the same
+  // alternating wide/narrow card pattern as the services page.
+  const otherServices = mapApiServices(
+    apiServices.filter((service) => service.slug !== currentSlug)
+  ).slice(0, 2);
 
   if (otherServices.length === 0) {
     return null;
