@@ -29,8 +29,12 @@ export function GridSection() {
             <Link
               key={service.slug}
               href={`/services/${service.slug}`}
+              // The max-width caps stop a lone card in a row from stretching to
+              // full width — it keeps its intended wide/narrow size instead.
               className={`w-full min-w-0 ${
-                service.size === "wide" ? "lg:flex-[812]" : "lg:flex-[604]"
+                service.size === "wide"
+                  ? "lg:flex-[812] lg:max-w-[812px]"
+                  : "lg:flex-[604] lg:max-w-[604px]"
               }`}
             >
               <ServiceCard {...service} />
