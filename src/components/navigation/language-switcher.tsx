@@ -59,13 +59,13 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       </button>
 
       {open && (
-        <ul className="absolute right-0 top-full z-50 mt-2 min-w-[132px] overflow-hidden rounded-xl border border-[#e7e7ea] bg-white py-1 shadow-[0px_16px_40px_0px_rgba(0,0,0,0.12)]">
+        <ul className="absolute right-0 top-full z-50 mt-2 min-w-[60px]  text-center  overflow-hidden rounded-xl border border-[#e7e7ea] bg-white py-1 shadow-[0px_16px_40px_0px_rgba(0,0,0,0.12)]">
           {routing.locales.map((loc) => (
             <li key={loc}>
               <button
                 type="button"
                 onClick={() => change(loc)}
-                className={`flex w-full cursor-pointer items-center px-4 py-2.5 text-left text-sm transition-colors hover:bg-[#f7f7f7] ${
+                className={`flex w-full cursor-pointer items-center text-center px-4 py-2.5 pl-4.5 text-sm transition-colors hover:bg-[#f7f7f7] ${
                   loc === locale ? "font-semibold text-neo-ink" : "text-[#5b606f]"
                 }`}
               >

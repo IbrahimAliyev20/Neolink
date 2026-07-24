@@ -55,13 +55,13 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
 
   return (
     <div className="bg-white flex flex-col items-center w-full">
-      <Container className="flex flex-col lg:flex-row gap-16 items-start w-full py-[90px]">
-        <div className="flex flex-col gap-9 items-start flex-1 min-w-0 w-full">
-          <div className="flex flex-col gap-6 items-start w-full">
-            <h2 className="font-semibold text-[#1c1c1e] text-[40px] leading-[56px] tracking-[0.4px] w-full">
+      <Container className="flex flex-col lg:flex-row gap-8 items-start w-full pt-0 pb-12 lg:gap-16 lg:py-[90px]">
+        <div className="flex flex-col gap-6 items-start flex-1 min-w-0 w-full lg:gap-9">
+          <div className="flex flex-col gap-3 items-start w-full lg:gap-6">
+            <h2 className="font-semibold text-[#1c1c1e] text-[20px] leading-[28px] tracking-[0.2px] w-full lg:text-[40px] lg:leading-[56px] lg:tracking-[0.4px]">
               Neoline Ailəsinə Qoşulun
             </h2>
-            <p className="text-[#5b606f] text-base leading-6 tracking-[0.16px] w-full">
+            <p className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] w-full lg:text-base lg:leading-6 lg:tracking-[0.16px]">
               Böyüməyə dəyər verən komandamızda bacarıqlarınızı nümayiş etdirin, yeni
               texnologiyalarla işləyin və gələcəyin həllərini birlikdə formalaşdıraq.
             </p>
@@ -79,16 +79,16 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
           </div>
         </div>
 
-        <div className="bg-[#0d153a] flex flex-col gap-6 items-start justify-center p-6 rounded-2xl flex-1 min-w-0 w-full">
-          <p className="font-medium text-white text-2xl leading-8 tracking-[0.24px]">
+        <div className="bg-[#0d153a] flex flex-col gap-5 items-start justify-center p-3.5 pb-5 rounded-[14px] flex-1 min-w-0 w-full lg:gap-6 lg:p-6 lg:pb-6 lg:rounded-2xl">
+          <p className="font-semibold text-white text-[20px] leading-[28px] tracking-[0.2px] lg:font-medium lg:text-2xl lg:leading-8 lg:tracking-[0.24px]">
             Müraciət edin
           </p>
 
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-8 items-start w-full"
+            className="flex flex-col gap-6 items-start w-full lg:gap-8"
           >
-            <div className="flex flex-col gap-6 items-start w-full">
+            <div className="flex flex-col gap-4 items-start w-full lg:gap-6">
               <div className="flex flex-col gap-2 items-start w-full">
                 <label htmlFor="apply-name" className="text-white text-sm tracking-[0.14px] px-1">
                   Ad, soyad
@@ -119,7 +119,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
                 />
               </div>
 
-              <div className="flex flex-col gap-3 items-start w-full">
+              <div className="flex flex-col gap-5 items-start w-full lg:gap-3">
                 <p className="font-medium text-white text-base tracking-[0.16px]">CV-niz</p>
                 <div
                   onClick={() => fileInputRef.current?.click()}
@@ -135,7 +135,7 @@ export function ApplySection({ vacancyId }: { vacancyId: string }) {
                   }}
                   role="button"
                   tabIndex={0}
-                  className={`bg-white/12 border border-dashed rounded-2xl flex flex-col gap-6 items-center p-8 w-full cursor-pointer transition-colors ${
+                  className={`bg-white/12 border border-dashed rounded-2xl flex flex-col gap-5 items-center px-8 py-6 w-full cursor-pointer transition-colors lg:gap-6 lg:py-8 ${
                     isDragActive ? "border-[#61cabb]" : "border-[#3abdaa]"
                   }`}
                 >

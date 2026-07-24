@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { CountUp } from "@/components/animation/count-up";
@@ -11,13 +12,6 @@ import Container from "@/components/shared/container";
 import LogoLoop, { type LogoItem } from "@/components/LogoLoop";
 import { useWhyNeoline } from "@/services/why-neoline/queries";
 import { useLogosWhy } from "@/services/logo/queries";
-
-/** Falls back to the static logos when the API list is empty. */
-const FALLBACK_LOGOS: LogoItem[] = [
-  { src: "/images/logo-1.png", width: 200, height: 38 },
-  { src: "/images/logo-2.png", width: 161, height: 72 },
-  { src: "/images/logo-3.png", width: 209, height: 45 },
-];
 
 /**
  * Figma desktop: `Frame 2147224640` (1920x1100) — "Niyə Məhz Neoline?".
@@ -33,10 +27,23 @@ export function WhyUsSection() {
   // Strategiya", [2] "“Tək Tərəfdaş” Üstünlüyü".
   const { data: items } = useWhyNeoline();
   const { data: apiLogosWhy = [] } = useLogosWhy();
-  const whyLogos: LogoItem[] =
-    apiLogosWhy.length > 0
-      ? apiLogosWhy.map((logo) => ({ src: logo.logo, href: logo.link || undefined }))
-      : FALLBACK_LOGOS;
+  // No fallback: when the API returns no logos the loop is simply left empty.
+  const whyLogos: LogoItem[] = apiLogosWhy.map((logo) => ({
+    src: logo.logo,
+    href: logo.link || undefined,
+  }));
+
+  // The loop's logoHeight/gap are fixed numbers, so they are shrunk on mobile
+  // (below lg) — otherwise the wide logos overflow the narrow card and fewer
+  // than three stay visible. Smaller values keep at least three side by side.
+  const [isMobileLoop, setIsMobileLoop] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const update = () => setIsMobileLoop(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
   const statItem = items?.[0];
   const strategyItem = items?.[1];
   const partnerItem = items?.[2];
@@ -76,11 +83,11 @@ export function WhyUsSection() {
             stagger={0.22}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
-            {/* Figma: Statistics-card-1 — 343x216 r16 p16 mobile / 880x360 r20 p 32/28
+            {/* Figma: Statistics-card-1 — 343x202 r16 p16 mobile / 880x360 r20 p 32/28
                 desktop. Widths are flex ratios, matching Figma’s 880 : 537 split. */}
-            <div className="relative flex min-h-[216px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:flex-[880] lg:rounded-[20px] lg:px-7 lg:py-8">
-              <div className="flex h-full flex-col justify-between gap-9 lg:gap-0">
-                <h3 className="max-w-[247px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
+            <div className="relative flex min-h-[202px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] border border-[#e7e7ea] bg-white p-4 lg:min-h-[360px] lg:flex-[880] lg:rounded-[20px] lg:px-7 lg:py-8">
+              <div className="flex flex-1 flex-col justify-between gap-9 lg:gap-0">
+                <h3 className="max-w-[247px] text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:max-w-[465px] md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   {partnerItem?.title ?? t("partnerTitle")}
                 </h3>
                 <p className="max-w-[824px] text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px]">
@@ -102,8 +109,8 @@ export function WhyUsSection() {
               />
             </div>
 
-            {/* Figma: Frame 2147225004 — 343x216 mobile / 537x360 desktop image card, r20 */}
-            <div className="relative h-[216px] w-full min-w-0 overflow-hidden rounded-[20px] lg:h-auto lg:min-h-[360px] lg:flex-[537]">
+            {/* Figma: Frame 2147225004 — 343x202 mobile / 537x360 desktop image card, r20 */}
+            <div className="relative h-[202px] w-full min-w-0 overflow-hidden rounded-[16px] lg:h-auto lg:min-h-[360px] lg:flex-[537] lg:rounded-[20px]">
               <Parallax amount={26} className="absolute inset-x-0 -inset-y-[18%]">
                 <Image
                   src="/images/why-photo-card.png"
@@ -124,11 +131,11 @@ export function WhyUsSection() {
             stagger={0.22}
             className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-6"
           >
-            {/* Figma: Statistics-card-2 — 343x216 r16 p16 mobile / 340x360 r20 p24
+            {/* Figma: Statistics-card-2 — 343x202 r16 p16 mobile / 340x360 r20 p24
                 desktop. Flex ratios matching Figma’s 340 : 712 : 340 split. */}
-            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
-              <div className="flex h-full flex-col justify-between">
-                <h3 className="text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
+            <div className="flex min-h-[202px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
+              <div className="flex flex-1 flex-col justify-between">
+                <h3 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   {strategyItem?.title ?? t("strategyTitle")}
                 </h3>
                 <p className="text-[16px] leading-[24px] font-normal tracking-[0.01em] text-neo-muted">
@@ -137,30 +144,33 @@ export function WhyUsSection() {
               </div>
             </div>
 
-            {/* Figma: Statistics-card-3 — 343x224 r16 p16 mobile / 712x360 r20 p 32/28 desktop */}
-            <div className="flex min-h-[224px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:flex-[712] lg:rounded-[20px] lg:px-7 lg:py-8">
-              <div className="flex h-full flex-col justify-between">
+            {/* Figma: Statistics-card-3 — 343x202 r16 p16 mobile / 712x360 r20 p 32/28 desktop */}
+            <div className="flex min-h-[202px] w-full min-w-0 flex-col overflow-hidden rounded-[16px] bg-[#0d153a] p-4 lg:min-h-[360px] lg:flex-[712] lg:rounded-[20px] lg:px-7 lg:py-8">
+              <div className="flex flex-1 flex-col justify-between">
                 <h3 className="max-w-[553px] text-[24px] leading-[32px] font-semibold tracking-[0.01em] text-white md:text-[28px] md:leading-[40px] lg:text-[40px] lg:leading-[56px]">
                   {t("corporateTitle")}
                 </h3>
-                {/* Figma: Frame 2147225009 — logos loop endlessly right to left. */}
-                <LogoLoop
-                  logos={whyLogos}
-                  direction="left"
-                  speed={32}
-                  gap={36}
-                  logoHeight={38}
-                  fadeOut
-                  fadeOutColor="#0d153a"
-                  className="opacity-70"
-                  ariaLabel="Partnyor loqoları"
-                />
+                {/* Figma: Frame 2147225009 — logos loop endlessly right to left.
+                    Rendered only when the API returns logos; otherwise left empty. */}
+                {whyLogos.length > 0 && (
+                  <LogoLoop
+                    logos={whyLogos}
+                    direction="left"
+                    speed={32}
+                    gap={isMobileLoop ? 20 : 36}
+                    logoHeight={isMobileLoop ? 22 : 38}
+                    fadeOut
+                    fadeOutColor="#0d153a"
+                    className="opacity-70"
+                    ariaLabel="Partnyor loqoları"
+                  />
+                )}
               </div>
             </div>
 
-            {/* Figma: Statistics-card-4 — 343x216 r16 p16 mobile / 340x360 r20 p24 desktop */}
-            <div className="flex min-h-[216px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
-              <div className="flex h-full flex-col justify-between">
+            {/* Figma: Statistics-card-4 — 343x202 r16 p16 mobile / 340x360 r20 p24 desktop */}
+            <div className="flex min-h-[202px] w-full min-w-0 flex-col rounded-[16px] bg-white p-4 lg:min-h-[360px] lg:flex-[340] lg:rounded-[20px] lg:p-6">
+              <div className="flex flex-1 flex-col justify-between">
                 {/* Figma: Frame 2147224998 — column; gap 12 mobile / 16 desktop */}
                 <div className="flex flex-col gap-3 lg:gap-4">
                   <span className="text-[32px] leading-[40px] font-semibold tracking-[0] text-neo-ink lg:text-[48px] lg:leading-[64px]">

@@ -123,7 +123,7 @@ export function ServicesSection() {
           width={800}
           height={534}
           aria-hidden
-          className="pointer-events-none mt-[10px] h-[101px] w-full object-cover opacity-[0.72] select-none lg:hidden"
+          className="pointer-events-none mt-[10px] h-[101px] w-full object-cover object-top opacity-[0.72] select-none lg:hidden"
         />
       </Container>
     </section>

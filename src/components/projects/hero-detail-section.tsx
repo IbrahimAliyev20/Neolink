@@ -19,7 +19,7 @@ export function HeroDetailSection({ project }: { project: Project }) {
           priority
         />
       )}
-      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/15" />
 
       <div className="relative flex flex-col h-full">
         <Container className="py-4 w-full lg:pt-6 lg:pb-0">

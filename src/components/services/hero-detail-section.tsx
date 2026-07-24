@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { OfferModal } from "@/components/shared/OfferModal";
 import { Parallax } from "@/components/animation/parallax";
@@ -19,6 +20,7 @@ export interface ServiceHero {
 
 export function HeroDetailSection({ service }: { service: ServiceHero }) {
   const tc = useTranslations("common");
+  const t = useTranslations("services.detail");
   const rootRef = useRef<HTMLElement | null>(null);
   const [isOfferModalOpen, setIsOfferModalOpen] = useState(false);
 
@@ -79,6 +81,15 @@ export function HeroDetailSection({ service }: { service: ServiceHero }) {
   return (
     <section ref={rootRef} className="w-full">
       <Container className="flex flex-col items-start w-full">
+        <div className="flex gap-1 items-center mb-5 lg:mb-8">
+          <Link href="/services" className="text-[#5b606f] text-xs hover:text-[#3abdaa] transition-colors">
+            {t("breadcrumb")}
+          </Link>
+          <ChevronRight className="h-4 w-4 text-[#b3b5bc]" strokeWidth={1.5} />
+          <p className="font-medium text-[#1c1c1e] text-xs truncate max-w-[400px]">
+            {service.title}
+          </p>
+        </div>
         <div className="flex flex-col gap-5 lg:flex-row lg:gap-16 xl:gap-[132px] items-center w-full">
           <div className="flex flex-col gap-5 items-start w-full lg:gap-12 lg:flex-1 lg:min-w-0">
             <div className="flex flex-col gap-3 items-start w-full lg:gap-6">

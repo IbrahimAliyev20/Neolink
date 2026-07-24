@@ -10,13 +10,13 @@ export function DetailSections({ sections }: { sections: VacancySection[] }) {
   if (sections.length === 0) return null;
 
   return (
-    <Container className="flex flex-col gap-12 items-start w-full pt-14 pb-[90px]">
+    <Container className="flex flex-col gap-5 items-start w-full pt-9 pb-9 lg:gap-12 lg:pt-14 lg:pb-[90px]">
       {sections.map((section) => (
         <div
           key={section.title}
-          className="flex flex-col lg:flex-row gap-6 items-start justify-between w-full"
+          className="flex flex-col gap-3 items-start justify-between w-full lg:flex-row lg:gap-6"
         >
-          <p className="font-semibold text-[#040711] text-[32px] leading-10 tracking-[0.32px] shrink-0 w-full lg:w-[434px]">
+          <p className="font-semibold text-[#040711] text-[20px] leading-[28px] tracking-[0.2px] shrink-0 w-full lg:w-[434px] lg:text-[32px] lg:leading-10 lg:tracking-[0.32px]">
             {section.title}
           </p>
           <RichHtml html={section.html} className="lg:max-w-[900px]" />

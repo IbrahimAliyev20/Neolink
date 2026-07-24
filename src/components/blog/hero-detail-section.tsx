@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { ChevronRight } from "lucide-react";
 import { toast } from "sonner";
+import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { Reveal } from "@/components/animation/reveal";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
@@ -178,6 +180,15 @@ export function HeroDetailSection({
   return (
     <Container className="flex flex-col items-center w-full">
       <div ref={rootRef} className="flex flex-col gap-5 items-center w-full lg:gap-8">
+        <div className="flex gap-1 items-center w-full">
+          <Link href="/blogs" className="text-[#4d4d4b] text-xs hover:text-[#3abdaa] transition-colors">
+            {t("breadcrumb")}
+          </Link>
+          <ChevronRight className="h-4 w-4 text-[#989898]" strokeWidth={1.5} />
+          <p className="font-medium text-[#040711] text-xs truncate max-w-[400px]">
+            {post.title}
+          </p>
+        </div>
         <div className="flex flex-col gap-4 items-start w-full lg:gap-7 lg:items-center">
           <h1
             data-hero-anim

@@ -139,7 +139,17 @@ export function HeroSection() {
                 data-hero-title
                 className="text-[20px] leading-[28px] font-semibold tracking-[0.01em] text-neo-ink md:text-[36px] md:leading-[46px] lg:text-[calc(var(--hero-u)*64)] lg:leading-[calc(var(--hero-u)*80)] lg:tracking-[0]"
                 dangerouslySetInnerHTML={{
-                  __html: hero?.title ?? accentHtml(t("titleFallback")),
+                  // The CMS stores the title as a full <h1> copied from the
+                  // rendered desktop hero, with baked-in inline styles
+                  // (font-size:64px, line-height:80px …) and `data-hero-*`
+                  // attributes. The hardcoded sizes override the responsive
+                  // classes and blow the title up on mobile, while the nested
+                  // `data-hero-anim` gets hidden by the CSS opacity rule and
+                  // never animated back in. Strip both: the teal accent lives on
+                  // a `color` attribute (not `style`), so it survives.
+                  __html: (hero?.title ?? accentHtml(t("titleFallback")))
+                    .replace(/\s*style="[^"]*"/gi, "")
+                    .replace(/\s*data-hero-(anim|title)="[^"]*"/gi, ""),
                 }}
               />
               <p data-hero-anim className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted md:text-[16px] md:leading-[24px] lg:text-[calc(var(--hero-u)*20)] lg:leading-[calc(var(--hero-u)*28)]">
@@ -173,8 +183,10 @@ export function HeroSection() {
               label={stats?.[0]?.title ?? t("statExpert")}
             />
             {/* `contents` lets both cards join the mobile row; at lg this
-                becomes Figma's `Frame 5` (row, gap 10). */}
-            <div className="contents lg:flex lg:w-full lg:items-center lg:justify-end lg:gap-[calc(var(--hero-u)*10)]">
+                becomes Figma's `Frame 5` (row, gap 10). `items-stretch` keeps
+                the two cards the same height at every width (not just 2xl),
+                so the pair never looks lopsided. */}
+            <div className="contents lg:flex lg:w-full lg:items-stretch lg:justify-end lg:gap-[calc(var(--hero-u)*10)]">
               <StatCard
                 className="js-hero-stat order-3 flex-1 lg:order-none"
                 value={stats?.[1]?.number ?? "40+"}

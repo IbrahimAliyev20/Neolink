@@ -3,10 +3,11 @@
 import { ArrowUpRight, ChevronDown, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import Container from "@/components/shared/container";
 import { LanguageSwitcher } from "@/components/navigation/language-switcher";
 import { useSetting } from "@/services/setting/queries";
@@ -36,9 +37,16 @@ const hoverLine =
  */
 export function Header() {
   const t = useTranslations("nav");
+  const tLang = useTranslations("lang");
   const { data: setting } = useSetting();
   const { data: apiServices = [] } = useServices();
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+
+  const changeLocale = (next: string) => {
+    if (next !== locale) router.replace(pathname, { locale: next });
+  };
 
   // Services dropdown content, split into two columns. `image` is the photo the
   // 420x284 preview cross-fades to when the row is hovered.
@@ -84,10 +92,14 @@ export function Header() {
 
     const ctx = gsap.context(() => {
       if (mobileOpen) {
+        // Slide-in only — never animate the panel's opacity. The drawer holds
+        // the opaque white background, so if this tween is ever interrupted
+        // (a re-render killing the context mid-flight) it must not be left
+        // translucent, or the page bleeds through. A stalled y is invisible.
         gsap.fromTo(
           drawer,
-          { opacity: 0, y: -12 },
-          { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }
+          { y: -12 },
+          { y: 0, duration: 0.4, ease: "power3.out" }
         );
       } else {
         gsap.to(drawer, {
@@ -119,6 +131,16 @@ export function Header() {
       document.body.style.overflow = previous;
     };
   }, [mobileOpen]);
+
+  // Lock page scroll while the desktop services mega-menu is open.
+  useEffect(() => {
+    if (!servicesOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [servicesOpen]);
 
   // Open: unroll from the header edge and lift the content in.
   // Close: reverse it, then unmount once the tween finishes.
@@ -236,7 +258,7 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`flex items-center gap-1 text-[14px] leading-[20px] tracking-[0.01em] transition-colors ${
+                    className={`flex items-center gap-1 text-[14px] leading-[20px] tracking-[0.01em] transition-colors hover:text-[#3abdaa] ${
                       highlighted
                         ? "font-medium text-[#1c1c1e]"
                         : "font-normal text-[#3b4153]"
@@ -276,9 +298,9 @@ export function Header() {
             </Link>
           </div>
 
-          {/* Language switcher stays visible on mobile, beside the menu trigger. */}
-          <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <LanguageSwitcher />
+          {/* Figma: the mobile top bar holds only the logo and the menu
+              trigger — language selection lives inside the drawer. */}
+          <div className="flex shrink-0 items-center lg:hidden">
             {/* Tablet / mobile trigger — the desktop nav collapses below lg. */}
             <button
               type="button"
@@ -307,7 +329,7 @@ export function Header() {
           // bar and pushes the bottom-pinned CTA off screen. `dvh` tracks the
           // actually-visible height, and the safe-area inset clears the gesture
           // bar so "Bizimlə əlaqə" always stays on screen.
-          className="absolute inset-x-0 top-full z-50 flex h-[calc(100dvh-66px)] flex-col justify-between gap-4 overflow-y-auto bg-white px-4 pt-3 pb-[calc(2.75rem+env(safe-area-inset-bottom))] opacity-0 will-change-[transform,opacity] lg:hidden"
+          className="absolute inset-x-0 top-full z-50 flex h-[calc(100dvh-66px)] flex-col justify-between gap-4 overflow-y-auto bg-white px-4 pt-3 pb-[calc(2.75rem+env(safe-area-inset-bottom))] will-change-transform lg:hidden"
         >
           {/* Figma: Frame 2147225056 — rows, 1px #F7F7F7 separators */}
           <div className="flex flex-col">
@@ -378,14 +400,47 @@ export function Header() {
             })}
           </div>
 
-          {/* Figma: Common buttons — 343x40, #0D153A, r100, 14/20 Medium */}
-          <Link
-            href="/contact"
-            onClick={() => setMobileOpen(false)}
-            className="flex h-10 w-full shrink-0 items-center justify-center rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
-          >
-            {t("contactCta")}
-          </Link>
+          {/* Figma: Frame 2147225097 — bottom block, 1px #E7E7EA divider on
+              top, then the language selector and the contact CTA. */}
+          <div className="flex shrink-0 flex-col gap-4">
+            <div className="h-px w-full bg-[#e7e7ea]" />
+
+            {/* Figma: Frame 2147224999 — "Dil seçimi" label + AZ/EN/RU pills */}
+            <div className="flex flex-col gap-4">
+              <span className="text-[12px] leading-[16px] font-medium text-[#5b606f]">
+                {tLang("aria")}
+              </span>
+              <div className="flex gap-3">
+                {routing.locales.map((loc) => {
+                  const active = loc === locale;
+                  return (
+                    <button
+                      key={loc}
+                      type="button"
+                      onClick={() => changeLocale(loc)}
+                      aria-pressed={active}
+                      className={`flex flex-1 cursor-pointer items-center justify-center rounded-full px-3 py-2 text-[12px] leading-[16px] font-medium transition-colors ${
+                        active
+                          ? "bg-[#3abdaa] text-white"
+                          : "bg-[#f7f7f7] text-[#3b4153] hover:bg-[#eef0f3]"
+                      }`}
+                    >
+                      {tLang(loc)}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Figma: Common buttons — 343x40, #0D153A, r100, 14/20 Medium */}
+            <Link
+              href="/contact"
+              onClick={() => setMobileOpen(false)}
+              className="flex h-10 w-full items-center justify-center rounded-full bg-[#0d153a] px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-[#0d153a]/90"
+            >
+              {t("contactCta")}
+            </Link>
+          </div>
         </div>
       )}
 

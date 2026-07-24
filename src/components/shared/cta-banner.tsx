@@ -29,9 +29,25 @@ export function CtaBanner() {
 
   return (
     <section className="relative w-full overflow-hidden">
+      {/* Mobile background — dedicated banner art below `lg`. */}
       <Parallax
         amount={26}
-        className="pointer-events-none absolute inset-x-0 -inset-y-[18%] select-none"
+        className="pointer-events-none absolute inset-x-0 -inset-y-[18%] select-none lg:hidden"
+      >
+        <Image
+          src="/images/cta-banner-bg-mobile.png"
+          alt=""
+          fill
+          sizes="100vw"
+          aria-hidden
+          className="object-cover object-center"
+        />
+      </Parallax>
+
+      {/* Desktop background — wide banner art at `lg` and up. */}
+      <Parallax
+        amount={26}
+        className="pointer-events-none absolute inset-x-0 -inset-y-[18%] hidden select-none lg:block"
       >
         <Image
           src="/images/cta-banner-bg.png"

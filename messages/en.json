@@ -118,6 +118,7 @@
       "desc": "Enterprise-grade, full IT services designed for growing B2B companies — all from a single hub."
     },
     "detail": {
+      "breadcrumb": "Services",
       "notFound": "Service not found."
     },
     "whatIncluded": {
@@ -168,6 +169,7 @@
       "desc": "Stay up to date with the most relevant articles and expert insights on technology, innovation and digital solutions."
     },
     "detail": {
+      "breadcrumb": "Blogs",
       "share": "Share:",
       "instagram": "Instagram",
       "copy": "Copy link",

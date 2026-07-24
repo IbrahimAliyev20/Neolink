@@ -4,9 +4,9 @@
     "az": "AZ",
     "en": "EN",
     "ru": "RU",
-    "azFull": "Azərbaycanca",
-    "enFull": "English",
-    "ruFull": "Русский"
+    "azFull": "Az",
+    "enFull": "En",
+    "ruFull": "Ru"
   },
   "nav": {
     "home": "Ana səhifə",
@@ -118,6 +118,7 @@
       "desc": "Böyüyən B2B şirkətləri üçün nəzərdə tutulmuş korporativ səviyyəli tam İT xidmətləri – hamısı bir mərkəzdən"
     },
     "detail": {
+      "breadcrumb": "Xidmətlər",
       "notFound": "Xidmət tapılmadı."
     },
     "whatIncluded": {
@@ -168,6 +169,7 @@
       "desc": "Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert fikirləri ilə gündəmdən geri qalmayın."
     },
     "detail": {
+      "breadcrumb": "Bloqlar",
       "share": "Paylaş:",
       "instagram": "Instagram",
       "copy": "Linki kopyala",
