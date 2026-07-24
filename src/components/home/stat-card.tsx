@@ -7,6 +7,10 @@ type StatCardProps = {
   /** Teal filled variant used for the highlighted stat. */
   accent?: boolean;
   className?: string;
+  /** Gate the count-up so it only runs once the card is revealed / data is in. */
+  countEnabled?: boolean;
+  /** Stagger the count-up start to line up with the card reveal. */
+  countDelay?: number;
 };
 
 /**
@@ -17,7 +21,14 @@ type StatCardProps = {
  * the cards scale with the rest of the hero instead of staying fixed while the
  * type around them shrinks.
  */
-export function StatCard({ value, label, accent, className }: StatCardProps) {
+export function StatCard({
+  value,
+  label,
+  accent,
+  className,
+  countEnabled = true,
+  countDelay = 0,
+}: StatCardProps) {
   return (
     <div
       className={cn(
@@ -33,7 +44,7 @@ export function StatCard({ value, label, accent, className }: StatCardProps) {
             accent ? "text-white" : "text-neo-ink"
           )}
         >
-          <CountUp value={value} delay={0.5} />
+          <CountUp value={value} delay={countDelay} enabled={countEnabled} />
         </span>
         <span
           className={cn(

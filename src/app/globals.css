@@ -250,6 +250,53 @@
   display: none;
 }
 
+/* CTA buttons: replaces the old cursor-magnet effect with a calmer, more
+   corporate motion — a soft light sheen sweeps across on hover while the button
+   lifts a couple of pixels and gains a subtle shadow. Pure CSS, GPU-friendly. */
+.btn-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.btn-cta::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -160%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.38) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -10px rgba(13, 21, 58, 0.4);
+}
+
+.btn-cta:hover::after {
+  left: 160%;
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px -6px rgba(13, 21, 58, 0.35);
+}
+
 /* No JS (or reduced motion) means no tween ever runs, so never hide anything. */
 @media (scripting: none), (prefers-reduced-motion: reduce) {
   [data-reveal] > *,
@@ -266,5 +313,15 @@
   ::view-transition-old(root),
   ::view-transition-new(root) {
     animation: none;
+  }
+
+  /* Keep the CTA calm: no sheen or lift for users who prefer reduced motion. */
+  .btn-cta::after {
+    display: none;
+  }
+
+  .btn-cta:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

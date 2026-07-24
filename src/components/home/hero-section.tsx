@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 
-import { MagneticLink } from "@/components/animation/magnetic-link";
+import { Link } from "@/i18n/navigation";
 import { StatCard } from "@/components/home/stat-card";
 import Container from "@/components/shared/container";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
@@ -25,7 +25,12 @@ export function HeroSection() {
   const tc = useTranslations("common");
   const rootRef = useRef<HTMLElement | null>(null);
   const { data: hero, isLoading: heroLoading } = useHero();
-  const { data: stats } = useStatistics();
+  const { data: stats, isLoading: statsLoading } = useStatistics();
+
+  // The count-up may only run once the intro has revealed the cards AND the real
+  // numbers are in — otherwise it ticks up behind a hidden card (or on the
+  // fallback value) and finishes before the card is ever seen.
+  const statsReady = !heroLoading && !statsLoading;
 
   // Opening timeline: the background settles while the copy, the buttons and
   // then the stat cards arrive. Elements start hidden via `[data-hero-anim]`
@@ -161,18 +166,18 @@ export function HeroSection() {
 
             {/* Figma: Frame 7 — row, gap 20; buttons 161.5x40 mobile, 265.585x48 desktop */}
             <div data-hero-anim className="flex gap-5 lg:gap-[calc(var(--hero-u)*20)]">
-              <MagneticLink
+              <Link
                 href="/contact"
-                className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
+                className="btn-cta flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white hover:bg-neo-teal/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
               >
                 {tc("contactUs")}
-              </MagneticLink>
-              <MagneticLink
+              </Link>
+              <Link
                 href="/services"
-                className="flex h-10 flex-1 items-center justify-center rounded-full bg-white px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-ink transition-colors hover:bg-white/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
+                className="btn-cta flex h-10 flex-1 items-center justify-center rounded-full bg-white px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-ink hover:bg-white/90 lg:h-[calc(var(--hero-u)*48)] lg:w-[calc(var(--hero-u)*265.59)] lg:flex-none lg:px-[calc(var(--hero-u)*24)] lg:text-[calc(var(--hero-u)*16)] lg:leading-[calc(var(--hero-u)*24)]"
               >
                 {tc("ourServices")}
-              </MagneticLink>
+              </Link>
             </div>
           </div>
 
@@ -183,6 +188,8 @@ export function HeroSection() {
               className="js-hero-stat order-1 flex-1 lg:order-none lg:w-full lg:flex-none"
               value={stats?.[0]?.number ?? "15+"}
               label={stats?.[0]?.title ?? t("statExpert")}
+              countEnabled={statsReady}
+              countDelay={0.1}
             />
             {/* `contents` lets both cards join the mobile row; at lg this
                 becomes Figma's `Frame 5` (row, gap 10). `items-stretch` keeps
@@ -193,12 +200,16 @@ export function HeroSection() {
                 className="js-hero-stat order-3 flex-1 lg:order-none"
                 value={stats?.[1]?.number ?? "40+"}
                 label={stats?.[1]?.title ?? t("statProjects")}
+                countEnabled={statsReady}
+                countDelay={0.2}
               />
               <StatCard
                 accent
                 className="js-hero-stat order-2 flex-1 lg:order-none"
                 value={stats?.[2]?.number ?? "98%"}
                 label={stats?.[2]?.title ?? t("statSatisfaction")}
+                countEnabled={statsReady}
+                countDelay={0.3}
               />
             </div>
           </div>
