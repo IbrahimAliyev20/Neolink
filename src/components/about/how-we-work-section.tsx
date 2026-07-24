@@ -16,7 +16,7 @@ export function HowWeWorkSection() {
   const { data: sectionTitle } = useSectionTitle("How We Work");
 
   return (
-    <div className="flex flex-col items-start w-full">
+    <div className="bg-white flex flex-col items-start w-full">
       <Container className="flex flex-col items-center w-full">
         <div className="flex flex-col gap-4 items-center py-8 w-full lg:flex-row lg:gap-[102px] lg:py-[90px]">
           <div className="flex flex-col gap-6 items-start w-full lg:gap-12 lg:flex-1 lg:min-w-0">

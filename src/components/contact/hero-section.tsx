@@ -51,6 +51,14 @@ export function HeroSection() {
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
 
+  // Every field must be filled before the submit button turns active.
+  const isFormValid =
+    name.trim() !== "" &&
+    email.trim() !== "" &&
+    phone.trim() !== "" &&
+    subject !== null &&
+    message.trim() !== "";
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (isPending) return;
@@ -155,9 +163,15 @@ export function HeroSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.link}
-                    className="bg-[rgba(235,248,247,0.04)] border border-[#3abdaa] flex items-center justify-center rounded-full size-11"
+                    className="bg-[rgba(235,248,247,0.04)] border border-[#3abdaa] flex items-center justify-center rounded-full size-11 shrink-0"
                   >
-                    <Image src={social.icon} alt="" width={24} height={24} />
+                    <Image
+                      src={social.icon}
+                      alt=""
+                      width={24}
+                      height={24}
+                      className="size-6 object-contain"
+                    />
                   </a>
                 ))}
               </div>
@@ -205,7 +219,7 @@ export function HeroSection() {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  placeholder="E-poçtunuu daxil edin"
+                  placeholder="E-poçtunu daxil edin"
                   className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
                 />
               </div>
@@ -307,8 +321,12 @@ export function HeroSection() {
 
               <button
                 type="submit"
-                disabled={isPending}
-                className="bg-[#9093a4] flex h-10 items-center justify-center px-6 py-2.5 rounded-full w-full transition-colors enabled:hover:bg-[#3abdaa] disabled:opacity-70 lg:h-12 lg:py-3"
+                disabled={!isFormValid || isPending}
+                className={`flex h-10 items-center justify-center px-6 py-2.5 rounded-full w-full transition-colors lg:h-12 lg:py-3 ${
+                  isFormValid
+                    ? "bg-[#3abdaa] cursor-pointer hover:bg-[#3abdaa]/90"
+                    : "bg-[#9093a4] cursor-not-allowed"
+                } disabled:opacity-70`}
               >
                 <span className="font-medium text-[#e7e8eb] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                   {isPending ? "Göndərilir..." : "Göndər"}

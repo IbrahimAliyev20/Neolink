@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
@@ -144,14 +145,14 @@ export function HeroSection() {
             </p>
           </div>
 
-          <button
+          <Link
             data-hero-anim
-            type="button"
-            className="flex h-10 w-[166px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 py-2.5 text-sm leading-5 font-medium tracking-[0.14px] text-white"
+            href="/contact"
+            className="flex h-10 w-[166px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 py-2.5 text-sm leading-5 font-medium tracking-[0.14px] text-white cursor-pointer transition-colors hover:bg-[#0d153a]/90"
           >
             Təklif al
             <ArrowUpRight className="size-5" strokeWidth={1.5} />
-          </button>
+          </Link>
         </div>
 
         <div data-hero-anim className="absolute top-[195.78px] left-[82.53px] flex h-[29.25px] w-[27.61px] items-center justify-center">
@@ -219,14 +220,14 @@ export function HeroSection() {
               </div>
             </div>
 
-            <button
+            <Link
               data-hero-anim
-              type="button"
-              className="flex h-12 w-[248px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-base leading-6 font-medium tracking-[0.16px] text-white"
+              href="/contact"
+              className="flex h-12 w-[248px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-base leading-6 font-medium tracking-[0.16px] text-white cursor-pointer transition-colors hover:bg-[#0d153a]/90"
             >
               Təklif al
               <ArrowUpRight className="size-6" strokeWidth={1.5} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

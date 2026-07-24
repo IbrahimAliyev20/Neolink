@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 import { MagneticLink } from "@/components/animation/magnetic-link";
 import { Parallax } from "@/components/animation/parallax";
@@ -17,6 +18,10 @@ import { useBanner } from "@/services/banner/queries";
  */
 export function CtaBanner() {
   const { data: banner } = useBanner();
+  const pathname = usePathname();
+  // Hide the button that points to the page you're already on.
+  const onContact = pathname.includes("/contact");
+  const onServices = pathname.includes("/services");
 
   return (
     <section className="relative w-full overflow-hidden">
@@ -66,18 +71,22 @@ export function CtaBanner() {
 
           {/* Figma: Frame 7 — row, gap 16; buttons 163.5x40 mobile, 265.585x48 desktop */}
           <div className="flex gap-4 lg:gap-5">
-            <MagneticLink
-              href="/contact"
-              className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
-            >
-              Bizimlə əlaqə
-            </MagneticLink>
-            <MagneticLink
-              href="/services"
-              className="flex h-10 flex-1 items-center justify-center rounded-full border border-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
-            >
-              Xidmətlərimiz
-            </MagneticLink>
+            {!onContact && (
+              <MagneticLink
+                href="/contact"
+                className="flex h-10 flex-1 items-center justify-center rounded-full bg-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-white transition-colors hover:bg-neo-teal/90 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
+              >
+                Bizimlə əlaqə
+              </MagneticLink>
+            )}
+            {!onServices && (
+              <MagneticLink
+                href="/services"
+                className="flex h-10 flex-1 items-center justify-center rounded-full border border-neo-teal px-6 text-[14px] leading-[20px] font-medium tracking-[0.01em] text-neo-teal transition-colors hover:bg-neo-teal/10 sm:h-12 sm:w-[265.59px] sm:flex-none sm:text-[16px] sm:leading-[24px]"
+              >
+                Xidmətlərimiz
+              </MagneticLink>
+            )}
           </div>
         </Reveal>
       </Container>

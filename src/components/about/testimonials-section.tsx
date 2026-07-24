@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { ClipReveal } from "@/components/animation/clip-reveal";
@@ -139,15 +140,15 @@ export function TestimonialsSection() {
                   layihənizi uğurla həyata keçiririk.
                 </p>
               </div>
-              <button
-                type="button"
-                className="bg-[#0d153a] flex gap-4 h-10 items-center justify-center px-6 py-2.5 rounded-full w-full lg:h-12 lg:py-3"
+              <Link
+                href="/contact"
+                className="bg-[#0d153a] flex gap-4 h-10 items-center justify-center px-6 py-2.5 rounded-full w-full cursor-pointer transition-colors hover:bg-[#0d153a]/90 lg:h-12 lg:py-3"
               >
                 <span className="font-medium text-[#3abdaa] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]">
                   Gəlin başlayaq
                 </span>
                 <ArrowUpRight className="h-5 w-5 lg:h-6 lg:w-6 text-[#3abdaa]" strokeWidth={1.5} />
-              </button>
+              </Link>
             </div>
           </div>
         </Reveal>

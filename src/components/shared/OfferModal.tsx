@@ -150,7 +150,7 @@ export function OfferModal({
                 required
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="E-poçtunuu daxil edin"
+                placeholder="E-poçtunu daxil edin"
                 className="bg-[#f7f7f7] border border-[#e7e7ea] rounded-xl px-4 py-3.5 w-full text-sm text-[#040711] placeholder:text-[#5b606f] focus:outline-none focus:border-[#3abdaa]"
               />
             </div>

@@ -88,7 +88,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.link}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[#e7e7ea] bg-white p-[10px] transition-colors hover:bg-[#f7f7f7]"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[#e7e7ea] bg-white p-[10px] transition-colors hover:bg-[#f7f7f7]"
                 >
                   <Image
                     src={social.icon}
@@ -96,7 +96,7 @@ export function Footer() {
                     width={24}
                     height={24}
                     aria-hidden
-                    className="h-6 w-6"
+                    className="h-6 w-6 object-contain"
                   />
                 </Link>
               ))}
