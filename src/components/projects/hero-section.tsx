@@ -1,5 +1,10 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
+
+import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 
 /**
  * Figma desktop (node 3263:87776, 1920x521 canvas): four rotated project-card
@@ -23,7 +28,7 @@ function RotatedCard({
   faded?: boolean;
 }) {
   return (
-    <div className={`absolute ${className}`}>
+    <div data-hero-card className={`absolute ${className}`}>
       <div className="flex size-full items-center justify-center">
         <div
           className={`relative overflow-hidden rounded-2xl border border-[#f2f4f8] ${boxClassName} ${rotate} ${
@@ -38,28 +43,91 @@ function RotatedCard({
 }
 
 export function HeroSection() {
+  const rootRef = useRef<HTMLElement | null>(null);
+
+  // Opening timeline, mirroring the home hero: the rotated cards pop in with a
+  // scale + stagger while the headline unrolls line by line and the copy, CTA
+  // and arrow rise into place. Elements that need to stay hidden until then are
+  // held at opacity 0 via `[data-hero-anim]` in globals.css, so nothing flashes
+  // before hydration. It runs once, on load.
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    if (prefersReducedMotion()) {
+      gsap.set(root.querySelectorAll("[data-hero-anim]"), { opacity: 1 });
+      return;
+    }
+
+    const ctx = gsap.context(() => {
+      // Only the layout that is actually on screen (mobile OR desktop) gets its
+      // headline split — SplitText needs a laid-out element, and the hidden
+      // variant has none.
+      root.querySelectorAll<HTMLElement>("[data-hero-title]").forEach((title) => {
+        if (!title.offsetParent) return;
+        SplitText.create(title, {
+          type: "lines",
+          mask: "lines",
+          autoSplit: true,
+          onSplit: (self) => {
+            gsap.set(title, { opacity: 1 });
+            return gsap.from(self.lines, {
+              yPercent: 100,
+              duration: 0.9,
+              stagger: 0.12,
+              ease: "power3.out",
+              delay: 0.15,
+            });
+          },
+        });
+      });
+
+      // The cards keep their natural opacity (the faded ones stay at 0.12):
+      // `from` reads each wrapper's current opacity as the destination, so the
+      // tween lands them exactly where the layout wants them.
+      gsap
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from(
+          "[data-hero-card]",
+          { opacity: 0, scale: 0.85, y: 24, duration: 0.9, stagger: 0.1, ease: "power2.out" },
+          0
+        )
+        .fromTo(
+          "[data-hero-anim]:not([data-hero-title])",
+          { opacity: 0, y: 24 },
+          { opacity: 1, y: 0, duration: 0.8, stagger: 0.12 },
+          0.45
+        );
+    }, root);
+
+    return () => ctx.kill();
+  }, []);
+
   return (
-    <section className="relative w-full overflow-hidden bg-[#f7f7f7]">
+    <section
+      ref={rootRef}
+      className="relative w-full overflow-hidden bg-[#f7f7f7]"
+    >
       {/* Mobile / tablet (Figma node 3268:81608, 375 canvas): the desktop
           composition at literal mobile pixel sizes — small rotated corner
           cards peeking in from the edges, centered copy, arrow to the CTA. */}
       <div className="relative mx-auto h-[359px] w-full max-w-[375px] lg:hidden">
-        <div className="absolute top-[5px] -left-[54px] flex h-[111.37px] w-[133px] items-center justify-center">
+        <div data-hero-card className="absolute top-[5px] -left-[54px] flex h-[111.37px] w-[133px] items-center justify-center">
           <div className="relative h-[89.98px] w-[117.59px] shrink-0 -rotate-[11.36deg] overflow-hidden rounded-[10px] border border-[#f2f4f8]">
             <Image src="/images/projects/hero/card-2.jpg" alt="" fill className="object-cover" sizes="118px" />
           </div>
         </div>
-        <div className="absolute top-[81px] -left-[10px] flex h-[54.02px] w-[65.73px] items-center justify-center">
+        <div data-hero-card className="absolute top-[81px] -left-[10px] flex h-[54.02px] w-[65.73px] items-center justify-center">
           <div className="relative h-[45.55px] w-[59.53px] shrink-0 -rotate-[8.69deg] overflow-hidden rounded-lg border border-[#f2f4f8] opacity-12">
             <Image src="/images/projects/hero/card-1.jpg" alt="" fill className="object-cover" sizes="60px" />
           </div>
         </div>
-        <div className="absolute top-[233px] left-[279.91px] flex h-[61.2px] w-[70.65px] items-center justify-center">
+        <div data-hero-card className="absolute top-[233px] left-[279.91px] flex h-[61.2px] w-[70.65px] items-center justify-center">
           <div className="relative h-[45.91px] w-[59.99px] shrink-0 rotate-[16.69deg] overflow-hidden rounded-lg border border-[#f2f4f8] opacity-12">
             <Image src="/images/projects/hero/card-3.jpg" alt="" fill className="object-cover" sizes="60px" />
           </div>
         </div>
-        <div className="absolute top-[255px] left-[284px] flex h-[94.41px] w-[113.87px] items-center justify-center">
+        <div data-hero-card className="absolute top-[255px] left-[284px] flex h-[94.41px] w-[113.87px] items-center justify-center">
           <div className="relative h-[78.03px] w-[101.97px] shrink-0 rotate-[9.91deg] overflow-hidden rounded-[10px] border border-[#f2f4f8]">
             <Image src="/images/projects/hero/card-4.jpg" alt="" fill className="object-cover" sizes="102px" />
           </div>
@@ -67,16 +135,17 @@ export function HeroSection() {
 
         <div className="absolute top-[93px] left-4 flex w-[343px] flex-col items-center gap-6">
           <div className="flex w-full flex-col items-center gap-3 text-center">
-            <h1 className="w-[294px] text-xl leading-7 font-semibold tracking-[0.2px] text-[#1c1c1e]">
+            <h1 data-hero-anim data-hero-title className="w-[294px] text-xl leading-7 font-semibold tracking-[0.2px] text-[#1c1c1e]">
               <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
             </h1>
-            <p className="w-full text-xs leading-4 tracking-[0.12px] text-[#5b606f]">
+            <p data-hero-anim className="w-full text-xs leading-4 tracking-[0.12px] text-[#5b606f]">
               Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
               fikirləri ilə gündəmdən geri qalmayın.
             </p>
           </div>
 
           <button
+            data-hero-anim
             type="button"
             className="flex h-10 w-[166px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 py-2.5 text-sm leading-5 font-medium tracking-[0.14px] text-white"
           >
@@ -85,7 +154,7 @@ export function HeroSection() {
           </button>
         </div>
 
-        <div className="absolute top-[195.78px] left-[82.53px] flex h-[29.25px] w-[27.61px] items-center justify-center">
+        <div data-hero-anim className="absolute top-[195.78px] left-[82.53px] flex h-[29.25px] w-[27.61px] items-center justify-center">
           <Image
             src="/images/projects/hero/arrow.svg"
             alt=""
@@ -131,15 +200,15 @@ export function HeroSection() {
 
           <div className="absolute left-[650px] top-[145px] flex w-[620px] flex-col items-center gap-9">
             <div className="relative flex w-full flex-col items-center gap-5 text-center">
-              <h1 className="w-[592px] text-[48px] leading-[64px] font-semibold text-[#1c1c1e]">
+              <h1 data-hero-anim data-hero-title className="w-[592px] text-[48px] leading-[64px] font-semibold text-[#1c1c1e]">
                 <span className="text-[#3abdaa]">Layihələrimizlə</span> yaxından tanış olun
               </h1>
-              <p className="w-full text-base leading-6 tracking-[0.16px] text-[#5b606f]">
+              <p data-hero-anim className="w-full text-base leading-6 tracking-[0.16px] text-[#5b606f]">
                 Texnologiya, innovasiya və rəqəmsal həllər haqqında ən aktual məqalələr və ekspert
                 fikirləri ilə gündəmdən geri qalmayın.
               </p>
 
-              <div className="absolute left-[110.81px] top-[196px] flex h-[72.5px] w-[81.29px] items-center justify-center">
+              <div data-hero-anim className="absolute left-[110.81px] top-[196px] flex h-[72.5px] w-[81.29px] items-center justify-center">
                 <Image
                   src="/images/projects/hero/arrow.svg"
                   alt=""
@@ -151,6 +220,7 @@ export function HeroSection() {
             </div>
 
             <button
+              data-hero-anim
               type="button"
               className="flex h-12 w-[248px] items-center justify-center gap-4 rounded-full bg-[#0d153a] px-6 text-base leading-6 font-medium tracking-[0.16px] text-white"
             >
