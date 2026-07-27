@@ -25,18 +25,18 @@ export function GridSection() {
 
   return (
     <Container className="flex flex-col gap-8 items-center w-full">
-      {/* Rows deal in one after another on scroll. Re-keyed on the count so the
-          stagger plays once the API services arrive rather than snapping in. */}
-      <Reveal
-        key={services.length}
-        y={44}
-        stagger={0.16}
-        end="top 55%"
-        className="flex flex-col gap-3 items-start w-full lg:gap-6"
-      >
+      <div className="flex flex-col gap-3 items-start w-full lg:gap-6">
+        {/* One reveal per row, so the two cards deal in one after another as the
+            row reaches the viewport — the same entrance the about page and the
+            home cards use. Rows appended by "show more" bring their own. */}
         {rows.map((row, rowIndex) => (
-          <div
+          <Reveal
             key={rowIndex}
+            y={44}
+            scale={0.96}
+            blur={6}
+            stagger={0.16}
+            end="top 55%"
             className="flex flex-col lg:flex-row gap-3 lg:gap-6 items-start w-full"
           >
             {row.map((service) => (
@@ -54,9 +54,9 @@ export function GridSection() {
                 <ServiceCard {...service} />
               </Link>
             ))}
-          </div>
+          </Reveal>
         ))}
-      </Reveal>
+      </div>
 
       {hasNextPage && (
         <button

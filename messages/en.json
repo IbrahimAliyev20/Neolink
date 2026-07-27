@@ -78,6 +78,9 @@
       "heading": "Your Entire IT Ecosystem",
       "desc": "Start with a technical audit that requires no financial commitment. We'll assess your existing systems, uncover weak points and provide a clear action plan.",
       "partnerAria": "Partner logos"
+    },
+    "introPopup": {
+      "aria": "Welcome"
     }
   },
   "cta": {

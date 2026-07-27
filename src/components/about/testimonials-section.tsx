@@ -36,8 +36,11 @@ export function TestimonialsSection() {
   const goPrev = () => setIndex((i) => (i - 1 + count) % count);
   const goNext = () => setIndex((i) => (i + 1) % count);
 
+  // Full 90px top padding: the section sits on the page background right under
+  // the white "how we work" block, so without it the heading would start flush
+  // against the colour boundary.
   return (
-    <div className="flex flex-col items-center w-full py-9 lg:pt-0 lg:pb-[90px]">
+    <div className="flex flex-col items-center w-full py-9 lg:py-[90px]">
       <Container className="flex flex-col items-center gap-6 w-full lg:gap-11">
         <div className="flex flex-col gap-4 items-start w-full lg:flex-row lg:items-start lg:justify-between lg:gap-10">
           <SplitLines>

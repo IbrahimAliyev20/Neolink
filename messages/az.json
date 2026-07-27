@@ -78,6 +78,9 @@
       "heading": "Bütün İT Ekosisteminiz",
       "desc": "Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət planı təqdim edəcəyik.",
       "partnerAria": "Partnyor loqoları"
+    },
+    "introPopup": {
+      "aria": "Xoş gəldiniz"
     }
   },
   "cta": {

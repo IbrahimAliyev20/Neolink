@@ -137,13 +137,40 @@ export function Header() {
     };
   }, [mobileOpen]);
 
-  // Lock page scroll while the desktop services mega-menu is open.
+  // Lock page scroll while the desktop services mega-menu is open — without
+  // `overflow: hidden`, which removes the scrollbar and makes the whole page
+  // jump sideways by its width the moment the pointer touches "Xidmətlər".
+  // Blocking the scroll inputs instead freezes the page while the scrollbar
+  // stays exactly where it is.
   useEffect(() => {
     if (!servicesOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+
+    const SCROLL_KEYS = new Set([
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+    ]);
+
+    const block = (event: Event) => event.preventDefault();
+    const blockKeys = (event: KeyboardEvent) => {
+      // Never swallow keystrokes meant for a field the user is typing in.
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("input, textarea, select, [contenteditable='true']")) return;
+      if (SCROLL_KEYS.has(event.key)) event.preventDefault();
+    };
+
+    window.addEventListener("wheel", block, { passive: false });
+    window.addEventListener("touchmove", block, { passive: false });
+    window.addEventListener("keydown", blockKeys);
+
     return () => {
-      document.body.style.overflow = previous;
+      window.removeEventListener("wheel", block);
+      window.removeEventListener("touchmove", block);
+      window.removeEventListener("keydown", blockKeys);
     };
   }, [servicesOpen]);
 
