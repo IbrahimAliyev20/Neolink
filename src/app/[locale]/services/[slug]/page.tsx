@@ -26,7 +26,7 @@ export default function ServiceDetailPage() {
 
   return (
     <>
-      <div className="bg-[#f7f7f7] flex flex-col gap-9 items-center pb-9 w-full pt-8 lg:gap-16 lg:pb-[90px] lg:pt-14">
+      <div className="bg-[#f7f7f7] flex flex-col items-center pb-9 w-full pt-8 lg:pb-[90px] lg:pt-14">
         <HeroDetailSection
           service={{
             slug: service.slug,
@@ -36,6 +36,11 @@ export default function ServiceDetailPage() {
             heroImage: service.cover_image_home,
           }}
         />
+      </div>
+
+      {/* White band: the cards carry the #f7f7f7 fill, so they only read as
+          cards when the surface behind them is white. */}
+      <div className="bg-white flex flex-col items-center py-9 w-full lg:py-[90px]">
         <WhatIncludedSection slug={service.slug} />
       </div>
 
