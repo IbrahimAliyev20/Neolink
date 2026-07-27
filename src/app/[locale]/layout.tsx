@@ -10,6 +10,7 @@ import { Toaster } from "sonner";
 import { Header } from "@/components/navigation/header";
 import { Footer } from "@/components/navigation/footer";
 import { CtaBanner } from "@/components/shared/cta-banner";
+import { getSettingSafe } from "@/services/setting/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -49,9 +50,21 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "metadata" });
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
+  // Favicon comes from the settings API; `public/favicon.ico` is the fallback
+  // when the call fails or the field is empty. (The file lives in `public/`
+  // rather than `src/app/` because a `src/app/favicon.ico` would take priority
+  // over this metadata and the API icon would never be used.)
+  const setting = await getSettingSafe(locale);
+  const favicon = setting?.sitefavicon?.trim() || "/favicon.ico";
+
   return {
     title: t("title"),
     description: t("description"),
+    icons: {
+      icon: favicon,
+      shortcut: favicon,
+      apple: favicon,
+    },
     ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
     openGraph: {
       title: t("title"),

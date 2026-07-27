@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { stripHtml } from "@/lib/data/blogs";
 import { OtherServices } from "@/components/services/OtherServices";
 import { HeroDetailSection } from "@/components/services/hero-detail-section";
 import { WhatIncludedSection } from "@/components/services/what-included-section";
@@ -32,7 +31,8 @@ export default function ServiceDetailPage() {
           service={{
             slug: service.slug,
             title: service.name,
-            description: stripHtml(service.description),
+            // Raw editor HTML — the hero renders it with its formatting intact.
+            description: service.description,
             heroImage: service.cover_image_home,
           }}
         />

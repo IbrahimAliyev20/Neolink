@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { stripHtml } from "@/lib/data/blogs";
 import { mapApiProject, type ProjectDetailSection } from "@/lib/data/projects";
 import { useProject } from "@/services/project/queries";
 import { RelatedProjects } from "@/components/projects/RelatedProjects";
@@ -31,12 +32,13 @@ export default function ProjectDetailPage() {
   const project = mapApiProject(apiProject);
 
   // Section titles are localized here (the mapper stays language-agnostic);
-  // empty sections are dropped.
+  // empty sections are dropped. The bodies are editor HTML, so emptiness is
+  // measured on the text content — `<p>&nbsp;</p>` is an empty section.
   const sections: ProjectDetailSection[] = [
     { number: "01", title: t("sectionAbout"), paragraphs: [apiProject.about] },
     { number: "02", title: t("sectionGoal"), paragraphs: [apiProject.goal] },
     { number: "03", title: t("sectionSolution"), paragraphs: [apiProject.solution] },
-  ].filter((section) => section.paragraphs.some((p) => p.trim().length > 0));
+  ].filter((section) => section.paragraphs.some((p) => stripHtml(p).length > 0));
 
   return (
     <>

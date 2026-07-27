@@ -7,6 +7,7 @@ import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import Container from "@/components/shared/container";
 import { OfferModal } from "@/components/shared/OfferModal";
+import { RichHtml } from "@/components/shared/RichHtml";
 import { Parallax } from "@/components/animation/parallax";
 import { gsap, prefersReducedMotion, SplitText } from "@/lib/gsap";
 import type { ServiceImage } from "@/lib/data/services";
@@ -100,12 +101,11 @@ export function HeroDetailSection({ service }: { service: ServiceHero }) {
               >
                 {service.title}
               </h1>
-              <p
-                data-hero-anim
-                className="text-[#5b606f] text-sm leading-5 tracking-[0.14px] lg:text-base lg:leading-6 lg:tracking-[0.16px]"
-              >
-                {service.description}
-              </p>
+              {/* Written in the admin panel's rich-text editor, so it is
+                  rendered as HTML rather than flattened to plain text. */}
+              <div data-hero-anim className="w-full">
+                <RichHtml html={service.description} />
+              </div>
             </div>
             <div data-hero-anim className="flex gap-5 items-start w-full">
               <button

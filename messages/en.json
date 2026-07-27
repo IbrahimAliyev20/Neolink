@@ -30,7 +30,9 @@
     "cancel": "Cancel",
     "emailApply": "Apply by email:",
     "close": "Close",
-    "showMore": "Show more"
+    "showMore": "Show more",
+    "prev": "Previous",
+    "next": "Next"
   },
   "footer": {
     "copyright": "Neoline Technology LLC | All rights reserved."

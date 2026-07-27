@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/animation/reveal";
@@ -51,9 +52,11 @@ export function EcosystemSection() {
   const t = useTranslations("home.ecosystem");
   const { data: logos = [] } = useLogos();
 
-  if (logos.length === 0) return null;
+  // Stable identity: `LogoLoop` re-measures (and restarts its RAF loop) whenever
+  // the `logos` prop changes, so a fresh array on every render keeps it stalling.
+  const partnerLogos = useMemo(() => (logos.length > 0 ? createPartnerLogos(logos) : []), [logos]);
 
-  const partnerLogos = createPartnerLogos(logos);
+  if (partnerLogos.length === 0) return null;
 
   return (
     <div className="flex flex-col gap-6 items-center justify-center py-9 w-full lg:gap-12 lg:pt-15 lg:pb-[90px]">

@@ -10,7 +10,12 @@ interface SettingResponse {
   data: SettingData
 }
 
-export const getSetting = async (): Promise<SettingData> => {
-  const response = await get<SettingResponse>('/setting')
+/** `locale` is passed explicitly because this also runs on the server (metadata),
+ *  where the client cannot read the locale off `window.location`. */
+export const getSetting = async (locale?: string): Promise<SettingData> => {
+  const response = await get<SettingResponse>(
+    '/setting',
+    locale ? { headers: { 'X-Locale': locale } } : undefined
+  )
   return response.data
 }

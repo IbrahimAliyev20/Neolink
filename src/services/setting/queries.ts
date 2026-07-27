@@ -10,6 +10,6 @@ export const useSetting = () => {
   const locale = useLocale()
   return useQuery({
     queryKey: [...settingKeys.all, locale],
-    queryFn: getSetting,
+    queryFn: () => getSetting(locale),
   })
 }

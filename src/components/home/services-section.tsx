@@ -50,10 +50,10 @@ export function ServicesSection() {
         {/* Figma: Frame 2147224630 — mobile column gap 32; desktop row, gap 102 */}
         <div className="relative flex flex-col gap-8 lg:flex-row lg:gap-[7.08%]">
           {/* Figma: Frame 16 — mobile centred, gap 16; desktop left, gap 24 / width 566 */}
-          {/* Sticks 95px below the top — clear of the 66px sticky header —
+          {/* Sticks 295px below the top — well clear of the 66px sticky header —
               while the service list scrolls past, and stops once the row (the
               section content) ends. */}
-          <div className="flex min-w-0 flex-col gap-4 text-center lg:sticky lg:top-[95px] lg:w-[39.31%] lg:self-start lg:gap-6 lg:text-left">
+          <div className="flex min-w-0 flex-col gap-4 text-center lg:sticky lg:top-[150px] lg:w-[39.31%] lg:self-start lg:gap-6 lg:text-left">
             {/* Full 56/72 only from 2xl, where the column is the Figma 566 wide;
                 between lg and 2xl the column is ~440 and 56px wraps badly. */}
             <SplitLines>

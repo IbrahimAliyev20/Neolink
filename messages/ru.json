@@ -30,7 +30,9 @@
     "cancel": "Отмена",
     "emailApply": "Заявка по эл. почте:",
     "close": "Закрыть",
-    "showMore": "Показать больше"
+    "showMore": "Показать больше",
+    "prev": "Назад",
+    "next": "Вперёд"
   },
   "footer": {
     "copyright": "Neoline Technology ООО | Все права защищены."

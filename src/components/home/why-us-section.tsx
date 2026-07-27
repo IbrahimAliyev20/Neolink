@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 
 import { CountUp } from "@/components/animation/count-up";
@@ -28,10 +28,16 @@ export function WhyUsSection() {
   const { data: items } = useWhyNeoline();
   const { data: apiLogosWhy = [] } = useLogosWhy();
   // No fallback: when the API returns no logos the loop is simply left empty.
-  const whyLogos: LogoItem[] = apiLogosWhy.map((logo) => ({
-    src: logo.logo,
-    href: logo.link || undefined,
-  }));
+  // Memoized because `LogoLoop` re-measures and restarts its RAF loop on every
+  // new `logos` identity — a fresh array each render keeps it stalling.
+  const whyLogos: LogoItem[] = useMemo(
+    () =>
+      apiLogosWhy.map((logo) => ({
+        src: logo.logo,
+        href: logo.link || undefined,
+      })),
+    [apiLogosWhy]
+  );
 
   // The loop's logoHeight/gap are fixed numbers, so they are shrunk on mobile
   // (below lg) — otherwise the wide logos overflow the narrow card and fewer

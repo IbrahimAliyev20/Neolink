@@ -116,6 +116,25 @@ const useImageLoader = (
   }, dependencies);
 };
 
+/** Live `prefers-reduced-motion` reading — starts `false` so SSR and the first
+ *  client render agree, then syncs (and keeps syncing) after mount. */
+const usePrefersReducedMotion = (): boolean => {
+  const [prefersReduced, setPrefersReduced] = useState(false);
+
+  useEffect(() => {
+    if (!window.matchMedia) return;
+
+    const query = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => setPrefersReduced(query.matches);
+
+    update();
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
+
+  return prefersReduced;
+};
+
 const useAnimationLoop = (
   trackRef: React.RefObject<HTMLDivElement | null>,
   targetVelocity: number,
@@ -130,14 +149,13 @@ const useAnimationLoop = (
   const offsetRef = useRef(0);
   const velocityRef = useRef(0);
 
+  // `prefers-reduced-motion` is read as state (not once at effect time) so the
+  // loop starts moving again if the OS/browser setting is turned off later.
+  const prefersReduced = usePrefersReducedMotion();
+
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
-
-    const prefersReduced =
-      typeof window !== 'undefined' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const seqSize = isVertical ? seqHeight : seqWidth;
 
@@ -161,7 +179,9 @@ const useAnimationLoop = (
         lastTimestampRef.current = timestamp;
       }
 
-      const deltaTime = Math.max(0, timestamp - lastTimestampRef.current) / 1000;
+      // Clamp the step: after a tab switch / throttled frame the gap can be
+      // seconds long, which would teleport the track instead of scrolling it.
+      const deltaTime = Math.min(Math.max(0, timestamp - lastTimestampRef.current) / 1000, 0.1);
       lastTimestampRef.current = timestamp;
 
       const target = isHovered && hoverSpeed !== undefined ? hoverSpeed : targetVelocity;
@@ -185,14 +205,30 @@ const useAnimationLoop = (
 
     rafRef.current = requestAnimationFrame(animate);
 
+    // Some browsers (notably iOS Safari) never deliver another frame after the
+    // tab/app is backgrounded, which leaves the marquee frozen. Restarting the
+    // loop when the page becomes visible again — including bfcache restores —
+    // makes it resume.
+    const restart = () => {
+      if (document.visibilityState === 'hidden') return;
+      lastTimestampRef.current = null;
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    document.addEventListener('visibilitychange', restart);
+    window.addEventListener('pageshow', restart);
+
     return () => {
+      document.removeEventListener('visibilitychange', restart);
+      window.removeEventListener('pageshow', restart);
       if (rafRef.current !== null) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
       }
       lastTimestampRef.current = null;
     };
-  }, [targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical]);
+  }, [trackRef, targetVelocity, seqWidth, seqHeight, isHovered, hoverSpeed, isVertical, prefersReduced]);
 };
 
 export const LogoLoop = React.memo<LogoLoopProps>(
@@ -272,6 +308,18 @@ export const LogoLoop = React.memo<LogoLoopProps>(
 
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight, isVertical]);
 
+    // A first measurement can land on a 0-width sequence (fonts still swapping,
+    // logos not decoded yet) and a device without ResizeObserver would then stay
+    // frozen forever — re-measure once everything has settled.
+    useEffect(() => {
+      if (document.readyState !== 'complete') {
+        window.addEventListener('load', updateDimensions, { once: true });
+      }
+      document.fonts?.ready.then(updateDimensions).catch(() => {});
+
+      return () => window.removeEventListener('load', updateDimensions);
+    }, [updateDimensions]);
+
     useAnimationLoop(trackRef, targetVelocity, seqWidth, seqHeight, isHovered, effectiveHoverSpeed, isVertical);
 
     const cssVariables = useMemo(
@@ -299,12 +347,19 @@ export const LogoLoop = React.memo<LogoLoopProps>(
       [isVertical, scaleOnHover, className]
     );
 
-    const handleMouseEnter = useCallback(() => {
-      if (effectiveHoverSpeed !== undefined) setIsHovered(true);
-    }, [effectiveHoverSpeed]);
-    const handleMouseLeave = useCallback(() => {
-      if (effectiveHoverSpeed !== undefined) setIsHovered(false);
-    }, [effectiveHoverSpeed]);
+    // Touch browsers emit a synthetic `mouseenter` on tap but often never emit
+    // the matching `mouseleave`, which used to leave the marquee paused (i.e.
+    // frozen) for the rest of the session. Only real mouse pointers pause it.
+    const handlePointerEnter = useCallback(
+      (event: React.PointerEvent) => {
+        if (event.pointerType !== 'mouse') return;
+        if (effectiveHoverSpeed !== undefined) setIsHovered(true);
+      },
+      [effectiveHoverSpeed]
+    );
+    const handlePointerLeave = useCallback(() => {
+      setIsHovered(false);
+    }, []);
 
     const renderLogoItem = useCallback(
       (item: LogoItem, key: React.Key) => {
@@ -483,8 +538,9 @@ export const LogoLoop = React.memo<LogoLoopProps>(
             isVertical ? 'flex-col h-max w-full' : 'flex-row w-max'
           )}
           ref={trackRef}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onPointerEnter={handlePointerEnter}
+          onPointerLeave={handlePointerLeave}
+          onPointerCancel={handlePointerLeave}
         >
           {logoLists}
         </div>
