@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePopupImage } from "@/services/popup-image/queries";
 
 /**
- * Figma: `Frame 2147225087` — a 750x422 r16 artwork panel centred on a 24%
- * black scrim, with a 32px round close button inset 16px from the top right.
+ * Figma: `Frame 2147225087` — an artwork panel centred on a 24% black scrim,
+ * with a 32px round close button inset 16px from the top right. The artwork
+ * comes from the API (`/popup-image`), which serves a different image — and a
+ * different shape — per language, so nothing here assumes a fixed ratio.
  *
  * Shown once per browser-tab session: `sessionStorage` survives client-side
  * navigation and reloads (so it never reappears while the visitor browses the
@@ -22,21 +26,29 @@ const SESSION_KEY = "neoline:intro-popup-seen";
 export function IntroPopup() {
   const t = useTranslations("home.introPopup");
   const tc = useTranslations("common");
+  const { data } = usePopupImage();
+  const image = data?.image?.trim();
   const [open, setOpen] = useState(false);
+  // The session is only spent once the artwork is actually there to show — a
+  // failed or empty response must not count as "already seen".
+  const decided = useRef(false);
 
-  // Read in an effect, never during render: the server has no `sessionStorage`,
-  // so deciding at render time would desync the markup and break hydration.
+  // Decided in an effect, never during render: the server has no
+  // `sessionStorage`, so reading it while rendering would break hydration.
   useEffect(() => {
+    if (!image || decided.current) return;
+    decided.current = true;
+
     try {
       if (sessionStorage.getItem(SESSION_KEY)) return;
-      // Marked as seen the moment it opens, so an immediate reload does not
-      // bring it back.
+      // Marked the moment it opens, so an immediate reload does not bring it
+      // back.
       sessionStorage.setItem(SESSION_KEY, "1");
     } catch {
       // Storage blocked (private mode, strict settings) — still show it once.
     }
     setOpen(true);
-  }, []);
+  }, [image]);
 
   useEffect(() => {
     if (!open) return;
@@ -61,38 +73,42 @@ export function IntroPopup() {
     };
   }, [open]);
 
-  if (!open) return null;
+  if (!open || !image) return null;
 
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/24 p-4"
       onClick={() => setOpen(false)}
     >
+      {/* A 16:9 panel — the ratio the uploaded artwork is authored at — capped
+          at the Figma 750 wide and at 85% of the viewport height so it never
+          runs off a short screen. `object-contain` is deliberate: whatever
+          arrives is shown whole, never cropped, squeezed or stretched. */}
       <div
         role="dialog"
         aria-modal="true"
         aria-label={t("aria")}
-        className="relative aspect-[750/422] w-full max-w-[750px] overflow-hidden rounded-2xl"
+        className="relative aspect-video max-h-[85dvh] w-full max-w-[750px]"
         onClick={(event) => event.stopPropagation()}
       >
         <Image
-          src="/images/home-intro-popup.png"
+          key={image}
+          src={image}
           alt=""
           fill
           priority
           sizes="(min-width: 782px) 750px, 100vw"
-          className="object-cover"
+          className="rounded-xl object-contain lg:rounded-2xl"
         />
-        {/* The artwork is exported from Figma with its close button drawn in, so
-            the control here is a transparent hit area sitting exactly on top of
-            it — positioned in percentages, which hold at every size because the
-            panel keeps the 750x422 ratio. */}
+        {/* Figma: 32px circle inset 16px from the top right. */}
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label={tc("close")}
-          className="absolute right-[2.13%] top-[3.79%] aspect-square w-[4.27%] cursor-pointer rounded-full transition-shadow hover:shadow-[0_0_0_3px_rgba(255,255,255,0.35)] focus-visible:shadow-[0_0_0_3px_rgba(255,255,255,0.6)] focus-visible:outline-none"
-        />
+          className="absolute right-3 top-3 flex size-9 cursor-pointer items-center justify-center rounded-full border border-[#f6f6f6] bg-[#f9f9f9] text-[#20201e] transition-colors hover:bg-white lg:right-4 lg:top-4 lg:size-8"
+        >
+          <X className="size-5 lg:size-6" strokeWidth={1.5} />
+        </button>
       </div>
     </div>
   );
