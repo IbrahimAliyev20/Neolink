@@ -8,7 +8,7 @@ import { ClipReveal } from "@/components/animation/clip-reveal";
 import { Parallax } from "@/components/animation/parallax";
 import { Reveal } from "@/components/animation/reveal";
 import { SplitLines } from "@/components/animation/split-lines";
-import { ServicesRail } from "@/components/home/services-rail";
+import { RailMarker, ServicesRail } from "@/components/home/services-rail";
 import Container from "@/components/shared/container";
 import { useServices } from "@/services/service/queries";
 
@@ -69,51 +69,59 @@ export function ServicesSection() {
             </Reveal>
           </div>
 
-          {/* Figma: Frame 2147224629 — mobile row gap 12; desktop gap 95, width 772 */}
-          <div className="flex min-w-0 gap-3 lg:w-[53.61%] lg:gap-[8%] xl:gap-[95px]">
-            {/* Figma: Services-numbers — column gap 16; width 36 mobile / 72 desktop */}
-            <ServicesRail count={services.length} />
+          {/* Figma: Frame 2147224629 — mobile row gap 12; desktop gap 95, width 772.
+              Each number shares a row with its service, so the name always sits
+              level with the number no matter how many lines it wraps to. */}
+          <ServicesRail
+            key={services.length}
+            count={services.length}
+            className="flex w-full min-w-0 flex-col lg:w-[53.61%]"
+          >
+            {services.map((service, index) => (
+              <div
+                key={service.slug}
+                className="flex items-start gap-3 lg:gap-[8%] xl:gap-[95px]"
+              >
+                {/* Figma: Services-numbers — 36 mobile / 72 desktop, 1px connector */}
+                <RailMarker index={index} />
 
-            {/* Figma: Frame 2147224619 — column; gap 24 mobile / 36 desktop, width 605 */}
-            <Reveal
-              key={services.length}
-              x={72}
-              y={0}
-              blur={6}
-              stagger={0.28}
-              end="top 45%"
-              className="flex w-full min-w-0 flex-col gap-6 lg:flex-1 lg:gap-9"
-            >
-              {services.map((service) => (
-                <Link
-                  href={`/services/${service.slug}`}
-                  key={service.slug}
-                  className="group flex items-center gap-4 lg:gap-8"
+                {/* Figma: Frame 2147224619 — gap 24 mobile / 36 desktop below each row */}
+                <Reveal
+                  x={72}
+                  y={0}
+                  blur={6}
+                  end="top 45%"
+                  className="min-w-0 flex-1 pb-6 lg:pb-9"
                 >
-                  {/* Figma: Frame 2147224617 — column; gap 11 mobile / 16 desktop */}
-                  <div className="flex min-w-0 flex-1 flex-col gap-[11px] lg:gap-4">
-                    <h3 className="text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px] 2xl:text-[24px] 2xl:leading-[32px]">
-                      {service.name}
-                    </h3>
-                    <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[14px] lg:leading-[22px] 2xl:text-[16px] 2xl:leading-[24px]">
-                      {service.short_description}
-                    </p>
-                  </div>
-                  {/* Figma: 112x79 mobile / 240x169 desktop, r12 */}
-                  <ClipReveal className="aspect-[240/169] w-[38%] max-w-[112px] shrink-0 overflow-hidden rounded-[12px] bg-neo-teal lg:w-[40%] lg:max-w-[240px]">
-                    <Image
-                      src={service.cover_image_home}
-                      alt=""
-                      width={240}
-                      height={169}
-                      aria-hidden
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.3]"
-                    />
-                  </ClipReveal>
-                </Link>
-              ))}
-            </Reveal>
-          </div>
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="group flex items-start gap-4 lg:gap-8"
+                  >
+                    {/* Figma: Frame 2147224617 — column; gap 11 mobile / 16 desktop */}
+                    <div className="flex min-w-0 flex-1 flex-col gap-[11px] lg:gap-4">
+                      <h3 className="text-[16px] leading-[24px] font-medium tracking-[0.01em] text-neo-ink lg:text-[20px] lg:leading-[28px] 2xl:text-[24px] 2xl:leading-[32px]">
+                        {service.name}
+                      </h3>
+                      <p className="text-[12px] leading-[16px] font-normal tracking-[0.01em] text-neo-muted lg:text-[14px] lg:leading-[22px] 2xl:text-[16px] 2xl:leading-[24px]">
+                        {service.short_description}
+                      </p>
+                    </div>
+                    {/* Figma: 112x79 mobile / 240x169 desktop, r12 */}
+                    <ClipReveal className="aspect-[240/169] w-[38%] max-w-[112px] shrink-0 overflow-hidden rounded-[12px] bg-neo-teal lg:w-[40%] lg:max-w-[240px]">
+                      <Image
+                        src={service.cover_image_home}
+                        alt=""
+                        width={240}
+                        height={169}
+                        aria-hidden
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.3]"
+                      />
+                    </ClipReveal>
+                  </Link>
+                </Reveal>
+              </div>
+            ))}
+          </ServicesRail>
         </div>
 
         {/* Figma mobile: `Burdaqal.az 1` — 343x101 strip below the cards (gap 10) */}
