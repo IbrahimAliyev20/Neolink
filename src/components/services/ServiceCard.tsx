@@ -13,11 +13,14 @@ export function ServiceCard({
 
   return (
     <div
-      className={`group border border-[#e7e7ea] flex gap-8 items-center p-3.5 rounded-[14px] min-w-0 w-full lg:px-8 lg:py-7 lg:rounded-2xl ${
+      className={`group border border-[#e7e7ea] flex gap-8 h-full items-center p-3.5 rounded-[14px] min-w-0 w-full lg:px-8 lg:py-7 lg:rounded-2xl ${
         size === "wide" ? "lg:flex-[812]" : "lg:flex-[604]"
       } ${isDark ? "bg-[#0d153a]" : "bg-white"}`}
     >
-      <div className="flex flex-col gap-4 items-center w-full lg:gap-9">
+      {/* `justify-between` keeps the images level across a row: when one card's
+          title wraps to more lines than its neighbour's, the extra height goes
+          between the copy and the image instead of stretching either. */}
+      <div className="flex flex-col gap-4 h-full items-center justify-between w-full lg:gap-9">
         <div className="flex flex-col gap-2.5 items-start w-full lg:gap-3">
           <p
             className={`font-semibold text-xl leading-7 tracking-[0.2px] w-full lg:font-medium lg:text-2xl lg:leading-8 lg:tracking-[0.24px] ${

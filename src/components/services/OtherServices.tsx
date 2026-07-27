@@ -45,7 +45,7 @@ export function OtherServices({ currentSlug }: { currentSlug: string }) {
           y={44}
           stagger={0.15}
           end="top 55%"
-          className="flex flex-col gap-3 lg:flex-row lg:gap-6 items-start w-full"
+          className="flex flex-col gap-3 lg:flex-row lg:gap-6 items-stretch w-full"
         >
           {otherServices.map((service) => (
             // A real box (not `contents`) so Reveal can animate it, carrying the

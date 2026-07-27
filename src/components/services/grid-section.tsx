@@ -37,7 +37,7 @@ export function GridSection() {
             blur={6}
             stagger={0.16}
             end="top 55%"
-            className="flex flex-col lg:flex-row gap-3 lg:gap-6 items-start w-full"
+            className="flex flex-col lg:flex-row gap-3 lg:gap-6 items-stretch w-full"
           >
             {row.map((service) => (
               <Link
