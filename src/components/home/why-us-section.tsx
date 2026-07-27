@@ -157,7 +157,10 @@ export function WhyUsSection() {
                   {t("corporateTitle")}
                 </h3>
                 {/* Figma: Frame 2147225009 — logos loop endlessly right to left.
-                    Rendered only when the API returns logos; otherwise left empty. */}
+                    Rendered only when the API returns logos; otherwise left empty.
+                    Loqo API-dən hansı rəngdə gəlirsə gəlsin tünd kartın üzərində
+                    ağ görünsün: brightness(0) hər pikseli qara edir, invert(1)
+                    ağa çevirir (şəffaf sahələr toxunulmaz qalır). */}
                 {whyLogos.length > 0 && (
                   <LogoLoop
                     logos={whyLogos}
@@ -167,7 +170,7 @@ export function WhyUsSection() {
                     logoHeight={isMobileLoop ? 22 : 38}
                     fadeOut
                     fadeOutColor="#0d153a"
-                    className="opacity-70"
+                    className="[&_img]:brightness-0 [&_img]:invert"
                     ariaLabel="Partnyor loqoları"
                   />
                 )}
