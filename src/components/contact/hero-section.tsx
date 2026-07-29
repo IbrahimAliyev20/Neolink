@@ -170,12 +170,15 @@ export function HeroSection() {
                     aria-label={social.link}
                     className="bg-[rgba(235,248,247,0.04)] border border-[#3abdaa] flex items-center justify-center rounded-full size-11 shrink-0"
                   >
+                    {/* The CMS uploads dark glyphs, which all but disappear on
+                        this dark card. `brightness(0) invert(1)` flattens any
+                        uploaded icon to pure white, whatever colour it has. */}
                     <Image
                       src={social.icon}
                       alt=""
                       width={24}
                       height={24}
-                      className="size-6 object-contain"
+                      className="size-6 object-contain [filter:brightness(0)_invert(1)]"
                     />
                   </a>
                 ))}

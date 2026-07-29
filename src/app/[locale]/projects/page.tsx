@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { HeroSection } from "@/components/projects/hero-section";
 import { GridSection } from "@/components/projects/grid-section";
 import { mapApiProject } from "@/lib/data/projects";
@@ -8,9 +9,13 @@ import { useProjectTags } from "@/services/project-tags/queries";
 import { useProjects, useProjectsByTag } from "@/services/project/queries";
 
 export default function ProjectPage() {
+  const tc = useTranslations("common");
   const { data: tags } = useProjectTags();
   const { data: allProjects } = useProjects();
+  // `null` is the "All" tab: no tag filter, the full `/projects` list is shown.
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
+
+  const allLabel = tc("all");
 
   // Only keep tags that actually have projects, so empty tabs never show. A
   // project can carry several tags, so we collect every tag name in use.
@@ -21,31 +26,32 @@ export default function ProjectPage() {
     return tags.filter((tag) => tagsInUse.has(tag.name));
   }, [tags, allProjects]);
 
-  // Default to the first available tag (and correct the selection if the active
-  // one drops out of the list).
+  // Fall back to "All" if the active tag drops out of the list (e.g. after a
+  // language switch reloads the tags).
   useEffect(() => {
-    if (
-      availableTags.length > 0 &&
-      !availableTags.some((tag) => tag.slug === activeSlug)
-    ) {
-      setActiveSlug(availableTags[0].slug);
+    if (activeSlug && !availableTags.some((tag) => tag.slug === activeSlug)) {
+      setActiveSlug(null);
     }
   }, [availableTags, activeSlug]);
 
+  // Skipped while "All" is selected — the unfiltered list is used instead.
   const { data: apiProjects } = useProjectsByTag(activeSlug ?? undefined);
 
   const gridProjects = useMemo(
-    () => (apiProjects ?? []).map(mapApiProject),
-    [apiProjects]
+    () => (activeSlug ? apiProjects ?? [] : allProjects ?? []).map(mapApiProject),
+    [activeSlug, apiProjects, allProjects]
   );
 
-  const categories = availableTags.map((tag) => tag.name);
+  // "All" leads the tab strip, then the tags that actually have projects.
+  const categories = [allLabel, ...availableTags.map((tag) => tag.name)];
   const activeCategory =
-    availableTags.find((tag) => tag.slug === activeSlug)?.name ??
-    categories[0] ??
-    "";
+    availableTags.find((tag) => tag.slug === activeSlug)?.name ?? allLabel;
 
   const handleChange = (name: string) => {
+    if (name === allLabel) {
+      setActiveSlug(null);
+      return;
+    }
     const tag = availableTags.find((t) => t.name === name);
     if (tag) setActiveSlug(tag.slug);
   };

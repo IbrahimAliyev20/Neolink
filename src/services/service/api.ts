@@ -33,10 +33,27 @@ export interface ServicePage {
   lastPage: number
 }
 
-/** GET /services — first page only (used by the header dropdown). */
+/**
+ * GET /services — every service, across all pages.
+ *
+ * The endpoint paginates at 6 per page, so a single call silently drops
+ * anything past the sixth service. Surfaces that list services in full (header
+ * mega-menu, home rail) need the whole set, so the remaining pages are fetched
+ * in parallel once page 1 reveals how many there are.
+ */
 export const getServices = async (): Promise<ServiceApiItem[]> => {
-  const response = await get<ServiceListResponse>('/services')
-  return response.data
+  const first = await get<ServiceListResponse>('/services')
+  const lastPage = first.meta?.last_page ?? 1
+
+  if (lastPage <= 1) return first.data
+
+  const rest = await Promise.all(
+    Array.from({ length: lastPage - 1 }, (_, index) =>
+      get<ServiceListResponse>('/services', { params: { page: index + 2 } })
+    )
+  )
+
+  return [first.data, ...rest.map((page) => page.data)].flat()
 }
 
 /** GET /services?page=N — a single paginated page (backend serves 6 per page). */

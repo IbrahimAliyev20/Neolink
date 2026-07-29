@@ -506,8 +506,10 @@ export function Header() {
                           className="group flex items-center justify-between gap-4 text-[20px] leading-[28px] font-normal tracking-[0.01em] text-[#3b4153] transition-colors hover:font-semibold hover:text-neo-ink"
                         >
                           {service.label}
+                          {/* Hover swings the 45° arrow a full 45° clockwise so
+                              it points straight right, then eases back on leave. */}
                           <ArrowUpRight
-                            className="h-7 w-7 shrink-0"
+                            className="h-7 w-7 shrink-0 transition-transform duration-300 ease-out group-hover:rotate-45 motion-reduce:transition-none"
                             strokeWidth={2}
                           />
                         </Link>
