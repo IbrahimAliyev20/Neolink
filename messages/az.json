@@ -33,7 +33,9 @@
     "all": "Hamısı",
     "showMore": "Daha çox",
     "prev": "Əvvəlki",
-    "next": "Növbəti"
+    "next": "Növbəti",
+    "prevSlide": "Əvvəlki slayd",
+    "nextSlide": "Növbəti slayd"
   },
   "footer": {
     "copyright": "Neoline Technology MMC | Bütün hüquqlar qorunur."
@@ -54,6 +56,7 @@
       "strategyTitle": "İcradan Əvvəl Strategiya",
       "strategyDesc": "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq.",
       "corporateTitle": "Korporativ Təcrübə, Kompakt Yanaşma",
+      "partnerAria": "Partnyor loqoları",
       "statLabel": "Əməkdaşlıq",
       "statDesc": "Biz sadəcə avadanlıq satmırıq. Hər müştəriyə audit edir, riskləri qiymətləndirir və məqsədinizə uyğun İT inkişaf planı hazırlayırıq."
     },
@@ -78,7 +81,8 @@
     "ecosystem": {
       "heading": "Bütün İT Ekosisteminiz",
       "desc": "Heç bir maliyyə öhdəliyi tələb etməyən texniki auditlə başlayın. Mövcud sistemlərinizi qiymətləndirəcəyik, zəif nöqtələri aşkarlayacaq və aydın fəaliyyət planı təqdim edəcəyik.",
-      "partnerAria": "Partnyor loqoları"
+      "partnerAria": "Partnyor loqoları",
+      "partnerLink": "Partnyor"
     },
     "introPopup": {
       "aria": "Xoş gəldiniz"

@@ -171,7 +171,7 @@ export function WhyUsSection() {
                     fadeOut
                     fadeOutColor="#0d153a"
                     className="[&_img]:brightness-0 [&_img]:invert"
-                    ariaLabel="Partnyor loqoları"
+                    ariaLabel={t("partnerAria")}
                   />
                 )}
               </div>

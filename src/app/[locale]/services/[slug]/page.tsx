@@ -1,6 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { OtherServices } from "@/components/services/OtherServices";
 import { HeroDetailSection } from "@/components/services/hero-detail-section";
 import { WhatIncludedSection } from "@/components/services/what-included-section";
@@ -9,6 +10,7 @@ import { useService } from "@/services/service/queries";
 export default function ServiceDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
+  const t = useTranslations("services.detail");
 
   const { data: service, isLoading } = useService(slug);
 
@@ -19,7 +21,7 @@ export default function ServiceDetailPage() {
   if (!service) {
     return (
       <div className="flex min-h-[60vh] items-center justify-center px-4 text-center text-[#5b606f]">
-        Xidmət tapılmadı.
+        {t("notFound")}
       </div>
     );
   }

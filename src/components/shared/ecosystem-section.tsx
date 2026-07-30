@@ -29,14 +29,14 @@ function PartnerCard({ logo }: { logo: ApiLogo }) {
  *  least `MIN_ROW_ITEMS` cards so the marquee never looks empty. */
 const MIN_ROW_ITEMS = 8;
 
-function createPartnerLogos(logos: ApiLogo[]): LogoItem[] {
+function createPartnerLogos(logos: ApiLogo[], linkLabel: string): LogoItem[] {
   const repeats = Math.ceil(MIN_ROW_ITEMS / logos.length);
   const filled = Array.from({ length: repeats }, () => logos).flat();
 
   return filled.map((logo, index) => ({
     node: <PartnerCard key={index} logo={logo} />,
     href: logo.link,
-    ariaLabel: "Partnyor",
+    ariaLabel: linkLabel,
   }));
 }
 
@@ -52,9 +52,14 @@ export function EcosystemSection() {
   const t = useTranslations("home.ecosystem");
   const { data: logos = [] } = useLogos();
 
+  const partnerLinkLabel = t("partnerLink");
+
   // Stable identity: `LogoLoop` re-measures (and restarts its RAF loop) whenever
   // the `logos` prop changes, so a fresh array on every render keeps it stalling.
-  const partnerLogos = useMemo(() => (logos.length > 0 ? createPartnerLogos(logos) : []), [logos]);
+  const partnerLogos = useMemo(
+    () => (logos.length > 0 ? createPartnerLogos(logos, partnerLinkLabel) : []),
+    [logos, partnerLinkLabel]
+  );
 
   if (partnerLogos.length === 0) return null;
 

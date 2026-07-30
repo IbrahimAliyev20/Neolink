@@ -33,7 +33,9 @@
     "all": "All",
     "showMore": "Show more",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide"
   },
   "footer": {
     "copyright": "Neoline Technology LLC | All rights reserved."
@@ -54,6 +56,7 @@
       "strategyTitle": "Strategy Before Execution",
       "strategyDesc": "We don't just sell hardware. We audit every client, assess the risks and build an IT development plan tailored to your goals.",
       "corporateTitle": "Corporate Experience, Compact Approach",
+      "partnerAria": "Partner logos",
       "statLabel": "Partnerships",
       "statDesc": "We don't just sell hardware. We audit every client, assess the risks and build an IT development plan tailored to your goals."
     },
@@ -78,7 +81,8 @@
     "ecosystem": {
       "heading": "Your Entire IT Ecosystem",
       "desc": "Start with a technical audit that requires no financial commitment. We'll assess your existing systems, uncover weak points and provide a clear action plan.",
-      "partnerAria": "Partner logos"
+      "partnerAria": "Partner logos",
+      "partnerLink": "Partner"
     },
     "introPopup": {
       "aria": "Welcome"
